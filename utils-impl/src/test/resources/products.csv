@@ -1,0 +1,4 @@
+id;ear;client;magicnumber;singlecluster
+product1;ch.sbb.releasetrain.product1:ch.sbb.releasetrain.product1.ear;ch.sbb.releasetrain.product1:ch.sbb.releasetrain.client-product1.jar;c;o
+product2;ch.sbb.releasetrain.product2:ch.sbb.releasetrain.product2.ear;ch.sbb.releasetrain.product2:ch.sbb.releasetrain.client-product2.jar;d;x
+product3;ch.sbb.releasetrain.product3:ch.sbb.releasetrain.product3.ear;ch.sbb.releasetrain.product3:ch.sbb.releasetrain.client-product3.jar;b;o
