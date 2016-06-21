@@ -7,7 +7,7 @@ package ch.sbb.releasetrain.utils.exception;
  * Releasetrain Exception
  * 
  * @author u203244 (Daniel Marthaler)
- * @since 2.0.6, 2015
+ * @since 0.0.1, 2016
  */
 public class ReleasetrainException extends Exception {
 

@@ -1,5 +1,6 @@
 /*
- * Copyright (C) Schweizerische Bundesbahnen SBB, 2016.
+ * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
+ * and to You under the Apache License, Version 2.0.
  */
 package ch.sbb.releasetrain.utils.bootstrap;
 
@@ -19,18 +20,17 @@ import com.google.inject.AbstractModule;
 
 
 /**
- * Guice Config
+ * Google Guice Base Config
  *
  * @author u203244 (Daniel Marthaler)
- * @version $Id: $
- * @since 2.0.10, 2015
+ * @since 0.0.1, 2016
  */
 public class GuiceConfig extends AbstractModule {
+
     @Override
     protected void configure() {
 
         bind(Log.class).to(SystemStreamLog.class);
-
 
         bind(FileUtil.class).to(FileUtilImpl.class);
 

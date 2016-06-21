@@ -1,5 +1,6 @@
 /*
- * Copyright (C) Schweizerische Bundesbahnen SBB, 2016.
+ * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
+ * and to You under the Apache License, Version 2.0.
  */
 package ch.sbb.releasetrain.utils.csv;
 
@@ -12,7 +13,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 
-public class CVSXLSReaderTest {
+public class CSVXLSReaderTest {
 
     @Test
     public void testIsBuildRUNNING() throws Exception {
@@ -20,7 +21,7 @@ public class CVSXLSReaderTest {
         InputStream in = this.getClass().getResourceAsStream("/products.csv");
         String text = IOUtil.toString(in);
 
-        CVSXLSReaderImpl reader = new CVSXLSReaderImpl();
+        CSVXLSReaderImpl reader = new CSVXLSReaderImpl();
         reader.setText(text);
 
         List<String> list = reader.getListFromColoumn("id");

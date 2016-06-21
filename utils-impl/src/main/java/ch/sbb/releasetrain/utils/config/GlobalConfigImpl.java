@@ -1,5 +1,6 @@
 /*
- * Copyright (C) Schweizerische Bundesbahnen SBB, 2016.
+ * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
+ * and to You under the Apache License, Version 2.0.
  */
 package ch.sbb.releasetrain.utils.config;
 
@@ -30,16 +31,17 @@ public class GlobalConfigImpl implements GlobalConfig {
     public GlobalConfigImpl() {
         Configurations configs = new Configurations();
         try {
-            Configuration config = configs.properties(new File(CONFIG_FILE));
+            config = configs.properties(new File(CONFIG_FILE));
         } catch (ConfigurationException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
 
     }
 
     public String get(String id) {
-        if (getFromEnv(id) != null) {
-            return getFromEnv(id);
+
+        if (System.getProperty(id) != null) {
+            return System.getProperty(id);
         }
         String ret = config.getString(id);
 
@@ -47,10 +49,6 @@ public class GlobalConfigImpl implements GlobalConfig {
             log.fatal("no config for key: " + id + " found in Env or " + CONFIG_FILE);
         }
         return ret;
-    }
-
-    private String getFromEnv(String key) {
-        return System.getProperty(key);
     }
 
 }

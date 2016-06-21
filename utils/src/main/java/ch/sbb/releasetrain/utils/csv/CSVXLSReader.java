@@ -12,7 +12,7 @@ import java.util.Map;
  * @author u203244 (Daniel Marthaler)
  * @since 0.0.1, 2016
  */
-public interface CVSXLSReader {
+public interface CSVXLSReader {
 
     /**
      * return's a column as List

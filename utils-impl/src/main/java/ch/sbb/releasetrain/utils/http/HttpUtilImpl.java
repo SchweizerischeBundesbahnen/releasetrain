@@ -1,12 +1,16 @@
 /*
- * Copyright (C) Schweizerische Bundesbahnen SBB, 2016.
+ * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
+ * and to You under the Apache License, Version 2.0.
  */
 package ch.sbb.releasetrain.utils.http;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
+import lombok.Setter;
 import lombok.extern.apachecommons.CommonsLog;
 
 import org.apache.http.HttpEntity;
@@ -18,7 +22,6 @@ import org.apache.http.client.AuthCache;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.auth.BasicScheme;
@@ -41,25 +44,23 @@ import com.google.inject.Singleton;
 @CommonsLog
 public class HttpUtilImpl implements HttpUtil {
 
+    @Setter
+    private String user = "";
 
-    private boolean setJenkinsAutentication = false;
-
-    public static void main(String[] args) {
-
-    }
+    @Setter
+    private String password = "";
 
     /**
-     * set setSetJenkinsAutentication to true for setting the autentication on jenkins
+     * set user and password for basic authentication
      */
     @Override
     public String getPageAsString(String url) {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
             HttpGet httpget = new HttpGet(url);
-            HttpClientContext context = HttpClientContext.create();
-            if (setJenkinsAutentication) {
-                initAutenticationOnContect(context);
-            }
+
+            HttpClientContext context = initAuthIfNeeded(url);
+
             HttpResponse response = httpclient.execute(httpget, context);
             HttpEntity entity = response.getEntity();
             return EntityUtils.toString(entity);
@@ -69,16 +70,17 @@ public class HttpUtilImpl implements HttpUtil {
         return "n/a";
     }
 
-    @Override
-    public void postJobAsXMLToJenkinsWithAuth(String url, String content) {
+    /**
+     * set user and password for basic authentication
+     */
+    public String postContentToUrl(String url, String content) {
 
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpPost post = new HttpPost(url);
         post.setHeader("Content-Type", "application/xml");
         HttpEntity entity = null;
 
-        HttpClientContext context = HttpClientContext.create();
-        initAutenticationOnContect(context);
+        HttpClientContext context = initAuthIfNeeded(url);
 
         try {
             entity = new StringEntity(content);
@@ -93,85 +95,53 @@ public class HttpUtilImpl implements HttpUtil {
             if (response.getStatusLine().getStatusCode() != 200) {
                 log.error("response code not ok: " + response.getStatusLine().getStatusCode());
             }
-        } catch (IOException e) {
-            log.error(e);
-        }
-
-    }
-
-    /**
-     * set setSetJenkinsAutentication to true for setting the autentication on jenkins
-     */
-    private void initAutenticationOnContect(HttpClientContext context) {
-        CredentialsProvider credsProvider = new BasicCredentialsProvider();
-        credsProvider.setCredentials(
-                new AuthScope(AuthScope.ANY),
-                new UsernamePasswordCredentials("***", "***"));
-
-        HttpHost targetHost = new HttpHost("ci.sbb.ch", 443, "https");
-
-        // Create AuthCache instance
-        AuthCache authCache = new BasicAuthCache();
-        // Generate BASIC scheme object and add it to the local auth cache
-        BasicScheme basicAuth = new BasicScheme();
-        authCache.put(targetHost, basicAuth);
-
-        // Add AuthCache to the execution context
-        context.setCredentialsProvider(credsProvider);
-        context.setAuthCache(authCache);
-    }
-
-    public boolean isSetJenkinsAutentication() {
-        return setJenkinsAutentication;
-    }
-
-    @Override
-    public void setSetJenkinsAutentication(boolean setJenkinsAutentication) {
-        this.setJenkinsAutentication = setJenkinsAutentication;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String putBodyToURL(String url, String body) {
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-        HttpPut post = new HttpPut(url);
-        // post.setHeader("Content-Type", "application/xml");
-        HttpEntity entity = null;
-
-        HttpClientContext context = HttpClientContext.create();
-        initAutenticationOnContect(context);
-
-        try {
-            entity = new StringEntity(body);
-        } catch (UnsupportedEncodingException e) {
-            log.error(e);
-        }
-
-        post.setEntity(entity);
-        HttpResponse response;
-        try {
-            response = httpclient.execute(post, context);
-            if (response.getStatusLine().getStatusCode() != 200) {
-                log.error("response code not ok: " + response.getStatusLine().getStatusCode());
-            }
-
-            HttpEntity entity2 = response.getEntity();
-            return EntityUtils.toString(entity2);
-
+            entity = response.getEntity();
+            return EntityUtils.toString(entity);
         } catch (IOException e) {
             log.error(e);
         }
         return "";
     }
 
+    /**
+     * authenticates the context if user and password are set
+     */
+    private HttpClientContext initAuthIfNeeded(String url) {
+
+        HttpClientContext context = HttpClientContext.create();
+        if (this.user.isEmpty() || this.password.isEmpty()) {
+            log.info("http connection without autentication, because no user / password ist known to HttpUtilImpl ...");
+            return context;
+        }
+
+        CredentialsProvider credsProvider = new BasicCredentialsProvider();
+        credsProvider.setCredentials(
+                new AuthScope(AuthScope.ANY),
+                new UsernamePasswordCredentials(user, password));
+        URL url4Host;
+        try {
+            url4Host = new URL(url);
+        } catch (MalformedURLException e) {
+            log.fatal(e.getMessage(), e);
+            return context;
+        }
+
+        HttpHost targetHost = new HttpHost(url4Host.getHost(), url4Host.getPort(), url4Host.getProtocol());
+        AuthCache authCache = new BasicAuthCache();
+        BasicScheme basicAuth = new BasicScheme();
+        authCache.put(targetHost, basicAuth);
+        context.setCredentialsProvider(credsProvider);
+        context.setAuthCache(authCache);
+        return context;
+    }
+
     @Override
     public InputStream getResourceAsStream(String url) {
+        HttpClientContext context = initAuthIfNeeded(url);
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpGet get = new HttpGet(url);
         try {
-            HttpResponse response = httpclient.execute(get);
+            HttpResponse response = httpclient.execute(get, context);
             return response.getEntity().getContent();
         } catch (Exception e) {
             log.error(e);

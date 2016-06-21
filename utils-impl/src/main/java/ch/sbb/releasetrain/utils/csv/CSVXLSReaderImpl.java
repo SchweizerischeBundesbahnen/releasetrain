@@ -1,3 +1,7 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
+ * and to You under the Apache License, Version 2.0.
+ */
 package ch.sbb.releasetrain.utils.csv;
 
 import java.io.StringReader;
@@ -19,12 +23,10 @@ import ch.sbb.releasetrain.utils.http.HttpUtil;
 import com.google.inject.Inject;
 
 /**
- * Liest die, zu einem Produkt Bsp: Angebot relevanten informationen aus dem products.xlsx
- * ung gibt diese als Map / Liste zurueck
- *
+ * reads informations to a "product" out of the product.csv file and returns the values as map or coloumn list
  */
 @CommonsLog
-public class CVSXLSReaderImpl implements CVSXLSReader {
+public class CSVXLSReaderImpl implements CSVXLSReader {
 
     @Inject
     private HttpUtil http;
@@ -62,7 +64,7 @@ public class CVSXLSReaderImpl implements CVSXLSReader {
             }
 
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage(), e);
         }
         return ret;
     }

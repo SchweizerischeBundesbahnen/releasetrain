@@ -1,5 +1,6 @@
 /*
- * Copyright (C) Schweizerische Bundesbahnen SBB, 2016.
+ * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
+ * and to You under the Apache License, Version 2.0.
  */
 package ch.sbb.releasetrain.utils.cisi;
 
@@ -15,7 +16,7 @@ import java.util.Map;
  */
 public interface EnvironmentOracle {
 
-    List<CheckableModel> loadCheckablesFromPortsXML();
+    List loadCheckablesFromPortsXML();
 
     List<String> getProductIds();
 
@@ -23,7 +24,7 @@ public interface EnvironmentOracle {
 
     String getMagicNumberForProduct(String product);
 
-    CheckableModel getClusterForProduct(String product, String branch);
+    String getClusterForProduct(String product, String branch);
 
     String getValueForProduct(String product, String value);
 
