@@ -54,8 +54,10 @@ public final class GITAccessorImpl implements GitAccessor {
     @Setter
     private String password = "master";
 
-    public boolean writeFile(String pathAndFile, String content, String startingpoint) {
-        startingpoint = "origin/" + startingpoint;
+    public boolean writeFile(String pathAndFile, String content, String startingPoint) {
+        if (startingPoint.contains("origin")) {
+            startingPoint = "origin/" + startingPoint;
+        }
 
         Git git = null;
         try {
@@ -68,7 +70,7 @@ public final class GITAccessorImpl implements GitAccessor {
                     setCreateBranch(true).
                     setName(branch).
                     setUpstreamMode(CreateBranchCommand.SetupUpstreamMode.TRACK).
-                    setStartPoint(startingpoint).
+                    setStartPoint(startingPoint).
                     call();
         } catch (GitAPIException e) {
             log.info(e.getMessage());
@@ -104,7 +106,10 @@ public final class GITAccessorImpl implements GitAccessor {
     }
 
     @Override
-    public String readFileToString(String pathAndFile) {
+    public String readFileToString(String pathAndFile, String startingPoint) {
+        if (startingPoint.contains("origin")) {
+            startingPoint = "origin/" + startingPoint;
+        }
         File tempDir = Files.createTempDir();
         try {
             this.gitClone(tempDir);
@@ -185,7 +190,7 @@ public final class GITAccessorImpl implements GitAccessor {
         } catch (GitAPIException e) {
             log.error(e.getMessage(), e);
         }
-        return gitClone(dir);
+        return gitOpen(dir);
     }
 
     private Git gitOpen(File dir) {

@@ -45,10 +45,10 @@ public class ReleasetrainInitMojo extends GuiceAbstractMojo {
     private String gituser = "marthaler.worb@gmail.com";
 
     @Parameter(property = "gitpassword", required = false)
-    private String gitpassword = "***";
+    private String gitpassword = "";
 
     @Parameter(property = "gitbranch", required = false)
-    private String gitbranch = "feature/releasetrain2";
+    private String gitbranch = "feature/releasetrain";
 
     public static void main(String[] args) throws Exception {
         ReleasetrainInitMojo mojo = new ReleasetrainInitMojo();
@@ -73,7 +73,7 @@ public class ReleasetrainInitMojo extends GuiceAbstractMojo {
         if (gitbranch.isEmpty()) {
             gitbranch = ask("please enter git branch (default: feature/releasetrain): ");
             if (gitbranch.isEmpty()) {
-                gitbranch = "feature/releasetrain2";
+                gitbranch = "feature/releasetrain";
             }
         }
 

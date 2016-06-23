@@ -14,8 +14,8 @@ public class GITAccessorTest {
     public void testIsBuildRUNNING() throws Exception {
 
         GITAccessorImpl git = new GITAccessorImpl();
-
-        Assert.assertTrue(git.readFileToString("pom.xml").contains("<modelVersion>4.0.0</modelVersion>"));
+        git.setRepo("https://github.com/SchweizerischeBundesbahnen/releasetrain.git");
+        Assert.assertTrue(git.readFileToString("pom.xml", "develop").contains("<modelVersion>4.0.0</modelVersion>"));
 
         // Assert.assertTrue(git.writeFile("pom.xml","housi"));
 
