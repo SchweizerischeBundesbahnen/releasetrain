@@ -1,0 +1,9 @@
+/root/.jenkins/jobs/releasetrain-release/workspace/business/src/main/java/ch/sbb/releasetrain/business/modelaccessor/XstreamModelAccessor.java
+/root/.jenkins/jobs/releasetrain-release/workspace/business/src/main/java/ch/sbb/releasetrain/business/model/MailReceiver.java
+/root/.jenkins/jobs/releasetrain-release/workspace/business/src/main/java/ch/sbb/releasetrain/business/jenkins/JenkinsJobThread.java
+/root/.jenkins/jobs/releasetrain-release/workspace/business/src/main/java/ch/sbb/releasetrain/business/modelaccessor/Recognizable.java
+/root/.jenkins/jobs/releasetrain-release/workspace/business/src/main/java/ch/sbb/releasetrain/business/modelaccessor/ModelService.java
+/root/.jenkins/jobs/releasetrain-release/workspace/business/src/main/java/ch/sbb/releasetrain/business/model/DefaultVersionSchemaImpl.java
+/root/.jenkins/jobs/releasetrain-release/workspace/business/src/main/java/ch/sbb/releasetrain/business/model/ReleaseJob.java
+/root/.jenkins/jobs/releasetrain-release/workspace/business/src/main/java/ch/sbb/releasetrain/business/guice/GuiceAbstractMojo.java
+/root/.jenkins/jobs/releasetrain-release/workspace/business/src/main/java/ch/sbb/releasetrain/business/guice/GuiceInjectorWrapper.java

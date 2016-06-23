@@ -1,0 +1,7 @@
+/root/.jenkins/jobs/releasetrain-release/workspace/utils/src/main/java/ch/sbb/releasetrain/utils/config/GlobalConfig.java
+/root/.jenkins/jobs/releasetrain-release/workspace/utils/src/main/java/ch/sbb/releasetrain/utils/workspace/ClasspathToWorkspaceWriter.java
+/root/.jenkins/jobs/releasetrain-release/workspace/utils/src/main/java/ch/sbb/releasetrain/utils/file/FileUtil.java
+/root/.jenkins/jobs/releasetrain-release/workspace/utils/src/main/java/ch/sbb/releasetrain/utils/git/GitAccessor.java
+/root/.jenkins/jobs/releasetrain-release/workspace/utils/src/main/java/ch/sbb/releasetrain/utils/emails/SMTPUtil.java
+/root/.jenkins/jobs/releasetrain-release/workspace/utils/src/main/java/ch/sbb/releasetrain/utils/csv/CSVXLSReader.java
+/root/.jenkins/jobs/releasetrain-release/workspace/utils/src/main/java/ch/sbb/releasetrain/utils/http/HttpUtil.java

@@ -1,0 +1,14 @@
+ch.sbb.releasetrain.utils
+ch.sbb.releasetrain.utils.bootstrap
+ch.sbb.releasetrain.utils.cisi
+ch.sbb.releasetrain.utils.config
+ch.sbb.releasetrain.utils.csv
+ch.sbb.releasetrain.utils.exception
+ch.sbb.releasetrain.utils.file
+ch.sbb.releasetrain.utils.git
+ch.sbb.releasetrain.utils.http
+ch.sbb.releasetrain.utils.jenkins
+ch.sbb.releasetrain.utils.models
+ch.sbb.releasetrain.utils.models.jenkins
+ch.sbb.releasetrain.utils.service
+ch.sbb.releasetrain.utils.workspace
