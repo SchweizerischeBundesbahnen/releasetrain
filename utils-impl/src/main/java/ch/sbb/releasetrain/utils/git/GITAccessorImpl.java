@@ -54,6 +54,21 @@ public final class GITAccessorImpl implements GitAccessor {
     @Setter
     private String password = "master";
 
+    public GITAccessorImpl() {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                log.info("deletig: " + getGitDir());
+                try {
+                    org.apache.commons.io.FileUtils.deleteDirectory(gitDir);
+                } catch (IOException e) {
+                    log.debug(e.getMessage(), e);
+                }
+                log.info("deleted: " + getGitDir());
+            }
+        });
+    }
+
     public boolean writeFile(String pathAndFile, String content, String startingPoint) {
         if (!startingPoint.contains("origin")) {
             startingPoint = "origin/" + startingPoint;
