@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.Setter;
-import lombok.extern.apachecommons.CommonsLog;
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -25,7 +25,7 @@ import com.google.inject.Inject;
 /**
  * reads informations to a "product" out of the product.csv file and returns the values as map or coloumn list
  */
-@CommonsLog
+@Slf4j
 public class CSVXLSReaderImpl implements CSVXLSReader {
 
     @Inject

@@ -12,7 +12,7 @@ package ch.sbb.releasetrain.utils.git;
  */
 public interface GitAccessor {
 
-    boolean writeFile(String pathAndFile, String content);
+    boolean writeFile(String pathAndFile, String content, String startingPoint);
 
     String readFileToString(String pathAndFile);
 

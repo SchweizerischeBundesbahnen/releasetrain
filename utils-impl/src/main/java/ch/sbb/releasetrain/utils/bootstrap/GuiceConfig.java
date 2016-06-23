@@ -4,9 +4,6 @@
  */
 package ch.sbb.releasetrain.utils.bootstrap;
 
-import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.plugin.logging.SystemStreamLog;
-
 import ch.sbb.releasetrain.utils.cisi.EnvironmentOracle;
 import ch.sbb.releasetrain.utils.cisi.EnvironmentOracleImpl;
 import ch.sbb.releasetrain.utils.config.GlobalConfig;
@@ -15,6 +12,8 @@ import ch.sbb.releasetrain.utils.file.FileUtil;
 import ch.sbb.releasetrain.utils.file.FileUtilImpl;
 import ch.sbb.releasetrain.utils.http.HttpUtil;
 import ch.sbb.releasetrain.utils.http.HttpUtilImpl;
+import ch.sbb.releasetrain.utils.workspace.ClasspathToWorkspaceWriter;
+import ch.sbb.releasetrain.utils.workspace.ClasspathToWorkspaceWriterImpl;
 
 import com.google.inject.AbstractModule;
 
@@ -30,7 +29,7 @@ public class GuiceConfig extends AbstractModule {
     @Override
     protected void configure() {
 
-        bind(Log.class).to(SystemStreamLog.class);
+        bind(ClasspathToWorkspaceWriter.class).to(ClasspathToWorkspaceWriterImpl.class);
 
         bind(FileUtil.class).to(FileUtilImpl.class);
 
@@ -39,6 +38,7 @@ public class GuiceConfig extends AbstractModule {
         bind(GlobalConfig.class).to(GlobalConfigImpl.class);
 
         bind(EnvironmentOracle.class).to(EnvironmentOracleImpl.class);
+
 
     }
 }

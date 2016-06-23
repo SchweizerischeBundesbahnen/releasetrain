@@ -7,7 +7,6 @@ package ch.sbb.releasetrain.utils.http;
 import java.io.InputStream;
 
 /**
- *
  * Makes HTTP(s) Calls
  *
  * @author u203244 (Daniel Marthaler)

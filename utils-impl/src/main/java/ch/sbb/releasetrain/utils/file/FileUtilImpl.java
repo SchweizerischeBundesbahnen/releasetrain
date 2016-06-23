@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
-import lombok.extern.apachecommons.CommonsLog;
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -20,7 +20,7 @@ import org.apache.commons.io.IOUtils;
  * @version $Id: $
  * @since 2.0.10, 2015
  */
-@CommonsLog
+@Slf4j
 public class FileUtilImpl implements FileUtil {
 
     @Override
@@ -28,7 +28,7 @@ public class FileUtilImpl implements FileUtil {
         try {
             FileUtils.writeStringToFile(new File(path), content, Charset.defaultCharset());
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getMessage(), e);
             return false;
         }
         return true;
@@ -39,29 +39,29 @@ public class FileUtilImpl implements FileUtil {
         try {
             return FileUtils.readFileToString(new File(pathAndFile), Charset.defaultCharset());
         } catch (IOException e) {
-            log.info(e);
+            log.info(e.getMessage(), e);
         }
         return "";
     }
 
     @Override
     public String readFileToStringFromClasspath(String pathAndFile) {
-
+        pathAndFile = pathAndFile.replace("///", "/");
         String ret = "";
 
         ClassLoader classLoader = getClass().getClassLoader();
         InputStream in = getClass().getResourceAsStream(pathAndFile);
         try {
             ret = IOUtils.toString(in, Charset.defaultCharset());
-        } catch (IOException e1) {
-            log.error(e1);
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
         }
 
         if (ret == null || ret.isEmpty()) {
             try {
                 ret = FileUtils.readFileToString(new File(classLoader.getResource(pathAndFile).getFile()), Charset.defaultCharset());
             } catch (IOException e) {
-                log.error(e);
+                log.error(e.getMessage(), e);
             }
         }
 
@@ -70,7 +70,7 @@ public class FileUtilImpl implements FileUtil {
             try {
                 ret = IOUtils.toString(in2, Charset.defaultCharset());
             } catch (IOException e) {
-                log.error(e);
+                log.error(e.getMessage(), e);
             }
         }
 

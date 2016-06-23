@@ -6,9 +6,12 @@ package ch.sbb.releasetrain.utils.git;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.apachecommons.CommonsLog;
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.maven.shared.utils.io.FileUtils;
 import org.apache.maven.shared.utils.io.IOUtil;
@@ -21,6 +24,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 import com.google.common.io.Files;
+import edu.emory.mathcs.backport.java.util.Arrays;
 
 /**
  * reading and writig a file from/to a git repo, we are cloning  from origin/master
@@ -28,13 +32,17 @@ import com.google.common.io.Files;
  * @author u203244 (Daniel Marthaler)
  * @since 0.0.1, 2016
  */
-@CommonsLog
+@Slf4j
 public final class GITAccessorImpl implements GitAccessor {
 
     @Setter
     private String repoKey = "git.repo.url";
 
     @Setter
+    private String repo = "";
+
+    @Setter
+    @Getter
     private File gitDir = Files.createTempDir();
 
     @Setter
@@ -46,11 +54,12 @@ public final class GITAccessorImpl implements GitAccessor {
     @Setter
     private String password = "master";
 
-    public boolean writeFile(String pathAndFile, String content) {
+    public boolean writeFile(String pathAndFile, String content, String startingpoint) {
+        startingpoint = "origin/" + startingpoint;
 
+        Git git = null;
         try {
-            this.gitClone(gitDir);
-            Git git = gitOpen(gitDir);
+            git = gitClone(gitDir);
             if (git == null) {
                 log.error("git not initialized!");
                 return false;
@@ -59,10 +68,16 @@ public final class GITAccessorImpl implements GitAccessor {
                     setCreateBranch(true).
                     setName(branch).
                     setUpstreamMode(CreateBranchCommand.SetupUpstreamMode.TRACK).
-                    setStartPoint("origin/master").
+                    setStartPoint(startingpoint).
                     call();
         } catch (GitAPIException e) {
-            log.error(e.getMessage(), e);
+            log.info(e.getMessage());
+        }
+
+        try {
+            git.pull().call();
+        } catch (GitAPIException e) {
+            log.info(e.getMessage());
         }
 
         try {
@@ -70,7 +85,7 @@ public final class GITAccessorImpl implements GitAccessor {
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
-        Git git = gitOpen(gitDir);
+
         if (git == null) {
             log.error("git not initialized!");
             return false;
@@ -78,7 +93,7 @@ public final class GITAccessorImpl implements GitAccessor {
         try {
             git.add().addFilepattern(".").call();
             git.commit().setMessage("commit").call();
-            PushCommand command = git.push();
+            PushCommand command = git.push().setForce(true);
             command.setCredentialsProvider(new UsernamePasswordCredentialsProvider(user, password));
             command.call();
         } catch (GitAPIException e) {
@@ -111,9 +126,58 @@ public final class GITAccessorImpl implements GitAccessor {
         return "";
     }
 
-    private void gitClone(File dir) {
+    public void wipeGitWorkspace(File fileToPurge, String... save) {
+        if (fileToPurge == null) {
+            fileToPurge = gitDir;
+        }
+        for (File file : fileToPurge.listFiles()) {
+            if (file.isDirectory()) {
+                wipeGitWorkspace(file);
+            }
+            deleteFile(file, save);
+        }
+    }
+
+    private void deleteFile(File file, String[] save) {
+        List<String> list = Arrays.asList(save);
+        list = new ArrayList<>(list);
+        list.add(".git");
+        String name = "";
+        try {
+            name = file.getCanonicalPath();
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+        for (String blocker : list) {
+            if (name.contains(blocker)) {
+                return;
+            }
+        }
+        file.delete();
+    }
+
+    public void stageAndPushDeletedFile() {
+        try {
+            Git git = this.gitOpen(gitDir);
+            git.add().addFilepattern(".").setUpdate(true).call();
+            git.commit().setMessage("wipe").call();
+            PushCommand command = git.push().setForce(true);
+            command.setCredentialsProvider(new UsernamePasswordCredentialsProvider(user, password));
+            command.call();
+        } catch (GitAPIException e) {
+            log.error(e.getMessage(), e);
+        }
+    }
+
+    private Git gitClone(File dir) {
+        Git git = gitOpen(dir);
+        if (git != null) {
+            log.info("already cloned ...");
+            return git;
+        }
+
         CloneCommand cloneCommand = Git.cloneRepository();
-        cloneCommand.setURI("https://github.com/SchweizerischeBundesbahnen/releasetrain.git");
+        cloneCommand.setURI(repo);
         cloneCommand.setCredentialsProvider(new UsernamePasswordCredentialsProvider(user, password));
         cloneCommand.setDirectory(dir);
         try {
@@ -121,6 +185,7 @@ public final class GITAccessorImpl implements GitAccessor {
         } catch (GitAPIException e) {
             log.error(e.getMessage(), e);
         }
+        return gitClone(dir);
     }
 
     private Git gitOpen(File dir) {
@@ -130,7 +195,7 @@ public final class GITAccessorImpl implements GitAccessor {
             try {
                 git = Git.open(new File(dir, ".git"));
             } catch (IOException e) {
-                log.error(e);
+                log.error(e.getMessage(), e);
             }
             return git;
         }

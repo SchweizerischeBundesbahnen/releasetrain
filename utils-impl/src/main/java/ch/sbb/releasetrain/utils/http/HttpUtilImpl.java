@@ -11,7 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import lombok.Setter;
-import lombok.extern.apachecommons.CommonsLog;
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -37,11 +37,10 @@ import com.google.inject.Singleton;
  * Get String from http(s) url
  * 
  * @author u203244 (Daniel Marthaler)
- * @version $Id: $
- * @since 2.0.6, 2015
+ * @since 0.0.1, 2016
  */
 @Singleton
-@CommonsLog
+@Slf4j
 public class HttpUtilImpl implements HttpUtil {
 
     @Setter
@@ -85,7 +84,7 @@ public class HttpUtilImpl implements HttpUtil {
         try {
             entity = new StringEntity(content);
         } catch (UnsupportedEncodingException e) {
-            log.error(e);
+            log.error(e.getMessage(), e);
         }
 
         post.setEntity(entity);
@@ -98,7 +97,7 @@ public class HttpUtilImpl implements HttpUtil {
             entity = response.getEntity();
             return EntityUtils.toString(entity);
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getMessage(), e);
         }
         return "";
     }
@@ -122,7 +121,7 @@ public class HttpUtilImpl implements HttpUtil {
         try {
             url4Host = new URL(url);
         } catch (MalformedURLException e) {
-            log.fatal(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return context;
         }
 
@@ -144,7 +143,7 @@ public class HttpUtilImpl implements HttpUtil {
             HttpResponse response = httpclient.execute(get, context);
             return response.getEntity().getContent();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage(), e);
         }
         return null;
     }

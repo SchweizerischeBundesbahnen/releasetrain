@@ -6,7 +6,7 @@ package ch.sbb.releasetrain.utils.config;
 
 import java.io.File;
 
-import lombok.extern.apachecommons.CommonsLog;
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
@@ -22,7 +22,7 @@ import com.google.inject.Singleton;
  * @since 2.0.6, 2015
  */
 @Singleton
-@CommonsLog
+@Slf4j
 public class GlobalConfigImpl implements GlobalConfig {
 
     private final static String CONFIG_FILE = "config.properties";
@@ -46,7 +46,7 @@ public class GlobalConfigImpl implements GlobalConfig {
         String ret = config.getString(id);
 
         if (ret == null) {
-            log.fatal("no config for key: " + id + " found in Env or " + CONFIG_FILE);
+            log.error("no config for key: " + id + " found in Env or " + CONFIG_FILE);
         }
         return ret;
     }

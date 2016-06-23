@@ -5,7 +5,7 @@
 
 	<groupId>ch.sbb.releasetrain</groupId>
 	<artifactId>parent</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3</version>
 	<packaging>pom</packaging>
 
 	<name>Release Train Mojo</name>
@@ -24,6 +24,8 @@
 	<modules>
 		<module>utils</module>
 		<module>utils-impl</module>
+		<module>business</module>
+		<module>plugins</module>
 	</modules>
 
 	<licenses>
@@ -175,6 +177,18 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.21</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.21</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>19.0</version>
@@ -194,17 +208,13 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.2</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.16.8</version>
 		</dependency>
+
 
 	</dependencies>
 
@@ -355,6 +365,7 @@
 					<artifactId>plexus-resources</artifactId>
 					<version>3.0.1</version>
 				</plugin>
+
 
 			</plugins>
 		</pluginManagement>
