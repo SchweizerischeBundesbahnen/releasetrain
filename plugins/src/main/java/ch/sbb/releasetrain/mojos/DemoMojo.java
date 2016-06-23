@@ -13,11 +13,6 @@ import com.google.inject.Inject;
 
 
 /**
- * Prueft aufgrund des generierten:
- * https://ci.sbb.ch/view/pt/view/cisi/view/01-build/view/30-releasetrain/job/pt
- * .cisi.build.rt.report.git.custom/lastSuccessfulBuild/artifact/serverreport.
- * html Reports ob die letzten SNAPSHOTS auf Websphere deplyed worden sind =
- * grÃ¼n oder nicht = rot
  *
  * @author u203244 (Daniel Marthaler)
  * @version $Id: $
