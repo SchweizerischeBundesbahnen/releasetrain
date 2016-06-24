@@ -4,29 +4,16 @@
 package ch.sbb.releasetrain.state.git;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
-
-import com.google.common.io.Files;
 
 
 /**
@@ -36,7 +23,7 @@ import com.google.common.io.Files;
  * @since 0.0.1, 2016
  */
 @Slf4j
-public final class GitRepoImpl implements GitRepo {
+public final class BitRepoImpl implements GitRepo {
 
     private final File gitDir;
 
@@ -48,11 +35,11 @@ public final class GitRepoImpl implements GitRepo {
 
     private final String password;
 
-    public GitRepoImpl(final String url, final String branch, final String user, final String password) {
+    public BitRepoImpl(final String url, final String branch, final String user, final String password) {
         this(url, branch, user, password, new File(System.getProperty("java.io.tmpdir"), filenameFromUrl(url)));
     }
 
-    GitRepoImpl(final String url, final String branch, final String user, final String password, final File tempDir) {
+    BitRepoImpl(final String url, final String branch, final String user, final String password, final File tempDir) {
         this.url = url;
         this.branch = branch;
         this.user = user;

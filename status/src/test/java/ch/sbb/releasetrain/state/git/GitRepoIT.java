@@ -8,17 +8,15 @@
  */
 package ch.sbb.releasetrain.state.git;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-
-import java.io.File;
 
 
 public class GitRepoIT {
@@ -40,7 +38,7 @@ public class GitRepoIT {
 
         assertFalse(new File(temporaryFolder.getRoot(), ".git").exists());
 
-        GitRepoImpl git = new GitRepoImpl("https://github.com/SchweizerischeBundesbahnen/releasetrain.git", " feature/testgitclient", gitToken , "", temporaryFolder.getRoot());
+        BitRepoImpl git = new BitRepoImpl("https://github.com/SchweizerischeBundesbahnen/releasetrain.git", " feature/testgitclient", gitToken, "", temporaryFolder.getRoot());
         git.cloneOrPull();
         System.out.println(temporaryFolder.getRoot().toString());
 
@@ -53,7 +51,7 @@ public class GitRepoIT {
 
         assertFalse(new File(temporaryFolder.getRoot(), ".git").exists());
 
-        GitRepoImpl git = new GitRepoImpl("https://github.com/SchweizerischeBundesbahnen/releasetrain.git", "feature/testgitclient", gitToken, "", temporaryFolder.getRoot());
+        BitRepoImpl git = new BitRepoImpl("https://github.com/SchweizerischeBundesbahnen/releasetrain.git", "feature/testgitclient", gitToken, "", temporaryFolder.getRoot());
         git.cloneOrPull();
         git.commitAndPush();
     }
