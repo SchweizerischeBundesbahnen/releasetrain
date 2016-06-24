@@ -111,13 +111,13 @@ public class ReleaseJob implements Recognizable<ReleaseJob> {
     }
 
     @Override
-    public String getId() {
+    public String retreiveIdentifier() {
         return this.date;
     }
 
     @Override
     public int compareTo(ReleaseJob releaseJob) {
-        return this.getId().compareTo(releaseJob.getId());
+        return this.retreiveIdentifier().compareTo(releaseJob.retreiveIdentifier());
     }
 
     public String getResponsibleMailingList() {

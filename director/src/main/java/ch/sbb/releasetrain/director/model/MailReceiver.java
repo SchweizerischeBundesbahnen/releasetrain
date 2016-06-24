@@ -26,11 +26,11 @@ public class MailReceiver implements Recognizable<MailReceiver> {
 
     @Override
     public int compareTo(MailReceiver o) {
-        return this.getId().compareTo(o.getId());
+        return this.retreiveIdentifier().compareTo(o.retreiveIdentifier());
     }
 
     @Override
-    public String getId() {
+    public String retreiveIdentifier() {
         return email;
     }
 

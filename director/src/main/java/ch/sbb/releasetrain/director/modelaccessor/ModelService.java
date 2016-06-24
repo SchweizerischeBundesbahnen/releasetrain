@@ -74,7 +74,7 @@ public abstract class ModelService<T extends Recognizable<?>> {
         String xml = this.getModelString(source);
         List<T> list = xstream.convertEntrys(xml);
         for (T server : list) {
-            if (server.getId().equals(id)) {
+            if (server.retreiveIdentifier().equals(id)) {
                 return server;
             }
         }

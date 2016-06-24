@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,13 +36,8 @@ import com.google.common.io.Files;
 public final class GITAccessorImpl implements GitAccessor {
 
     @Setter
-    private String repoKey = "git.repo.url";
-
-    @Setter
     private String repo = "";
 
-    @Setter
-    @Getter
     private File gitDir = Files.createTempDir();
 
     @Setter
@@ -119,6 +113,16 @@ public final class GITAccessorImpl implements GitAccessor {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void connectToRepoAndBranch(String user, String password, String branch) {
+
+    }
+
+    @Override
+    public boolean writeAndCommitFile(String pathAndFile, String content) {
+        return false;
     }
 
     @Override

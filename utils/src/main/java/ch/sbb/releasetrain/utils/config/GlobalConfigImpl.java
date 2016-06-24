@@ -12,8 +12,6 @@ import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 
-
-
 /**
  * Global Config for all the Mojos
  *

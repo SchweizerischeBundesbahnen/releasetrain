@@ -12,6 +12,6 @@ package ch.sbb.releasetrain.director.modelaccessor;
  */
 public interface Recognizable<T> extends Comparable<T> {
 
-    public String getId();
+    public String retreiveIdentifier();
 
 }
