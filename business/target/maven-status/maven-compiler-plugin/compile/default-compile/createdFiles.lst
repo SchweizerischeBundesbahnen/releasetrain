@@ -1,9 +1,0 @@
-ch/sbb/releasetrain/business/model/DefaultVersionSchemaImpl.class
-ch/sbb/releasetrain/business/guice/GuiceAbstractMojo.class
-ch/sbb/releasetrain/business/guice/GuiceInjectorWrapper.class
-ch/sbb/releasetrain/business/modelaccessor/ModelService.class
-ch/sbb/releasetrain/business/modelaccessor/XstreamModelAccessor.class
-ch/sbb/releasetrain/business/modelaccessor/Recognizable.class
-ch/sbb/releasetrain/business/model/MailReceiver.class
-ch/sbb/releasetrain/business/jenkins/JenkinsJobThread.class
-ch/sbb/releasetrain/business/model/ReleaseJob.class

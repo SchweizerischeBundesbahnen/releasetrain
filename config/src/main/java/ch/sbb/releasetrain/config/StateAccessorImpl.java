@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import ch.sbb.releasetrain.config.model.ReleaseConfig;
 import ch.sbb.releasetrain.director.modelaccessor.XstreamModelAccessor;
-import ch.sbb.releasetrain.utils.git.GitAccessor;
+import ch.sbb.releasetrain.state.git.GitAccessor;
 
 /**
  * Provides Acces to the Release Configs, stored in a storage like GIT
