@@ -23,7 +23,7 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
  * @since 0.0.1, 2016
  */
 @Slf4j
-public final class BitRepoImpl implements GitRepo {
+public final class GitRepoImpl implements GitRepo {
 
     private final File gitDir;
 
@@ -35,11 +35,11 @@ public final class BitRepoImpl implements GitRepo {
 
     private final String password;
 
-    public BitRepoImpl(final String url, final String branch, final String user, final String password) {
+    public GitRepoImpl(final String url, final String branch, final String user, final String password) {
         this(url, branch, user, password, new File(System.getProperty("java.io.tmpdir"), filenameFromUrl(url)));
     }
 
-    BitRepoImpl(final String url, final String branch, final String user, final String password, final File tempDir) {
+    GitRepoImpl(final String url, final String branch, final String user, final String password, final File tempDir) {
         this.url = url;
         this.branch = branch;
         this.user = user;

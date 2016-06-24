@@ -24,7 +24,7 @@ public class GitRepoTest {
 
     @Test
     public void isClonedEmpty() throws IOException {
-        assertFalse(new BitRepoImpl("", "", "", "", temporaryFolder.newFolder("leer")).isCloned());
+        assertFalse(new GitRepoImpl("", "", "", "", temporaryFolder.newFolder("leer")).isCloned());
     }
 
 
@@ -32,21 +32,21 @@ public class GitRepoTest {
     public void isCloned() throws IOException {
         File dir = temporaryFolder.newFolder("cloned");
         new File(dir, ".git").mkdir();
-        assertTrue(new BitRepoImpl("", "", "", "", dir).isCloned());
+        assertTrue(new GitRepoImpl("", "", "", "", dir).isCloned());
     }
 
 
     @Test
     public void filenameFromUrlHttp() {
         assertEquals("https___github_com_SchweizerischeBundesbahnen_releasetrain_git",
-                BitRepoImpl.filenameFromUrl("https://github.com/SchweizerischeBundesbahnen/releasetrain.git"));
+                GitRepoImpl.filenameFromUrl("https://github.com/SchweizerischeBundesbahnen/releasetrain.git"));
 
     }
 
     @Test
     public void filenameFromUrlSSH() {
         assertEquals("git_github_com_SchweizerischeBundesbahnen_releasetrain_git",
-                BitRepoImpl.filenameFromUrl("git@github.com:SchweizerischeBundesbahnen/releasetrain.git\n"));
+                GitRepoImpl.filenameFromUrl("git@github.com:SchweizerischeBundesbahnen/releasetrain.git\n"));
 
     }
 

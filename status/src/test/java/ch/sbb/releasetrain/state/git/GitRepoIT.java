@@ -38,7 +38,7 @@ public class GitRepoIT {
 
         assertFalse(new File(temporaryFolder.getRoot(), ".git").exists());
 
-        BitRepoImpl git = new BitRepoImpl("https://github.com/SchweizerischeBundesbahnen/releasetrain.git", " feature/testgitclient", gitToken, "", temporaryFolder.getRoot());
+        GitRepoImpl git = new GitRepoImpl("https://github.com/SchweizerischeBundesbahnen/releasetrain.git", " feature/testgitclient", gitToken, "", temporaryFolder.getRoot());
         git.cloneOrPull();
         System.out.println(temporaryFolder.getRoot().toString());
 
@@ -51,7 +51,7 @@ public class GitRepoIT {
 
         assertFalse(new File(temporaryFolder.getRoot(), ".git").exists());
 
-        BitRepoImpl git = new BitRepoImpl("https://github.com/SchweizerischeBundesbahnen/releasetrain.git", "feature/testgitclient", gitToken, "", temporaryFolder.getRoot());
+        GitRepoImpl git = new GitRepoImpl("https://github.com/SchweizerischeBundesbahnen/releasetrain.git", "feature/testgitclient", gitToken, "", temporaryFolder.getRoot());
         git.cloneOrPull();
         git.commitAndPush();
     }

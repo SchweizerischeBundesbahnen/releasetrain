@@ -1,7 +1,0 @@
-ch/sbb/releasetrain/utils/config/GlobalConfig.class
-ch/sbb/releasetrain/utils/emails/SMTPUtil.class
-ch/sbb/releasetrain/utils/http/HttpUtil.class
-ch/sbb/releasetrain/utils/git/GitAccessor.class
-ch/sbb/releasetrain/utils/file/FileUtil.class
-ch/sbb/releasetrain/utils/workspace/ClasspathToWorkspaceWriter.class
-ch/sbb/releasetrain/utils/csv/CSVXLSReader.class
