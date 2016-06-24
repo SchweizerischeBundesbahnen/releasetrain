@@ -2,9 +2,6 @@ package ch.sbb.releasetrain.utils.workspace;
 
 import lombok.Setter;
 import ch.sbb.releasetrain.utils.file.FileUtil;
-
-import com.google.inject.Inject;
-
 /**
  * Util to write Files from classpath to the workspace (ex. jenkins workspace)
  *
@@ -16,7 +13,7 @@ public class ClasspathToWorkspaceWriterImpl implements ClasspathToWorkspaceWrite
     @Setter
     protected String workspace;
 
-    @Inject
+
     protected FileUtil fileUtil;
 
     @Override

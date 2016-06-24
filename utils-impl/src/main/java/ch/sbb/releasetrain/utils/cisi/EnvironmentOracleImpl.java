@@ -62,11 +62,11 @@ public class EnvironmentOracleImpl implements EnvironmentOracle {
     /**
      * private static final String CONFL = "https://confluence.sbb.ch/x/JIgqKg";
      * 
-     * @Inject
+     *
      *         protected HttpUtil http;
-     * @Inject
+     *
      *         protected GlobalConfig config;
-     * @Inject
+     *
      *         protected CSVXLSReader xls;
      *         private Map<String, CheckableModel> clusterMap = new HashMap<>();
      * 

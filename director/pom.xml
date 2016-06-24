@@ -9,16 +9,14 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>utils-impl</artifactId>
+	<artifactId>business</artifactId>
 
 	<dependencies>
 		<dependency>
 			<groupId>ch.sbb.releasetrain</groupId>
-			<artifactId>utils</artifactId>
+			<artifactId>utils-impl</artifactId>
 			<version>0.0.6-SNAPSHOT</version>
 		</dependency>
-
-
 	</dependencies>
 
 </project>

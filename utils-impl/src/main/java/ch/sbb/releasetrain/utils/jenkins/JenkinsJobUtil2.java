@@ -34,13 +34,13 @@ public class JenkinsJobUtil2 {
 
     private Map<String, JenkinsJobModel> map = new HashMap<>();
 
-    @Inject
+
     private Log log;
 
-    @Inject
+
     private HttpUtil http;
 
-    @Inject
+
     private GlobalConfig config;
 
 
