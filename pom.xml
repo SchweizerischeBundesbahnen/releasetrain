@@ -34,7 +34,6 @@
 		<module>mavenmojos</module>
 		<module>utils</module>
 		<module>action</module>
-		<module>springboot</module>
 		<module>config</module>
 		<module>status</module>
 	</modules>
