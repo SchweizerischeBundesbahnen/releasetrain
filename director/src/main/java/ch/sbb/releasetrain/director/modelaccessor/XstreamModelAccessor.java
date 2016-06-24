@@ -13,9 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.FileUtils;
 
-import ch.sbb.releasetrain.director.model.MailReceiver;
-import ch.sbb.releasetrain.director.model.ReleaseJob;
-
 import com.thoughtworks.xstream.XStream;
 
 /**
@@ -25,25 +22,16 @@ import com.thoughtworks.xstream.XStream;
  * @since 0.0.1, 2016
  */
 @Slf4j
-public abstract class XstreamModelAccessor<T extends Recognizable> {
+public class XstreamModelAccessor<T extends Recognizable> {
 
     private XStream xstream;
-
-     // = post Construct
-    private void init() {
-        log.debug("** calling post construct init()");
-        xstream.alias("releaseJob", ReleaseJob.class);
-        xstream.alias("list", List.class);
-        xstream.alias("receiver", MailReceiver.class);
-        log.debug("** init ok");
-    }
 
     public String convertEntrys(Object in) {
         return xstream.toXML(in);
     }
 
     public List<T> convertEntrys(String in) {
-        List<T> list = (List<T>) xstream.fromXML(in);
+        List<T> list = (List<T>) xstream.fromXML(in, "UTF-8");
         Collections.sort(list);
         return list;
     }

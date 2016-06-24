@@ -12,8 +12,10 @@ package ch.sbb.releasetrain.utils.git;
  */
 public interface GitAccessor {
 
-    boolean writeFile(String pathAndFile, String content, String startingPoint);
+    void connectToRepoAndBranch(String user, String password, String branch);
 
-    String readFileToString(String pathAndFile, String startingPoint);
+    boolean writeAndCommitFile(String pathAndFile, String content);
+
+    String readFileToString(String pathAndFile);
 
 }
