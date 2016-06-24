@@ -18,7 +18,6 @@ import ch.sbb.releasetrain.utils.http.HttpUtil;
 
 import com.google.inject.Inject;
 
-
 /**
  * Wraper Thread for Jenkins Builds
  *
@@ -34,15 +33,16 @@ public class JenkinsJobThread extends Thread {
     private long start = Long.MAX_VALUE;
     private String apiLatestBuildURL = "";
     private String jobUrl = "";
-    @Inject
-    private GlobalConfig config;
-    @Inject
-    private HttpUtil http;
+
     @Getter
     private String jobId = "";
     private String startBuildnumber = "";
     private boolean finished = false;
 
+    @Inject
+    private GlobalConfig config;
+    @Inject
+    private HttpUtil http;
 
     /**
      * Constructor for jobs without parameters
@@ -65,7 +65,7 @@ public class JenkinsJobThread extends Thread {
             params = params + "&" + poormanUrlEncoded;
         }
         jobUrl = jobUrl + params;
-        jobUrl = jobUrl.replace("build?", "buildWithParameters?");
+        jobUrl = jobUrl.replace("/build?", "/buildWithParameters?");
 
         if (cause != null && !cause.isEmpty()) {
             try {
@@ -74,23 +74,6 @@ public class JenkinsJobThread extends Thread {
                 log.error(e.getMessage(), e);
             }
         }
-    }
-
-    private String callURL(final String urlin) {
-        if (urlin.contains("badge/icon") || urlin.contains("/queue/api/json")) {
-            if (log.isTraceEnabled()) {
-                log.trace("calling state url: " + urlin);
-            }
-        } else {
-            if (log.isTraceEnabled()) {
-                log.trace("calling url: " + urlin);
-            }
-            if (urlin.contains("/buildWithParameters")) {
-                log.info("GO TO JOB:          " + StringUtils.substringBefore(urlin, "/buildWithParameters"));
-                log.info("------!!!>          " + urlin);
-            }
-        }
-        return http.getPageAsString(urlin);
     }
 
     public String getBuildColor() {
@@ -110,7 +93,7 @@ public class JenkinsJobThread extends Thread {
             return "blue";
         }
 
-        if (isBuildIsYellow(xmlApiString)) {
+        if (isBuildYellow(xmlApiString)) {
             return "yellow";
         }
 
@@ -122,6 +105,23 @@ public class JenkinsJobThread extends Thread {
         log.warn("!!! RED -> : " + xmlApiString);
 
         return "red";
+    }
+
+    private String callURL(final String urlin) {
+        if (urlin.contains("badge/icon") || urlin.contains("/queue/api/json")) {
+            if (log.isTraceEnabled()) {
+                log.trace("calling state url: " + urlin);
+            }
+        } else {
+            if (log.isTraceEnabled()) {
+                log.trace("calling url: " + urlin);
+            }
+            if (urlin.contains("/buildWithParameters")) {
+                log.info("GO TO JOB:          " + StringUtils.substringBefore(urlin, "/buildWithParameters"));
+                log.info("------!!!>          " + urlin);
+            }
+        }
+        return http.getPageAsString(urlin);
     }
 
     private boolean isBuildIsGreen(String str) {
@@ -151,8 +151,7 @@ public class JenkinsJobThread extends Thread {
         return false;
     }
 
-
-    protected boolean isBuildIsYellow(String str) {
+    private boolean isBuildYellow(String str) {
         if ((start + 1000) > System.currentTimeMillis()) {
             return false;
         }
@@ -162,7 +161,7 @@ public class JenkinsJobThread extends Thread {
         return false;
     }
 
-    protected boolean isBuildInQueueInternal() {
+    private boolean isBuildInQueueInternal() {
 
         if ((start + 1000) > System.currentTimeMillis()) {
             return true;
