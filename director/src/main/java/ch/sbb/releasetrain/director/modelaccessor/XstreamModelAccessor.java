@@ -2,7 +2,7 @@
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
  * and to You under the Apache License, Version 2.0.
  */
-package ch.sbb.releasetrain.utils.service;
+package ch.sbb.releasetrain.director.modelaccessor;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,43 +10,26 @@ import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.maven.plugin.logging.Log;
+import lombok.extern.slf4j.Slf4j;
 
-import ch.sbb.releasetrain.utils.models.MailReceiver;
-import ch.sbb.releasetrain.utils.models.Recognizable;
-import ch.sbb.releasetrain.utils.models.ReleaseJob;
+import org.apache.commons.io.FileUtils;
+
+import ch.sbb.releasetrain.director.model.MailReceiver;
+import ch.sbb.releasetrain.director.model.ReleaseJob;
 
 import com.thoughtworks.xstream.XStream;
 
 /**
- * Representation of a release Build Job
+ * Marshaling / unmarsahling models from / to xstream strings
  *
  * @author u203244 (Daniel Marthaler)
- * @version $Id: $
- * @param <T>
- * @since 2.0.6, 2015
+ * @since 0.0.1, 2016
  */
-@SuppressWarnings("rawtypes")
+@Slf4j
 public class XstreamModelAccessor<T extends Recognizable> {
 
 
     private XStream xstream;
-
-
-    private Log log;
-
-    public XstreamModelAccessor(Log log) {
-        this.log = log;
-        xstream = new XStream();
-        xstream.alias("releaseJob", ReleaseJob.class);
-        xstream.alias("list", List.class);
-        xstream.alias("receiver", MailReceiver.class);
-    }
-
-    public XstreamModelAccessor() {
-
-    }
 
      // = post Construct
     private void init() {
@@ -67,13 +50,12 @@ public class XstreamModelAccessor<T extends Recognizable> {
         return list;
     }
 
-    public void saveEntrys(List<T> list, String file) {
-        String xml = xstream.toXML(list);
+    public void saveEntrys(List<T> obj, String file) {
+        String xml = convertEntrys(obj);
         try {
             FileUtils.writeStringToFile(new File(file), xml, Charset.defaultCharset());
         } catch (IOException e) {
             log.error("saving log model", e);
         }
     }
-
 }

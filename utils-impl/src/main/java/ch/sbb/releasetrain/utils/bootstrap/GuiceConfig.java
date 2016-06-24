@@ -15,9 +15,6 @@ import ch.sbb.releasetrain.utils.http.HttpUtilImpl;
 import ch.sbb.releasetrain.utils.workspace.ClasspathToWorkspaceWriter;
 import ch.sbb.releasetrain.utils.workspace.ClasspathToWorkspaceWriterImpl;
 
-import com.google.inject.AbstractModule;
-
-
 /**
  * Google Guice Base Config
  *
