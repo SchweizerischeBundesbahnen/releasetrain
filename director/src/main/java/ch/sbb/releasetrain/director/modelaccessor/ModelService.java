@@ -7,7 +7,6 @@ package ch.sbb.releasetrain.director.modelaccessor;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +14,7 @@ import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.sbb.releasetrain.utils.file.FileUtil;
 import ch.sbb.releasetrain.utils.http.HttpUtil;
@@ -27,16 +27,15 @@ import ch.sbb.releasetrain.utils.http.HttpUtil;
  * @since 0.0.1, 2016
  */
 @Slf4j
-public class ModelService<T extends Recognizable<?>> {
+public abstract class ModelService<T extends Recognizable<?>> {
 
-
-    private XstreamModelAccessor<T> xstream;
-
-
+    @Autowired
     private HttpUtil http;
 
-
+    @Autowired
     private FileUtil file;
+
+    private XstreamModelAccessor<T> xstream;
 
     private Map<String, String> cache = new HashMap<String, String>();
 
@@ -63,7 +62,7 @@ public class ModelService<T extends Recognizable<?>> {
         // 3 from resource
         InputStream in = ModelService.class.getResourceAsStream(source);
         try {
-            return IOUtils.toString(in, Charset.defaultCharset());
+            return IOUtils.toString(in, "UTF-8");
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
