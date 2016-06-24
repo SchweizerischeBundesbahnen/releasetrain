@@ -12,9 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang.StringUtils;
 
-import ch.sbb.releasetrain.director.guice.GuiceInjectorWrapper;
 import ch.sbb.releasetrain.utils.config.GlobalConfig;
 import ch.sbb.releasetrain.utils.http.HttpUtil;
+
 
 /**
  * Wraper Thread for Jenkins Builds
@@ -23,30 +23,27 @@ import ch.sbb.releasetrain.utils.http.HttpUtil;
  * @since 0.0.1, 2016
  */
 @Slf4j
-public class JenkinsJobThread extends Thread {
+public final class JenkinsJobThread extends Thread {
 
+    private final GlobalConfig config;
     boolean waiting = true;
     boolean running = false;
     private String params = "";
     private long start = Long.MAX_VALUE;
     private String apiLatestBuildURL = "";
     private String jobUrl = "";
-
     @Getter
     private String jobId = "";
     private String startBuildnumber = "";
     private boolean finished = false;
-
-
-    private GlobalConfig config;
-
     private HttpUtil http;
 
     /**
      * Constructor for jobs without parameters
      */
-    public JenkinsJobThread(String job) {
-        GuiceInjectorWrapper.injectMembers(this);
+    public JenkinsJobThread(String job, GlobalConfig config, HttpUtil http) {
+        this.http = http;
+        this.config = config;
         apiLatestBuildURL = config.get("jenkins.url") + "/job/" + job + "/lastBuild/api/xml";
         jobUrl = config.get("jenkins.url") + "/job/" + job + "/build?token=" + config.get("jenkins.buildtoken");
         jobId = job;
@@ -56,8 +53,8 @@ public class JenkinsJobThread extends Thread {
     /**
      * Constructor for jenkins builds with parameters
      */
-    public JenkinsJobThread(final String job, final String cause, final String... parameters) {
-        this(job);
+    public JenkinsJobThread(final String job, final String cause, GlobalConfig config, HttpUtil http, final String... parameters) {
+        this(job, config, http);
         for (final String param : parameters) {
             final String poormanUrlEncoded = param.replace(" ", "+");
             params = params + "&" + poormanUrlEncoded;
@@ -123,40 +120,28 @@ public class JenkinsJobThread extends Thread {
     }
 
     private boolean isBuildIsGreen(String str) {
-        if (str.contains("<result>SUCCESS</result>")) {
-            return true;
-        }
-        return false;
+        return str.contains("<result>SUCCESS</result>");
     }
 
     private boolean isBuildBlueInternal(String str) {
         if ((start + 1000) > System.currentTimeMillis()) {
             return true;
         }
-        if (str.contains("<building>true</building>")) {
-            return true;
-        }
-        return false;
+        return str.contains("<building>true</building>");
     }
 
     private boolean isBuildRed(String str) {
         if ((start + 1000) > System.currentTimeMillis()) {
             return true;
         }
-        if (str.contains("<result>FAILURE</result>")) {
-            return true;
-        }
-        return false;
+        return str.contains("<result>FAILURE</result>");
     }
 
     private boolean isBuildYellow(String str) {
         if ((start + 1000) > System.currentTimeMillis()) {
             return false;
         }
-        if (str.contains("<result>UNSTABLE</result>")) {
-            return true;
-        }
-        return false;
+        return str.contains("<result>UNSTABLE</result>");
     }
 
     private boolean isBuildInQueueInternal() {
@@ -165,10 +150,7 @@ public class JenkinsJobThread extends Thread {
             return true;
         }
         final String str = callURL(config.get("jenkins.queue.url"));
-        if (str.contains(this.jobId)) {
-            return true;
-        }
-        return false;
+        return str.contains(this.jobId);
     }
 
     public boolean isBuildInQueue() {

@@ -6,7 +6,6 @@ package ch.sbb.releasetrain.director.modelaccessor;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,8 +25,7 @@ import com.thoughtworks.xstream.XStream;
  * @since 0.0.1, 2016
  */
 @Slf4j
-public class XstreamModelAccessor<T extends Recognizable> {
-
+public abstract class XstreamModelAccessor<T extends Recognizable> {
 
     private XStream xstream;
 
@@ -53,7 +51,7 @@ public class XstreamModelAccessor<T extends Recognizable> {
     public void saveEntrys(List<T> obj, String file) {
         String xml = convertEntrys(obj);
         try {
-            FileUtils.writeStringToFile(new File(file), xml, Charset.defaultCharset());
+            FileUtils.writeStringToFile(new File(file), xml, "UTF-8");
         } catch (IOException e) {
             log.error("saving log model", e);
         }
