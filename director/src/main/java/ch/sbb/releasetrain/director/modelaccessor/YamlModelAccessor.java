@@ -4,14 +4,11 @@
  */
 package ch.sbb.releasetrain.director.modelaccessor;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.apache.commons.io.FileUtils;
 import org.yaml.snakeyaml.Yaml;
 
 /**
@@ -21,11 +18,12 @@ import org.yaml.snakeyaml.Yaml;
  * @since 0.0.1, 2016
  */
 @Slf4j
+@SuppressWarnings("unchecked")
 public class YamlModelAccessor<T extends Recognizable> {
 
     Yaml yaml = new Yaml();
 
-    public String convertEntrys(Object in) {
+    public String convertEntrys(List<T> in) {
         return yaml.dump(in);
     }
 
@@ -35,12 +33,12 @@ public class YamlModelAccessor<T extends Recognizable> {
         return list;
     }
 
-    public void saveEntrys(List<T> obj, String file) {
-        String xml = convertEntrys(obj);
-        try {
-            FileUtils.writeStringToFile(new File(file), xml, "UTF-8");
-        } catch (IOException e) {
-            log.error("saving log model", e);
-        }
+    public String convertEntry(T in) {
+        return yaml.dump(in);
     }
+
+    public T convertEntry(String in) {
+        return (T) yaml.load(in);
+    }
+
 }

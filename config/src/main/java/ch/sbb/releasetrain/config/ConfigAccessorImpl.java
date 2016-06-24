@@ -4,6 +4,7 @@
  */
 package ch.sbb.releasetrain.config;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +27,20 @@ import ch.sbb.releasetrain.utils.http.HttpUtil;
 public class ConfigAccessorImpl implements ConfigAccessor {
 
     @Value("config.baseurl")
+    @Setter
     private String baseURL;
 
     @Autowired
+    @Setter
     private HttpUtil http;
 
     private YamlModelAccessor<ReleaseConfig> xstream = new YamlModelAccessor<>();
 
     @Override
     public ReleaseConfig readConfig(String name) {
-        String xml = http.getPageAsString(baseURL + "/" + name + "xml");
-        return xstream.convertEntrys(xml).get(0);
+        String url = baseURL + "/" + name + ".yaml";
+        String page = http.getPageAsString(url);
+        return xstream.convertEntry(page);
     }
 
 }
