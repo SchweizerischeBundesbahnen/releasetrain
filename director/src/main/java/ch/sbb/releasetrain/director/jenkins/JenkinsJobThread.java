@@ -124,24 +124,15 @@ public final class JenkinsJobThread extends Thread {
     }
 
     private boolean isBuildBlueInternal(String str) {
-        if ((start + 1000) > System.currentTimeMillis()) {
-            return true;
-        }
-        return str.contains("<building>true</building>");
+        return (start + 1000) > System.currentTimeMillis() || str.contains("<building>true</building>");
     }
 
     private boolean isBuildRed(String str) {
-        if ((start + 1000) > System.currentTimeMillis()) {
-            return true;
-        }
-        return str.contains("<result>FAILURE</result>");
+        return (start + 1000) > System.currentTimeMillis() || str.contains("<result>FAILURE</result>");
     }
 
     private boolean isBuildYellow(String str) {
-        if ((start + 1000) > System.currentTimeMillis()) {
-            return false;
-        }
-        return str.contains("<result>UNSTABLE</result>");
+        return (start + 1000) <= System.currentTimeMillis() && str.contains("<result>UNSTABLE</result>");
     }
 
     private boolean isBuildInQueueInternal() {
