@@ -53,13 +53,13 @@ public final class GITAccessorImpl implements GitAccessor {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-                log.info("deletig: " + getGitDir());
+                log.info("deletig: " + gitDir);
                 try {
                     org.apache.commons.io.FileUtils.deleteDirectory(gitDir);
                 } catch (IOException e) {
                     log.debug(e.getMessage(), e);
                 }
-                log.info("deleted: " + getGitDir());
+                log.info("deleted: " + gitDir);
             }
         });
     }
@@ -126,6 +126,10 @@ public final class GITAccessorImpl implements GitAccessor {
     }
 
     @Override
+    public String readFileToString(String pathAndFile) {
+        return null;
+    }
+
     public String readFileToString(String pathAndFile, String startingPoint) {
         if (!startingPoint.contains("origin")) {
             startingPoint = "origin/" + startingPoint;

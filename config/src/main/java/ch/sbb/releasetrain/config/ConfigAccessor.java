@@ -14,5 +14,7 @@ import ch.sbb.releasetrain.config.model.ReleaseConfig;
  * @since 0.0.1, 2016
  */
 public interface ConfigAccessor {
+
     ReleaseConfig readConfig(String name);
+
 }

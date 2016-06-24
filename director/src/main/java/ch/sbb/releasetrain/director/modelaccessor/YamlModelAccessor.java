@@ -12,8 +12,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.FileUtils;
-
-import com.thoughtworks.xstream.XStream;
+import org.yaml.snakeyaml.Yaml;
 
 /**
  * Marshaling / unmarsahling models from / to xstream strings
@@ -22,16 +21,16 @@ import com.thoughtworks.xstream.XStream;
  * @since 0.0.1, 2016
  */
 @Slf4j
-public class XstreamModelAccessor<T extends Recognizable> {
+public class YamlModelAccessor<T extends Recognizable> {
 
-    private XStream xstream = new XStream();
+    Yaml yaml = new Yaml();
 
     public String convertEntrys(Object in) {
-        return xstream.toXML(in);
+        return yaml.dump(in);
     }
 
     public List<T> convertEntrys(String in) {
-        List<T> list = (List<T>) xstream.fromXML(in, "UTF-8");
+        List<T> list = (List<T>) yaml.load(in);
         Collections.sort(list);
         return list;
     }

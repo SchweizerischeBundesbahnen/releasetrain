@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import ch.sbb.releasetrain.config.model.ReleaseConfig;
-import ch.sbb.releasetrain.director.modelaccessor.XstreamModelAccessor;
+import ch.sbb.releasetrain.director.modelaccessor.YamlModelAccessor;
 import ch.sbb.releasetrain.utils.http.HttpUtil;
 
 /**
@@ -31,7 +31,7 @@ public class ConfigAccessorImpl implements ConfigAccessor {
     @Autowired
     private HttpUtil http;
 
-    private XstreamModelAccessor<ReleaseConfig> xstream = new XstreamModelAccessor<>();
+    private YamlModelAccessor<ReleaseConfig> xstream = new YamlModelAccessor<>();
 
     @Override
     public ReleaseConfig readConfig(String name) {
