@@ -13,6 +13,12 @@ import ch.sbb.releasetrain.config.model.ReleaseConfig;
 import ch.sbb.releasetrain.config.model.email.MailReceiver;
 import ch.sbb.releasetrain.utils.http.HttpUtilImpl;
 
+/**
+ * Test
+ *
+ * @author u203244 (Daniel Marthaler)
+ * @since 0.0.1, 2016
+ */
 public class ConfigAccessorImplTest {
 
     @Test
@@ -25,7 +31,7 @@ public class ConfigAccessorImplTest {
         Assert.assertNotNull(config);
 
         List<MailReceiver> emailReceiver = accessor.readMailReceiver();
-        Assert.assertEquals(3, emailReceiver.size());
+        Assert.assertEquals(4, emailReceiver.size());
 
         List<MailReceiver> emailReceiverList = accessor.readMailReveiverForMailinglist("test");
         Assert.assertEquals(2, emailReceiverList.size());

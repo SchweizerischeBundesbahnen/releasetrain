@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
-import ch.sbb.releasetrain.director.modelaccessor.Recognizable;
+import ch.sbb.releasetrain.utils.model.Recognizable;
 
 /**
  * Representation of a whole Release Job retreived from a storage provider (Ex: GIT Repo)

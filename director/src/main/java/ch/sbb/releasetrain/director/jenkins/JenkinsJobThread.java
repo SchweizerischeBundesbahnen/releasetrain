@@ -24,7 +24,6 @@ import ch.sbb.releasetrain.utils.http.HttpUtil;
 @Slf4j
 public final class JenkinsJobThread extends Thread {
 
-    // private final GlobalConfig config;
     boolean waiting = true;
     boolean running = false;
     private String params = "";

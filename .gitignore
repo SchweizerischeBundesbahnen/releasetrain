@@ -3,7 +3,7 @@
 *.jar
 *.war
 *.ear
-*.iml
+**/*.iml
 
 /.idea
 .idea
@@ -11,5 +11,6 @@
 tmp
 /target
 target
+*.out
 
 hs_err_pid*

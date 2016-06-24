@@ -10,7 +10,7 @@ import java.util.Date;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import ch.sbb.releasetrain.director.modelaccessor.Recognizable;
+import ch.sbb.releasetrain.utils.model.Recognizable;
 
 /**
  * Represents a scheduled Release Calendar Event, to trigger a Release Action
@@ -51,12 +51,12 @@ public class ReleaseEvent implements Recognizable<ReleaseEvent> {
 
     @Override
     public int compareTo(ReleaseEvent o) {
-        return this.retreiveIdentifier().compareTo(o.retreiveIdentifier());
+        return this.date.compareTo(o.getDate());
     }
 
     @Override
     public String retreiveIdentifier() {
-        return date;
+        return releaseVersion;
     }
 
 }

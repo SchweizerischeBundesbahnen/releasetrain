@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import lombok.Data;
-import ch.sbb.releasetrain.director.modelaccessor.Recognizable;
+import ch.sbb.releasetrain.utils.model.Recognizable;
 
 /**
  * Represents a Email Receiver

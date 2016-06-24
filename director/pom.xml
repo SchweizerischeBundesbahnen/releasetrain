@@ -15,16 +15,15 @@
 	<dependencies>
 
 		<dependency>
-			<artifactId>utils</artifactId>
+			<artifactId>config</artifactId>
 			<groupId>ch.sbb.releasetrain</groupId>
-		<version>${project.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.yaml</groupId>
-			<artifactId>snakeyaml</artifactId>
-			<version>1.17</version>
+			<groupId>ch.sbb.releasetrain</groupId>
+			<artifactId>status</artifactId>
+			<version>0.0.6-SNAPSHOT</version>
 		</dependency>
-
 
 	</dependencies>
 

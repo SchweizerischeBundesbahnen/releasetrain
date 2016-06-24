@@ -2,7 +2,7 @@
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
  * and to You under the Apache License, Version 2.0.
  */
-package ch.sbb.releasetrain.director.modelaccessor;
+package ch.sbb.releasetrain.utils.yaml;
 
 import java.util.Collections;
 import java.util.List;
@@ -10,6 +10,8 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 import org.yaml.snakeyaml.Yaml;
+
+import ch.sbb.releasetrain.utils.model.Recognizable;
 
 /**
  * Marshaling / unmarsahling models from / to xstream strings

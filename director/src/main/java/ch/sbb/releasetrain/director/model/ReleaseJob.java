@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.Data;
-import ch.sbb.releasetrain.director.modelaccessor.Recognizable;
+import ch.sbb.releasetrain.utils.model.Recognizable;
 
 /**
  * Representation of a release Build Job with his subjobs

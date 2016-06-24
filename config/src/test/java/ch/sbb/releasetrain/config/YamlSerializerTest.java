@@ -17,15 +17,21 @@ import org.junit.rules.TemporaryFolder;
 import ch.sbb.releasetrain.config.model.ActionConfig;
 import ch.sbb.releasetrain.config.model.ReleaseConfig;
 import ch.sbb.releasetrain.config.model.email.MailReceiver;
-import ch.sbb.releasetrain.director.modelaccessor.YamlModelAccessor;
+import ch.sbb.releasetrain.utils.yaml.YamlModelAccessor;
 
+/**
+ * Test
+ *
+ * @author u203244 (Daniel Marthaler)
+ * @since 0.0.1, 2016
+ */
 public class YamlSerializerTest {
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
 
-    YamlModelAccessor<ReleaseConfig> configSerializer = new YamlModelAccessor<>();
-    YamlModelAccessor<MailReceiver> emailSerializer = new YamlModelAccessor<>();
+    private YamlModelAccessor<ReleaseConfig> configSerializer = new YamlModelAccessor<>();
+    private YamlModelAccessor<MailReceiver> emailSerializer = new YamlModelAccessor<>();
 
     @Test
     public void testSerializeActionConfig() throws Exception {

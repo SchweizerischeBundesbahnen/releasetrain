@@ -3,38 +3,25 @@
  */
 package ch.sbb.releasetrain.mojos;
 
-import java.io.File;
-import java.util.Date;
 import java.util.Scanner;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-import ch.sbb.releasetrain.director.guice.GuiceAbstractMojo;
-import ch.sbb.releasetrain.director.guice.GuiceInjectorWrapper;
-import ch.sbb.releasetrain.state.git.GITAccessorImpl;
-import ch.sbb.releasetrain.utils.workspace.ClasspathToWorkspaceWriter;
 
 /**
  * Release Train Mojo
  */
 @Mojo(name = "init", defaultPhase = LifecyclePhase.VALIDATE, requiresOnline = true, requiresProject = false, threadSafe = false)
 @Slf4j
-public class ReleasetrainInitMojo extends GuiceAbstractMojo {
+public class ReleasetrainInitMojo extends AbstractMojo {
 
-
-    private GuiceInjectorWrapper guice;
-
-
-    private GITAccessorImpl git;
-
-
-    private ClasspathToWorkspaceWriter writer;
 
     @Parameter(property = "gitrepo", required = false)
     private String gitrepo = "https://github.com/SchweizerischeBundesbahnen/releasetrain.git";
@@ -74,24 +61,27 @@ public class ReleasetrainInitMojo extends GuiceAbstractMojo {
                 gitbranch = "feature/releasetrain";
             }
         }
-
-        git.setRepo(gitrepo);
-        git.setUser(gituser);
-        git.setPassword(gitpassword);
-        git.setBranch(gitbranch);
-        git.writeFile("info.txt", new Date().toString(), "master");
-
-        if (new File(git.getGitDir(), "/config.properties").exists()) {
-            log.info("repo is already initialized with a release train config branch ... will not update");
-            return;
-        }
-
-        git.wipeGitWorkspace(null, ".git", "config.properties");
-        git.stageAndPushDeletedFile();
-        writer.setWorkspace(git.getGitDir().getAbsolutePath());
-        writer.writeFileFromCPToWorkspace("/", "config.properties");
-        git.writeFile("info.txt", new Date().toString(), "");
     }
+
+    /**
+     * git.setRepo(gitrepo);
+     * git.setUser(gituser);
+     * git.setPassword(gitpassword);
+     * git.setBranch(gitbranch);
+     * git.writeFile("info.txt", new Date().toString(), "master");
+     * 
+     * if (new File(git.getGitDir(), "/config.properties").exists()) {
+     * log.info("repo is already initialized with a release train config branch ... will not update");
+     * return;
+     * }
+     * 
+     * git.wipeGitWorkspace(null, ".git", "config.properties");
+     * git.stageAndPushDeletedFile();
+     * writer.setWorkspace(git.getGitDir().getAbsolutePath());
+     * writer.writeFileFromCPToWorkspace("/", "config.properties");
+     * git.writeFile("info.txt", new Date().toString(), "");
+     * }
+     **/
 
     private String ask(String text) {
         Scanner sc = new Scanner(System.in);
@@ -101,5 +91,4 @@ public class ReleasetrainInitMojo extends GuiceAbstractMojo {
         }
         return "";
     }
-
 }

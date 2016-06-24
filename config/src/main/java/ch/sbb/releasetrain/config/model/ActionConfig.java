@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lombok.Data;
-import ch.sbb.releasetrain.director.modelaccessor.Recognizable;
+import ch.sbb.releasetrain.utils.model.Recognizable;
 
 /**
  * Representation of a Action retreived from a storage provider (Ex: GIT Repo)

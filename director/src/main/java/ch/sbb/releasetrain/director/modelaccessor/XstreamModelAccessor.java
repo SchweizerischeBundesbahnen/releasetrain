@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.FileUtils;
 
+import ch.sbb.releasetrain.utils.model.Recognizable;
+
 import com.thoughtworks.xstream.XStream;
 
 /**

@@ -18,9 +18,9 @@ import org.springframework.stereotype.Component;
 import ch.sbb.releasetrain.config.model.ReleaseConfig;
 import ch.sbb.releasetrain.config.model.email.MailReceiver;
 import ch.sbb.releasetrain.config.model.releasecalendar.ReleaseEvent;
-import ch.sbb.releasetrain.director.modelaccessor.YamlModelAccessor;
 import ch.sbb.releasetrain.utils.csv.CSVXLSReader;
 import ch.sbb.releasetrain.utils.http.HttpUtil;
+import ch.sbb.releasetrain.utils.yaml.YamlModelAccessor;
 
 /**
  * Provides Acces to the Release Configs, stored in a storage like GIT
