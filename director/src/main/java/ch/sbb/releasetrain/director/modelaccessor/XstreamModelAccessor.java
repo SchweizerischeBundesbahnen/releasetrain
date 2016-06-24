@@ -24,7 +24,7 @@ import com.thoughtworks.xstream.XStream;
 @Slf4j
 public class XstreamModelAccessor<T extends Recognizable> {
 
-    private XStream xstream;
+    private XStream xstream = new XStream();
 
     public String convertEntrys(Object in) {
         return xstream.toXML(in);

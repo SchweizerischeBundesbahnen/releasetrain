@@ -2,7 +2,7 @@
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
  * and to You under the Apache License, Version 2.0.
  */
-package ch.sbb.releasetrain.director.model;
+package ch.sbb.releasetrain.config.model.email;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,9 +19,7 @@ import ch.sbb.releasetrain.director.modelaccessor.Recognizable;
 @Data
 public class MailReceiver implements Recognizable<MailReceiver> {
 
-    private String anrede;
     private String email;
-    private boolean active = true;
     private Set<String> mailinglist = new HashSet<String>();
 
     @Override

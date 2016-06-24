@@ -2,9 +2,10 @@
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
  * and to You under the Apache License, Version 2.0.
  */
-package ch.sbb.releasetrain.config;
+package ch.sbb.releasetrain.config.releasecalendar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.Setter;
@@ -18,26 +19,29 @@ import ch.sbb.releasetrain.config.model.ReleaseConfig;
 import ch.sbb.releasetrain.config.model.email.MailReceiver;
 import ch.sbb.releasetrain.config.model.releasecalendar.ReleaseEvent;
 import ch.sbb.releasetrain.director.modelaccessor.YamlModelAccessor;
+import ch.sbb.releasetrain.utils.csv.CSVXLSReader;
 import ch.sbb.releasetrain.utils.http.HttpUtil;
 
 /**
  * Provides Acces to the Release Configs, stored in a storage like GIT
  *
  * @author u203244 (Daniel Marthaler)
+ * @version $Id: $
  * @since 0.0.1, 2016
  */
 @Slf4j
 @Component
 public class ConfigAccessorImpl implements ConfigAccessor {
 
+    @Autowired
+    @Setter
+    CSVXLSReader calendarReader;
     @Value("config.baseurl")
     @Setter
     private String baseURL;
-
     @Autowired
     @Setter
     private HttpUtil http;
-
     private YamlModelAccessor<ReleaseConfig> accessorRelease = new YamlModelAccessor<>();
     private YamlModelAccessor<MailReceiver> accessorMailing = new YamlModelAccessor<>();
 
@@ -69,7 +73,22 @@ public class ConfigAccessorImpl implements ConfigAccessor {
     }
 
     @Override
-    public List<ReleaseEvent> readReleaseCalendars() {
-        return null;
+    public List<ReleaseEvent> readReleaseCalendar() {
+        List<ReleaseEvent> retEvents = new ArrayList<>();
+        String url = baseURL + "/releasecalendar.csv";
+        String page = http.getPageAsString(url);
+        List<List<String>> rows = calendarReader.getAllRows(page);
+
+        for (List<String> cols : rows) {
+            ReleaseEvent event = new ReleaseEvent();
+            event.setDate(cols.get(0));
+            event.setReleaseVersion(cols.get(1));
+            event.setSnapshotVersion(cols.get(2));
+            event.setMaintenaceVersion(cols.get(3));
+            event.setActionType(cols.get(4));
+            retEvents.add(event);
+        }
+        Collections.sort(retEvents);
+        return retEvents;
     }
 }

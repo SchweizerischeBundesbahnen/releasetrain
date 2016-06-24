@@ -4,55 +4,61 @@
  */
 package ch.sbb.releasetrain.utils.csv;
 
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-
-import ch.sbb.releasetrain.utils.config.GlobalConfig;
-import ch.sbb.releasetrain.utils.http.HttpUtil;
+import org.springframework.stereotype.Component;
 
 /**
  * reads informations to a "product" out of the product.csv file and returns the values as map or coloumn list
  */
 @Slf4j
+@Component
 public class CSVXLSReaderImpl implements CSVXLSReader {
 
-
-    private HttpUtil http;
-
-    private GlobalConfig config;
-
-    @Setter
-    private String text;
-
-    @Setter
-    private String fileUrlKey = "product.config.url";
-
     @Override
-    public List<String> getListFromColoumn(String spalte) {
-        return new ArrayList<>(getMapFromXLS(spalte, spalte).values());
+    public List<String> getColoumnAsList(String coloumn, String content) {
+        return new ArrayList<>(getMapFrom2Coloums(coloumn, coloumn, content).values());
     }
 
     @Override
-    public Map<String, String> getMapFromXLS(String coloumn1, String coloumn2) {
+    public List<List<String>> getAllRows(String content) {
+        List<List<String>> ret = new ArrayList<>();
+        try {
+            final CSVParser parser = getParser(content);
+
+            Map<String, Integer> header = parser.getHeaderMap();
+
+            for (CSVRecord record : parser.getRecords()) {
+                List<String> row = new ArrayList<>();
+                for (int i : header.values()) {
+                    row.add(record.get(i));
+                }
+                ret.add(row);
+            }
+
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return ret;
+    }
+
+    @Override
+    public Map<String, String> getMapFrom2Coloums(String coloumn1, String coloumn2, String content) {
 
         Map<String, String> ret = new HashMap<>();
         try {
 
-            if (text == null) {
-                text = http.getPageAsString(config.get(fileUrlKey));
-            }
-
-            final CSVParser parser = new CSVParser(new StringReader(text), CSVFormat.EXCEL.withDelimiter(';').withFirstRecordAsHeader());
+            final CSVParser parser = getParser(content);
 
             for (CSVRecord record : parser.getRecords()) {
                 String c1 = record.get(coloumn1);
@@ -64,6 +70,15 @@ public class CSVXLSReaderImpl implements CSVXLSReader {
             log.error(e.getMessage(), e);
         }
         return ret;
+    }
+
+    private CSVParser getParser(String content) {
+        try {
+            return new CSVParser(new StringReader(content), CSVFormat.EXCEL.withDelimiter(';').withFirstRecordAsHeader());
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+        return null;
     }
 
 }

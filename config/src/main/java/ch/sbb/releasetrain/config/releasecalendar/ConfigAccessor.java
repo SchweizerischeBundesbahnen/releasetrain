@@ -2,7 +2,7 @@
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
  * and to You under the Apache License, Version 2.0.
  */
-package ch.sbb.releasetrain.config;
+package ch.sbb.releasetrain.config.releasecalendar;
 
 import java.util.List;
 
@@ -25,6 +25,6 @@ public interface ConfigAccessor {
 
     List<MailReceiver> readMailReveiverForMailinglist(String... mailinglists);
 
-    List<ReleaseEvent> readReleaseCalendars();
+    List<ReleaseEvent> readReleaseCalendar();
 
 }
