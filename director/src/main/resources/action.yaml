@@ -1,0 +1,7 @@
+!!ch.sbb.releasetrain.config.model.ReleaseConfig
+typ: action
+actions:
+- name: nameOfTheFirstAction
+  properties: {firstProperty: firstPropertyValue, secondProperty: secondPropertyValue}
+- name: nameOfTheSecondAction-äöü@
+  properties: {firstProperty: firstPropertyValue}

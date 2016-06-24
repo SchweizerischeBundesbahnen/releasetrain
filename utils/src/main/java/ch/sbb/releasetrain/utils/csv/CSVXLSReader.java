@@ -17,11 +17,16 @@ public interface CSVXLSReader {
     /**
      * return's a column as List
      */
-    List<String> getListFromColoumn(String spalte);
+    List<String> getColoumnAsList(String spalte, String content);
 
     /**
-     * returns 2 coloums as Map getMapFromXLS("id","ear")
+     * return's a column as List
      */
-    Map<String, String> getMapFromXLS(String spalte1, String spalte2);
+    List<List<String>> getAllRows(String content);
+
+    /**
+     * returns 2 coloums as Map getMapFrom2Coloums("id","ear")
+     */
+    Map<String, String> getMapFrom2Coloums(String coloumn1, String coloumn2, String content);
 
 }

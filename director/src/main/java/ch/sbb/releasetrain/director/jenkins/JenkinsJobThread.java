@@ -6,15 +6,14 @@ package ch.sbb.releasetrain.director.jenkins;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Map;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang.StringUtils;
 
-import ch.sbb.releasetrain.utils.config.GlobalConfig;
 import ch.sbb.releasetrain.utils.http.HttpUtil;
-
 
 /**
  * Wraper Thread for Jenkins Builds
@@ -25,7 +24,7 @@ import ch.sbb.releasetrain.utils.http.HttpUtil;
 @Slf4j
 public final class JenkinsJobThread extends Thread {
 
-    private final GlobalConfig config;
+    // private final GlobalConfig config;
     boolean waiting = true;
     boolean running = false;
     private String params = "";
@@ -37,11 +36,12 @@ public final class JenkinsJobThread extends Thread {
     private String startBuildnumber = "";
     private boolean finished = false;
     private HttpUtil http;
+    private Map<String, String> config;
 
     /**
      * Constructor for jobs without parameters
      */
-    public JenkinsJobThread(String job, GlobalConfig config, HttpUtil http) {
+    public JenkinsJobThread(String job, Map<String, String> config, HttpUtil http) {
         this.http = http;
         this.config = config;
         apiLatestBuildURL = config.get("jenkins.url") + "/job/" + job + "/lastBuild/api/xml";
@@ -53,7 +53,7 @@ public final class JenkinsJobThread extends Thread {
     /**
      * Constructor for jenkins builds with parameters
      */
-    public JenkinsJobThread(final String job, final String cause, GlobalConfig config, HttpUtil http, final String... parameters) {
+    public JenkinsJobThread(final String job, final String cause, Map<String, String> config, HttpUtil http, final String... parameters) {
         this(job, config, http);
         for (final String param : parameters) {
             final String poormanUrlEncoded = param.replace(" ", "+");

@@ -2,15 +2,13 @@
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
  * and to You under the Apache License, Version 2.0.
  */
-package utils.http;
+package ch.sbb.releasetrain.utils.http;
 
 import java.io.InputStream;
 
 import org.codehaus.plexus.util.IOUtil;
 import org.junit.Assert;
 import org.junit.Test;
-
-import ch.sbb.releasetrain.utils.http.HttpUtilImpl;
 
 
 public class HttpUtilTest {
