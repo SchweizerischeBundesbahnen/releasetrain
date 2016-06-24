@@ -17,7 +17,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 
 import ch.sbb.releasetrain.director.guice.GuiceAbstractMojo;
 import ch.sbb.releasetrain.director.guice.GuiceInjectorWrapper;
-import ch.sbb.releasetrain.utils.git.GITAccessorImpl;
+import ch.sbb.releasetrain.state.git.GITAccessorImpl;
 import ch.sbb.releasetrain.utils.workspace.ClasspathToWorkspaceWriter;
 
 /**
