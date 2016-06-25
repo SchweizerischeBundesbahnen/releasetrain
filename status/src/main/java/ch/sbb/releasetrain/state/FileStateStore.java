@@ -1,7 +1,6 @@
 /*
  * Copyright (C) Schweizerische Bundesbahnen SBB, 2016.
  */
-
 package ch.sbb.releasetrain.state;
 
 import java.io.File;

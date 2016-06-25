@@ -10,7 +10,6 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import ch.sbb.releasetrain.action.Action;
@@ -36,7 +35,6 @@ public class Director {
     private ConfigAccessor config;
 
     @Autowired
-    @Qualifier("fileStateStore")
     private StateStore stateStore;
 
     @Autowired

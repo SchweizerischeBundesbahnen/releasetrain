@@ -4,6 +4,7 @@
  */
 package ch.sbb.releasetrain.utils.emails;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.mail.Email;
@@ -24,8 +25,10 @@ import org.springframework.stereotype.Component;
 public class SMTPUtilImpl implements SMTPUtil {
 
     @Value("${smtp.port:25}")
+    @Setter
     private int mailport;
     @Value("${smtp.host: }")
+    @Setter
     private String mailhost = "smtpout.sbb.ch";
 
     @Override

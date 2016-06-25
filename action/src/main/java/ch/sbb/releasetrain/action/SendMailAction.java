@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,11 @@ import ch.sbb.releasetrain.utils.emails.SMTPUtil;
 public class SendMailAction extends AbstractAction {
 
     @Autowired
+    @Setter
     private SMTPUtil smtpUtil;
 
     @Autowired
+    @Setter
     private ConfigAccessor config;
 
     @Override

@@ -22,7 +22,6 @@ import org.apache.maven.plugins.annotations.Parameter;
 @Slf4j
 public class ReleasetrainInitMojo extends AbstractMojo {
 
-
     @Parameter(property = "gitrepo", required = false)
     private String gitrepo = "https://github.com/SchweizerischeBundesbahnen/releasetrain.git";
 

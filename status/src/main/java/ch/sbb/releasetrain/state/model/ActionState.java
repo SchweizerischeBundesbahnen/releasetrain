@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
+import ch.sbb.releasetrain.utils.model.Recognizable;
 
 /**
  * The state of a release event.
@@ -18,7 +19,7 @@ import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ActionState {
+public class ActionState implements Recognizable<ActionState> {
 
     private String resultString;
 
@@ -34,4 +35,13 @@ public class ActionState {
         return config.getName();
     }
 
+    @Override
+    public String retreiveIdentifier() {
+        return getActionName();
+    }
+
+    @Override
+    public int compareTo(ActionState actionState) {
+        return actionState.retreiveIdentifier().compareTo(this.retreiveIdentifier());
+    }
 }

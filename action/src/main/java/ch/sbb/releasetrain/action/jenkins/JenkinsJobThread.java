@@ -176,7 +176,7 @@ public final class JenkinsJobThread extends Thread {
         waiting = true;
         while (waiting) {
             if (isBuildInQueueInternal()) {
-                log.info("job: waiting in queu...");
+                log.info("------!!!>          waiting in queu...");
                 sleep(5);
             } else {
                 waiting = false;
@@ -191,11 +191,11 @@ public final class JenkinsJobThread extends Thread {
         while (running) {
             String color = getBuildColor();
             if (color.equals("blue")) {
-                log.info("job: is executing...");
+                log.info("------!!!>          is executing...");
                 sleep(5);
             } else {
                 running = false;
-                log.info("job: finished! color: " + color);
+                log.info("------!!!>          finished! color: " + color);
                 return;
             }
         }
