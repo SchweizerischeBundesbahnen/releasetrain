@@ -23,7 +23,7 @@ public class FileStateStore implements StateStore {
     @Autowired
     private StateStoreConfig storeConfig;
 
-    private YamlModelAccessor<ReleaseState> releaseState = new YamlModelAccessor<ReleaseState>();
+    private YamlModelAccessor<ReleaseState> releaseState = new YamlModelAccessor<>();
 
     @Override
     public void writeReleaseStatus(ReleaseState releaseStatus) {

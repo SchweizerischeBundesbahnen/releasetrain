@@ -35,7 +35,6 @@ public class ReleaseStatusTest  {
         assertEquals(ActionResult.NONE, releaseStatus.getActionState().get(0).getActionResult());
     }
 
-
     private List<ActionConfig> createConfigs() {
         List<ActionConfig> configs = new ArrayList<>();
         ActionConfig action1 = new ActionConfig();
