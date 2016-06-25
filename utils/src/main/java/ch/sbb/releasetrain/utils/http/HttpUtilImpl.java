@@ -30,6 +30,8 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * Get String from http(s) url
@@ -38,11 +40,14 @@ import org.apache.http.util.EntityUtils;
  * @since 0.0.1, 2016
  */
 @Slf4j
+@Component
 public class HttpUtilImpl implements HttpUtil {
 
+    @Value("${http.user: }")
     @Setter
     private String user = "";
 
+    @Value("${http.password: }")
     @Setter
     private String password = "";
 
@@ -54,7 +59,8 @@ public class HttpUtilImpl implements HttpUtil {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
             HttpGet httpget = new HttpGet(url);
-
+            httpget.setHeader("Cache-Control", "no-store");
+            httpget.setHeader("Cache-Control", "no-cache");
             HttpClientContext context = initAuthIfNeeded(url);
 
             HttpResponse response = httpclient.execute(httpget, context);
@@ -106,7 +112,7 @@ public class HttpUtilImpl implements HttpUtil {
 
         HttpClientContext context = HttpClientContext.create();
         if (this.user.isEmpty() || this.password.isEmpty()) {
-            log.info("http connection without autentication, because no user / password ist known to HttpUtilImpl ...");
+            log.debug("http connection without autentication, because no user / password ist known to HttpUtilImpl ...");
             return context;
         }
 

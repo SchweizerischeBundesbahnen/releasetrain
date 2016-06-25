@@ -4,24 +4,43 @@
 
 package ch.sbb.releasetrain.state.model;
 
-import com.google.common.collect.ImmutableList;
-import lombok.Getter;
-
 import java.util.List;
 
-public class ReleaseState {
-    @Getter
-    private final List<ActionState> actionState;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
+import ch.sbb.releasetrain.utils.model.Recognizable;
+
+import com.google.common.collect.ImmutableList;
+
+@NoArgsConstructor
+public class ReleaseState implements Recognizable<ReleaseState> {
 
     @Getter
-    private final String releaseName;
+    @Setter
+    private List<ActionState> actionState;
 
-    public ReleaseState(String releaseName, String... actionNames) {
+    @Getter
+    @Setter
+    private String releaseName;
+
+    public ReleaseState(String releaseName, List<ActionConfig> configs) {
         this.releaseName = releaseName;
         ImmutableList.Builder<ActionState> actionStatus = new ImmutableList.Builder<>();
-        for(String actionName : actionNames) {
+        for (ActionConfig actionName : configs) {
             actionStatus.add(new ActionState(actionName));
         }
         this.actionState = actionStatus.build();
+    }
+
+    @Override
+    public String retreiveIdentifier() {
+        return releaseName;
+    }
+
+    @Override
+    public int compareTo(ReleaseState releaseState) {
+        return releaseState.retreiveIdentifier().compareTo(this.retreiveIdentifier());
     }
 }

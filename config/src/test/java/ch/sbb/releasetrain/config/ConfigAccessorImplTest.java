@@ -9,8 +9,9 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import ch.sbb.releasetrain.config.model.ReleaseConfig;
 import ch.sbb.releasetrain.config.model.email.MailReceiver;
+import ch.sbb.releasetrain.config.model.releaseconfig.ReleaseConfig;
+import ch.sbb.releasetrain.config.releasecalendar.ConfigAccessorImpl;
 import ch.sbb.releasetrain.utils.http.HttpUtilImpl;
 
 /**

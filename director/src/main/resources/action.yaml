@@ -1,4 +1,4 @@
-!!ch.sbb.releasetrain.config.model.ReleaseConfig
+!!ch.sbb.releasetrain.config.model.releaseconfig.ReleaseConfig
 typ: action
 actions:
 - name: nameOfTheFirstAction

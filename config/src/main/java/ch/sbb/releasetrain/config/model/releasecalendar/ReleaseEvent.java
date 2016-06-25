@@ -4,11 +4,12 @@
  */
 package ch.sbb.releasetrain.config.model.releasecalendar;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import lombok.Data;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import ch.sbb.releasetrain.utils.model.Recognizable;
 
@@ -20,6 +21,7 @@ import ch.sbb.releasetrain.utils.model.Recognizable;
  */
 @Data
 @Slf4j
+@ToString
 public class ReleaseEvent implements Recognizable<ReleaseEvent> {
 
     private transient final static String DATE_PATTERN = "yyyy-MM-dd HH:mm";
@@ -34,19 +36,14 @@ public class ReleaseEvent implements Recognizable<ReleaseEvent> {
 
     private String actionType;
 
-    public Date retreiveAsDate() {
-        SimpleDateFormat format = new SimpleDateFormat(DATE_PATTERN);
-        try {
-            return format.parse(date);
-        } catch (ParseException e) {
-            log.error(e.getMessage(), e);
-        }
-        return null;
+    public LocalDateTime retreiveAsDate() {
+        DateTimeFormatter formater = DateTimeFormatter.ofPattern(DATE_PATTERN);
+        return LocalDateTime.from(formater.parse(date));
     }
 
-    public void putAsDate() {
+    public void putAsDateTime(LocalDateTime dateTime) {
         SimpleDateFormat format = new SimpleDateFormat(DATE_PATTERN);
-        date = format.toString();
+        date = format.format(dateTime);
     }
 
     @Override

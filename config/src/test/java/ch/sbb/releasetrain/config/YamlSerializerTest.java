@@ -14,9 +14,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import ch.sbb.releasetrain.config.model.ActionConfig;
-import ch.sbb.releasetrain.config.model.ReleaseConfig;
 import ch.sbb.releasetrain.config.model.email.MailReceiver;
+import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
+import ch.sbb.releasetrain.config.model.releaseconfig.ReleaseConfig;
 import ch.sbb.releasetrain.utils.yaml.YamlModelAccessor;
 
 /**

@@ -19,6 +19,19 @@
 			<groupId>ch.sbb.releasetrain</groupId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<dependency>
+			<artifactId>action</artifactId>
+			<groupId>ch.sbb.releasetrain</groupId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>utils</artifactId>
+			<groupId>ch.sbb.releasetrain</groupId>
+			<version>${project.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>ch.sbb.releasetrain</groupId>
 			<artifactId>status</artifactId>

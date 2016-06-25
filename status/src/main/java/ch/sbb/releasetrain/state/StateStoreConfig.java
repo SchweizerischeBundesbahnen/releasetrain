@@ -6,16 +6,22 @@ package ch.sbb.releasetrain.state;
 
 import lombok.Getter;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+@Getter
 public class StateStoreConfig {
-    @Getter
+
+    @Value("${store.user:default}")
     private String user;
 
-    @Getter
+    @Value("${store.password:default}")
     private String password;
 
-    @Getter
+    @Value("${store.url:default}")
     private String url;
 
-    @Getter
+    @Value("${store.branch:default}")
     private String branch;
 }

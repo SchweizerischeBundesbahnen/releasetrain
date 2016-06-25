@@ -4,12 +4,15 @@
 
 package ch.sbb.releasetrain.state.git;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Provide access to git repository.
- * 
+ *
  * @author u206123 (Florian Seidl)
  * @since 0.0.6, 2016.
  */
+@Component
 public class GitClientImpl implements GitClient {
     @Override
     public GitRepo gitRepo(String repo, String branch, String user, String password) {

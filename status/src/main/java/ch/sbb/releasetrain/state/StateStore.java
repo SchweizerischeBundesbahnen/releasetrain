@@ -8,8 +8,6 @@ import ch.sbb.releasetrain.state.model.ReleaseState;
 
 public interface StateStore {
 
-    void init(StateStoreConfig storeConfig);
-
     void writeReleaseStatus(ReleaseState releaseStatus);
 
     ReleaseState readReleaseStatus(String releaseName);

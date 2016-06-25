@@ -5,26 +5,27 @@
 package ch.sbb.releasetrain.state.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
 
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class ActionState {
-    @Getter
-    private final String actionName;
 
-    @Getter
-    @Setter
-    private ActionProgress actionProgress = ActionProgress.OPEN;
+    private String resultString;
 
-    @Getter
-    @Setter
+    private ActionConfig config;
+
     private ActionResult actionResult = ActionResult.NONE;
 
-    public ActionState(final String actionName) {
-        this.actionName = actionName;
+    public ActionState(final ActionConfig actionConfig) {
+        this.config = actionConfig;
     }
 
-
+    public String getActionName() {
+        return config.getName();
+    }
 
 }

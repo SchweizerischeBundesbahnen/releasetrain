@@ -6,6 +6,7 @@ package ch.sbb.releasetrain.action;
 
 import org.springframework.stereotype.Component;
 
+import ch.sbb.releasetrain.state.model.ActionResult;
 import ch.sbb.releasetrain.state.model.ActionState;
 
 /**
@@ -19,6 +20,6 @@ public interface Action {
 
     String getName();
 
-    void run(ActionState state);
+    ActionResult run(ActionState state, String releaseVersion, String snapshotVersion, String maintenanceVersion);
 
 }

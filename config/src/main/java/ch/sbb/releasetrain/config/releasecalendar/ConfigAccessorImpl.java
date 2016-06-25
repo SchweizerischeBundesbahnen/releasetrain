@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import ch.sbb.releasetrain.config.model.ReleaseConfig;
 import ch.sbb.releasetrain.config.model.email.MailReceiver;
 import ch.sbb.releasetrain.config.model.releasecalendar.ReleaseEvent;
+import ch.sbb.releasetrain.config.model.releaseconfig.ReleaseConfig;
 import ch.sbb.releasetrain.utils.csv.CSVXLSReader;
 import ch.sbb.releasetrain.utils.http.HttpUtil;
 import ch.sbb.releasetrain.utils.yaml.YamlModelAccessor;
@@ -36,9 +36,11 @@ public class ConfigAccessorImpl implements ConfigAccessor {
     @Autowired
     @Setter
     CSVXLSReader calendarReader;
-    @Value("config.baseurl")
+
+    @Value("${config.baseurl}")
     @Setter
     private String baseURL;
+
     @Autowired
     @Setter
     private HttpUtil http;
@@ -75,7 +77,10 @@ public class ConfigAccessorImpl implements ConfigAccessor {
     @Override
     public List<ReleaseEvent> readReleaseCalendar() {
         List<ReleaseEvent> retEvents = new ArrayList<>();
-        String url = baseURL + "/releasecalendar.csv";
+        if (!baseURL.endsWith("/")) {
+            baseURL = baseURL + "/";
+        }
+        String url = baseURL + "releasecalendar.csv";
         String page = http.getPageAsString(url);
         List<List<String>> rows = calendarReader.getAllRows(page);
 

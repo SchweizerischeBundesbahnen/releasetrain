@@ -2,7 +2,7 @@
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
  * and to You under the Apache License, Version 2.0.
  */
-package ch.sbb.releasetrain.director.jenkins;
+package ch.sbb.releasetrain.action.jenkins;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -26,40 +26,41 @@ public final class JenkinsJobThread extends Thread {
 
     boolean waiting = true;
     boolean running = false;
-    private String params = "";
+    String jenkinsBuildtoken;
+    String jenkinsQueueUrl;
     private long start = Long.MAX_VALUE;
     private String apiLatestBuildURL = "";
-    private String jobUrl = "";
     @Getter
+    private String jobUrl = "";
     private String jobId = "";
     private String startBuildnumber = "";
     private boolean finished = false;
     private HttpUtil http;
-    private Map<String, String> config;
-
-    /**
-     * Constructor for jobs without parameters
-     */
-    public JenkinsJobThread(String job, Map<String, String> config, HttpUtil http) {
-        this.http = http;
-        this.config = config;
-        apiLatestBuildURL = config.get("jenkins.url") + "/job/" + job + "/lastBuild/api/xml";
-        jobUrl = config.get("jenkins.url") + "/job/" + job + "/build?token=" + config.get("jenkins.buildtoken");
-        jobId = job;
-        startBuildnumber = this.getBuildnumber();
-    }
+    private String jenkinsUrl;
 
     /**
      * Constructor for jenkins builds with parameters
      */
-    public JenkinsJobThread(final String job, final String cause, Map<String, String> config, HttpUtil http, final String... parameters) {
-        this(job, config, http);
-        for (final String param : parameters) {
-            final String poormanUrlEncoded = param.replace(" ", "+");
-            params = params + "&" + poormanUrlEncoded;
+    public JenkinsJobThread(final String job, final String cause, String jenkinsUrl, String jenkinsBuildtoken, String jenkinsQueueUrl, HttpUtil http, final Map<String, String> params) {
+
+        this.http = http;
+        this.jenkinsUrl = jenkinsUrl;
+        this.jenkinsBuildtoken = jenkinsBuildtoken;
+        this.jenkinsQueueUrl = jenkinsQueueUrl;
+        apiLatestBuildURL = jenkinsUrl + "/job/" + job + "/lastBuild/api/xml";
+        jobUrl = jenkinsUrl + "/job/" + job + "/build?token=" + jenkinsBuildtoken;
+        jobId = job;
+        startBuildnumber = this.getBuildnumber();
+
+        String par = "";
+        if (params != null) {
+            for (final String param : params.keySet()) {
+                final String poormanUrlEncoded = param.replace(" ", "+") + "=" + params.get(param).replace(" ", "+");
+                par = par + "&" + poormanUrlEncoded;
+            }
+            jobUrl = jobUrl + par;
+            jobUrl = jobUrl.replace("/build?", "/buildWithParameters?");
         }
-        jobUrl = jobUrl + params;
-        jobUrl = jobUrl.replace("/build?", "/buildWithParameters?");
 
         if (cause != null && !cause.isEmpty()) {
             try {
@@ -139,13 +140,10 @@ public final class JenkinsJobThread extends Thread {
         if ((start + 1000) > System.currentTimeMillis()) {
             return true;
         }
-        final String str = callURL(config.get("jenkins.queue.url"));
+        final String str = callURL(this.jenkinsQueueUrl);
         return str.contains(this.jobId);
     }
 
-    public boolean isBuildInQueue() {
-        return waiting;
-    }
 
     private String getBuildnumber() {
         final String str = callURL(apiLatestBuildURL);
@@ -153,7 +151,7 @@ public final class JenkinsJobThread extends Thread {
     }
 
     public String getLatestUserForJob() {
-        String url = config.get("jenkins.url") + "/job/" + this.jobId + "/lastBuild";
+        String url = this.jenkinsUrl + "/job/" + this.jobId + "/lastBuild";
         String result = this.callURL(url);
         String user = org.apache.commons.lang3.StringUtils.substringBetween(result, "user <a href=\"/user/", "\">");
 
@@ -162,7 +160,7 @@ public final class JenkinsJobThread extends Thread {
                 return "timer";
             }
 
-            String url2 = config.get("jenkins.url") + "/job/" + this.jobId + "/lastBuild/changes";
+            String url2 = this.jenkinsUrl + "/job/" + this.jobId + "/lastBuild/changes";
             String result2 = this.callURL(url2);
             String user2 = org.apache.commons.lang3.StringUtils.substringBetween(result2, "by <a href=\"/user/", "/\">");
 
@@ -198,6 +196,7 @@ public final class JenkinsJobThread extends Thread {
             } else {
                 running = false;
                 log.info("job: finished! color: " + color);
+                return;
             }
         }
 
@@ -211,7 +210,7 @@ public final class JenkinsJobThread extends Thread {
         throw new RuntimeException("please use startBuildJobOnJenkins(false)");
     }
 
-    public Thread startBuildJobOnJenkins(final boolean blocking) {
+    public void startBuildJobOnJenkins(final boolean blocking) {
         callURL(jobUrl);
         start = System.currentTimeMillis();
         super.start();
@@ -223,7 +222,6 @@ public final class JenkinsJobThread extends Thread {
         } catch (final InterruptedException e) {
             log.error(e.getMessage(), e);
         }
-        return this;
     }
 
     private void sleep(int seconds) {

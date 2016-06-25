@@ -5,12 +5,13 @@
 package ch.sbb.releasetrain.utils.emails;
 
 /**
- *
+ * Send Emails
+ * 
  * @author u203244 (Daniel Marthaler)
  * @since 0.0.1, 2016
  */
 public interface SMTPUtil {
 
-     void send(final String absender, final String empfaenger, final String betreff, final String text);
+    void send(final String sender, final String receiver, final String subject, final String body);
 
 }

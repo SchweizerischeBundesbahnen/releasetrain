@@ -2,7 +2,7 @@
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
  * and to You under the Apache License, Version 2.0.
  */
-package ch.sbb.releasetrain.config.model;
+package ch.sbb.releasetrain.config.model.releaseconfig;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +20,7 @@ import ch.sbb.releasetrain.utils.model.Recognizable;
 public class ActionConfig implements Recognizable<ActionConfig> {
 
     private String name;
+    private int offsetHours;
 
     private Map<String, String> properties = new HashMap<>();
 
@@ -32,4 +33,5 @@ public class ActionConfig implements Recognizable<ActionConfig> {
     public int compareTo(ActionConfig actionConfig) {
         return actionConfig.retreiveIdentifier().compareTo(name);
     }
+
 }

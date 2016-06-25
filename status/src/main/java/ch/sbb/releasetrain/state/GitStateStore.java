@@ -4,10 +4,11 @@
 
 package ch.sbb.releasetrain.state;
 
-import ch.sbb.releasetrain.state.model.ReleaseState;
-import ch.sbb.releasetrain.state.git.GitClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import ch.sbb.releasetrain.state.git.GitClient;
+import ch.sbb.releasetrain.state.model.ReleaseState;
 
 @Component
 public class GitStateStore implements StateStore {
@@ -16,12 +17,6 @@ public class GitStateStore implements StateStore {
     private GitClient gitAccessorFactory;
 
     private StateStoreConfig storeConfig = null;
-
-    @Override
-    public void init(StateStoreConfig storeConfig) {
-        storeConfig = storeConfig;
-    }
-
 
 
     @Override

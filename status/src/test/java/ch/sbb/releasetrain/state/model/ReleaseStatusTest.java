@@ -4,21 +4,26 @@
 
 package ch.sbb.releasetrain.state.model;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
 
 public class ReleaseStatusTest  {
 
     @Test
     public void newReleaseStatus()  {
-        ReleaseState releaseStatus = new ReleaseState("myrelease");
+        ReleaseState releaseStatus = new ReleaseState("myrelease", createConfigs());
         assertEquals("myrelease", releaseStatus.getReleaseName());
     }
 
     @Test
     public void newReleaseStatusWithActionNames()  {
-        ReleaseState releaseStatus = new ReleaseState("myrelease", "myaction1", "myaction2");
+        ReleaseState releaseStatus = new ReleaseState("myrelease", createConfigs());
         assertEquals(2, releaseStatus.getActionState().size());
         assertEquals("myaction1", releaseStatus.getActionState().get(0).getActionName());
         assertEquals("myaction2", releaseStatus.getActionState().get(1).getActionName());
@@ -26,13 +31,16 @@ public class ReleaseStatusTest  {
 
     @Test
     public void newActionStatusResult()  {
-        ReleaseState releaseStatus = new ReleaseState("myrelease", "myaction");
+        ReleaseState releaseStatus = new ReleaseState("myrelease", createConfigs());
         assertEquals(ActionResult.NONE, releaseStatus.getActionState().get(0).getActionResult());
     }
 
-    @Test
-    public void newActionStatusProgress()  {
-        ReleaseState releaseStatus = new ReleaseState("myrelease", "myaction");
-        assertEquals(ActionProgress.OPEN, releaseStatus.getActionState().get(0).getActionProgress());
+
+    private List<ActionConfig> createConfigs() {
+        List<ActionConfig> configs = new ArrayList<>();
+        configs.add(new ActionConfig());
+        configs.add(new ActionConfig());
+        return configs;
     }
+
 }

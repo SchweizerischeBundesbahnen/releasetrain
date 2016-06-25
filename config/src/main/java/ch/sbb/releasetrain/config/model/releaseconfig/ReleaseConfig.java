@@ -2,7 +2,7 @@
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
  * and to You under the Apache License, Version 2.0.
  */
-package ch.sbb.releasetrain.config.model;
+package ch.sbb.releasetrain.config.model.releaseconfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,4 +32,5 @@ public class ReleaseConfig implements Recognizable<ReleaseConfig> {
     public int compareTo(ReleaseConfig releaseConfig) {
         return releaseConfig.retreiveIdentifier().compareTo(typ);
     }
+
 }

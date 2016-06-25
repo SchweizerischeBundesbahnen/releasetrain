@@ -6,9 +6,9 @@ package ch.sbb.releasetrain.config.releasecalendar;
 
 import java.util.List;
 
-import ch.sbb.releasetrain.config.model.ReleaseConfig;
 import ch.sbb.releasetrain.config.model.email.MailReceiver;
 import ch.sbb.releasetrain.config.model.releasecalendar.ReleaseEvent;
+import ch.sbb.releasetrain.config.model.releaseconfig.ReleaseConfig;
 
 /**
  * Provides Acces to the Release Configs, stored in a storage like GIT
