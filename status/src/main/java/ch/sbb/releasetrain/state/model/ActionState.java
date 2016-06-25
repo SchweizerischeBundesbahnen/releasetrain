@@ -6,9 +6,16 @@ package ch.sbb.releasetrain.state.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
 
+/**
+ * The state of a release event.
+ *
+ * @author u206123 (Florian Seidl)
+ * @since 0.0.6, 2016.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

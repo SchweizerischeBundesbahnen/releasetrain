@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,7 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 
 /**
+ * Access a git repository via JGit.
  *
  * @author u206123 (Florian Seidl)
  * @author u203244 (Daniel Marthaler)
@@ -78,6 +80,10 @@ public final class GitRepoImpl implements GitRepo {
         return new File(gitDir, ".git").exists();
     }
 
+    @Override
+    public File directory() {
+        return gitDir;
+    }
 
     public void cloneOrPull() {
         callWithRetry(c -> doCloneOrPull(), 0);
@@ -196,15 +202,16 @@ public final class GitRepoImpl implements GitRepo {
     /**
      * Use with care!
      */
-    boolean deleteBranch() {
+    public boolean deleteBranch() {
         if (!branch.startsWith("feature/")) {
             throw new GitException("Can only delete feature branch.");
         }
         try {
+
             final Git git = gitOpen();
             git.checkout().
                     setCreateBranch(true).
-                    setName("feature/temp").
+                    setName("feature/temp_" + UUID.randomUUID()).
                     call();
             List<String> deletedBranches = git.branchDelete().setBranchNames(branch).setForce(true).call();
             if (deletedBranches.size() == 1) {

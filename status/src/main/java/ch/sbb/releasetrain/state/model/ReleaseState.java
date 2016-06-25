@@ -6,6 +6,7 @@ package ch.sbb.releasetrain.state.model;
 
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,8 +14,17 @@ import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
 import ch.sbb.releasetrain.utils.model.Recognizable;
 
 import com.google.common.collect.ImmutableList;
+import lombok.ToString;
 
+/**
+ * The state of a release event.
+ *
+ * @author u206123 (Florian Seidl)
+ * @since 0.0.6, 2016.
+ */
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class ReleaseState implements Recognizable<ReleaseState> {
 
     @Getter

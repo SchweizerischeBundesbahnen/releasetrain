@@ -24,4 +24,9 @@ public interface GitRepo {
      */
     void addCommitPush();
 
+    /**
+     * Return the current workspace directory
+     */
+    File directory();
+
 }

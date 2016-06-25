@@ -13,6 +13,10 @@ import org.junit.Test;
 
 import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
 
+/**
+ * @author u206123 (Florian Seidl)
+ * @since 0.0.6, 2016.
+ */
 public class ReleaseStatusTest  {
 
     @Test

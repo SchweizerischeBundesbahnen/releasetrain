@@ -23,7 +23,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-
+/**
+ * @author u206123 (Florian Seidl)
+ * @since 0.0.6, 2016.
+ */
 public class GitRepoIT {
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
