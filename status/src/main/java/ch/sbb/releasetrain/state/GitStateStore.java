@@ -4,20 +4,18 @@
 
 package ch.sbb.releasetrain.state;
 
-import ch.sbb.releasetrain.state.git.GitRepo;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import ch.sbb.releasetrain.state.git.GitClient;
+import ch.sbb.releasetrain.state.git.GitRepo;
 import ch.sbb.releasetrain.state.model.ReleaseState;
-
-import java.io.File;
 
 /**
  * Store the release state and config within a git repo in a special branch.

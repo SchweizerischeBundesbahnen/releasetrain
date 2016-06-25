@@ -6,7 +6,6 @@ package ch.sbb.releasetrain.state.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
 

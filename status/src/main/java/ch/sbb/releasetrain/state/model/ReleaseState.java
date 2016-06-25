@@ -10,11 +10,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
 import ch.sbb.releasetrain.utils.model.Recognizable;
 
 import com.google.common.collect.ImmutableList;
-import lombok.ToString;
 
 /**
  * The state of a release event.

@@ -5,11 +5,7 @@
 package ch.sbb.releasetrain.state;
 
 import java.io.File;
-import java.io.IOException;
 
-import lombok.extern.slf4j.Slf4j;
-
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;

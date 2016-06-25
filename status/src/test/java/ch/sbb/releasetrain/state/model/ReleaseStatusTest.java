@@ -28,7 +28,7 @@ public class ReleaseStatusTest  {
     @Test
     public void newReleaseStatusWithActionNames()  {
         ReleaseState releaseStatus = new ReleaseState("myrelease", createConfigs());
-        assertEquals(2, releaseStatus.getActionState().size());
+        assertEquals(3, releaseStatus.getActionState().size());
         assertEquals("myaction1", releaseStatus.getActionState().get(0).getActionName());
         assertEquals("myaction2", releaseStatus.getActionState().get(1).getActionName());
     }
@@ -39,10 +39,16 @@ public class ReleaseStatusTest  {
         assertEquals(ActionResult.NONE, releaseStatus.getActionState().get(0).getActionResult());
     }
 
-
     private List<ActionConfig> createConfigs() {
         List<ActionConfig> configs = new ArrayList<>();
-        configs.add(new ActionConfig());
+        ActionConfig action1 = new ActionConfig();
+        action1.setName("myaction1");
+        configs.add(action1);
+
+        ActionConfig action2 = new ActionConfig();
+        action2.setName("myaction2");
+        configs.add(action2);
+
         configs.add(new ActionConfig());
         return configs;
     }

@@ -4,24 +4,22 @@
 
 package ch.sbb.releasetrain.state;
 
-import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
-import ch.sbb.releasetrain.state.git.GitClientImpl;
-import ch.sbb.releasetrain.state.git.GitRepo;
-import ch.sbb.releasetrain.state.git.GitRepoImpl;
-import ch.sbb.releasetrain.state.model.ReleaseState;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.io.IOException;
+import java.util.Collections;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Collections;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
+import ch.sbb.releasetrain.state.git.GitClientImpl;
+import ch.sbb.releasetrain.state.git.GitRepoImpl;
+import ch.sbb.releasetrain.state.model.ReleaseState;
 
 /**
  * @author u206123 (Florian Seidl)

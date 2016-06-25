@@ -4,10 +4,10 @@
 
 package ch.sbb.releasetrain.state;
 
+import java.io.File;
+
 import ch.sbb.releasetrain.state.model.ReleaseState;
 import ch.sbb.releasetrain.utils.yaml.YamlModelAccessor;
-
-import java.io.File;
 
 /**
  * @author u206123 (Florian Seidl)
