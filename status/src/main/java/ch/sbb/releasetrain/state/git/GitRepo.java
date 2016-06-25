@@ -4,6 +4,8 @@
  */
 package ch.sbb.releasetrain.state.git;
 
+import java.io.File;
+
 /**
  * Writing and Reading Files from GIT to String
  *
@@ -11,5 +13,8 @@ package ch.sbb.releasetrain.state.git;
  * @since 0.0.1, 2016
  */
 public interface GitRepo {
+    void cloneOrPull();
+
+    void addCommitPush();
 
 }
