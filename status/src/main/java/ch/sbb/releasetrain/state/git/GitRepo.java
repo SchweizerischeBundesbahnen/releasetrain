@@ -7,14 +7,21 @@ package ch.sbb.releasetrain.state.git;
 import java.io.File;
 
 /**
- * Writing and Reading Files from GIT to String
+ * Clone/Pull a git repo or update the remote by adding/committing/pushing
  *
+ * @author u206123 (Florian Seidl)
  * @author u203244 (Daniel Marthaler)
  * @since 0.0.1, 2016
  */
 public interface GitRepo {
+    /**
+     * Clone the repo if it does not exist or pull if it does
+     */
     void cloneOrPull();
 
+    /**
+     * add all unadded files, commit to local repo and push to remote
+     */
     void addCommitPush();
 
 }

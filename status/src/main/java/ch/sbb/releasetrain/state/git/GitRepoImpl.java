@@ -20,9 +20,11 @@ import org.eclipse.jgit.api.PullResult;
 import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.PushResult;
 import org.eclipse.jgit.transport.RefSpec;
@@ -31,8 +33,8 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 
 /**
- * reading and writig a file from/to a git url, we are cloning from origin/master
- * 
+ *
+ * @author u206123 (Florian Seidl)
  * @author u203244 (Daniel Marthaler)
  * @since 0.0.1, 2016
  */
@@ -98,17 +100,22 @@ public final class GitRepoImpl implements GitRepo {
 
     public void doAddCommitPush() throws IOException, GitAPIException {
         Git git = gitOpen();
-        gitOpen().add().addFilepattern(".").call();
-        git.commit().setMessage("Automatic commit by releasetrain").call();
-        PushCommand command = git.push();
-        command.setCredentialsProvider(credentialsProvider());
-        command.call();
+        gitOpen().add()
+                .addFilepattern(".")
+                .call();
+        git.commit()
+                .setMessage("Automatic commit by releasetrain")
+                .call();
+        git.push()
+                .setCredentialsProvider(credentialsProvider())
+                .call();
     }
 
     private void callWithRetry(final GitConsumer call, int retry) {
         try {
             call.accept(null);
-        } catch (IOException | GitAPIException e) {
+        }
+        catch (IOException | TransportException e) {
             if (retry < 3) {
                 try {
                     Thread.sleep(1000L * (retry + 1)); // back off
@@ -116,25 +123,33 @@ public final class GitRepoImpl implements GitRepo {
                 } catch (InterruptedException e1) { // bad luck...
                 }
             } else {
-                throw new GitException("Clone or pull failed", e);
+                throw new GitException(String.format("Git operation falied after %d retries", retry), e);
             }
         }
+        catch (GitAPIException e) {
+            throw new GitException("Git operation failed", e);
+        }
     }
-
 
     Git pull(Git git) throws GitAPIException {
-        PullResult result = git
-                .pull()
-                .call();
-        if (result.isSuccessful()) {
-            return git;
+        if(remoteBranchExists(git)) {
+            PullResult result = git
+                    .pull()
+                    .setStrategy(MergeStrategy.THEIRS)
+                    .call();
+            if (result.isSuccessful()) {
+                return git;
+            }
+            else {
+                throw new GitException("Pull failed: " + result.toString());
+            }
         }
         else {
-            throw new GitException("Pull failed: " + result.toString());
+            return git;
         }
     }
 
-    void checkoutOrCreateBranch(final Git git) throws GitAPIException, IOException {
+    Git checkoutOrCreateBranch(final Git git) throws GitAPIException, IOException {
         if (!branch.equals(git.getRepository().getBranch())) {
             CheckoutCommand checkoutCommand = git.checkout()
                     .setCreateBranch(true)
@@ -146,6 +161,7 @@ public final class GitRepoImpl implements GitRepo {
             }
             checkoutCommand.call();
         }
+        return git;
     }
 
 
@@ -159,6 +175,23 @@ public final class GitRepoImpl implements GitRepo {
         }
         return false;
     }
+
+    private Git gitClone() throws GitAPIException {
+        return Git.cloneRepository()
+                .setURI(url)
+                .setCredentialsProvider(credentialsProvider())
+                .setDirectory(gitDir)
+                .call();
+    }
+
+    private Git gitOpen() throws IOException {
+        return Git.open(new File(gitDir, ".git"));
+    }
+
+    private CredentialsProvider credentialsProvider() {
+        return new UsernamePasswordCredentialsProvider(user, password);
+    }
+
 
     /**
      * Use with care!
@@ -197,20 +230,5 @@ public final class GitRepoImpl implements GitRepo {
         }
     }
 
-    private Git gitClone() throws GitAPIException {
-        return Git.cloneRepository()
-                .setURI(url)
-                .setCredentialsProvider(credentialsProvider())
-                .setDirectory(gitDir)
-                .call();
-    }
-
-    private Git gitOpen() throws IOException {
-        return Git.open(new File(gitDir, ".git"));
-    }
-
-    private CredentialsProvider credentialsProvider() {
-        return new UsernamePasswordCredentialsProvider(user, password);
-    }
 
 }
