@@ -6,5 +6,5 @@
    \__\  |__|  /__/      |_____/|____/|____/    \_____|_|    |_|       |_|    |_|   |_____/
   ==========================================================================================
 
-   :: Application Version      ::     ${application.formatted-version}
-   :: Spring Boot              ::     ${spring-boot.formatted-version}
+:: :: Application Version      ::     ${application.formatted-version}
+:: :: Spring Boot              ::     ${spring-boot.formatted-version}
