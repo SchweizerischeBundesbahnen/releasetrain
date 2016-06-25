@@ -142,9 +142,22 @@ public class GitRepoIT {
     }
 
 
-    //git.cloneOrPull("pom.xml", "develop").contains("<modelVersion>4.0.0</modelVersion>"));
+    @Test
+    public void cloneReleasetrainRepoAndPull() throws Exception {
+        gitRepo.cloneOrPull();
+        assertTrue(new File(workspace, ".git").exists());
+        gitRepo.cloneOrPull();
+        assertTrue(new File(workspace, ".git").exists());
+    }
 
-        // Assert.assertTrue(git.writeFile("pom.xml","housi"));
+    @Test
+    public void cloneReleasetrainRepoPushAndPull() throws Exception {
+        gitRepo.cloneOrPull();
+        new File(workspace, "bla.txt").createNewFile();
+        gitRepo.addCommitPush();
+        gitRepo.cloneOrPull();
+        assertTrue(new File(workspace, "bla.txt").exists());
+    }
 
     private File recheckout() throws IOException {
         final File recheckoutWorkspace = temporaryFolder.newFolder("recheckout");
