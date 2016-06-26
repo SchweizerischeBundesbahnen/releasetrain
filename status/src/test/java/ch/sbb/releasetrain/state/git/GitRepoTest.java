@@ -4,7 +4,6 @@
  */
 package ch.sbb.releasetrain.state.git;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -37,20 +36,4 @@ public class GitRepoTest {
         new File(dir, ".git").mkdir();
         assertTrue(new GitRepoImpl("", "", "", "", dir).isCloned());
     }
-
-
-    @Test
-    public void filenameFromUrlHttp() {
-        assertEquals("https___github_com_SchweizerischeBundesbahnen_releasetrain_git",
-                GitRepoImpl.filenameFromUrl("https://github.com/SchweizerischeBundesbahnen/releasetrain.git"));
-
-    }
-
-    @Test
-    public void filenameFromUrlSSH() {
-        assertEquals("git_github_com_SchweizerischeBundesbahnen_releasetrain_git",
-                GitRepoImpl.filenameFromUrl("git@github.com:SchweizerischeBundesbahnen/releasetrain.git\n"));
-
-    }
-
 }

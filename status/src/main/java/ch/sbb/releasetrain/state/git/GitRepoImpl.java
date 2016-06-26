@@ -52,21 +52,12 @@ public final class GitRepoImpl implements GitRepo {
         void accept(T t) throws IOException, GitAPIException;
     }
 
-    public GitRepoImpl(final String url, final String branch, final String user, final String password) {
-        this(url, branch, user, password, new File(System.getProperty("java.io.tmpdir"), filenameFromUrl(url)));
-    }
-
     GitRepoImpl(final String url, final String branch, final String user, final String password, final File tempDir) {
         this.url = url;
         this.branch = branch;
         this.user = user;
         this.password = password;
         this.gitDir = tempDir;
-    }
-
-
-    static String filenameFromUrl(final String url) {
-        return url.trim().replaceAll("[\\W]", "_");
     }
 
     boolean isCloned() {
