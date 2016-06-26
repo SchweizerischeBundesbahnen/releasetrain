@@ -51,9 +51,9 @@ public class YamlSerializerTest {
         release.getActions().add(action2);
 
         File file = new File(testFolder.getRoot(), "action.yaml");
-        FileUtils.writeStringToFile(file, configSerializer.convertEntry(release));
+        FileUtils.writeStringToFile(file, configSerializer.convertEntry(release), "UTF-8");
 
-        ReleaseConfig release2 = configSerializer.convertEntry(FileUtils.readFileToString(file));
+        ReleaseConfig release2 = configSerializer.convertEntry(FileUtils.readFileToString(file, "UTF-8"));
         Assert.assertNotNull(release2);
         Assert.assertEquals(release, release2);
 
