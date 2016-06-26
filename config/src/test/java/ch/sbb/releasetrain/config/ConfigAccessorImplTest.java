@@ -35,7 +35,7 @@ public class ConfigAccessorImplTest {
         Assert.assertEquals(4, emailReceiver.size());
 
         List<MailReceiver> emailReceiverList = accessor.readMailReveiverForMailinglist("test");
-        Assert.assertEquals(3, emailReceiverList.size());
+        Assert.assertEquals(2, emailReceiverList.size());
 
     }
 

@@ -6,7 +6,7 @@ package ch.sbb.releasetrain.utils.http;
 
 import java.io.InputStream;
 
-import org.codehaus.plexus.util.IOUtil;
+import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -41,7 +41,7 @@ public class HttpUtilTest {
     public void testGetStream() throws Exception {
         HttpUtilImpl http = new HttpUtilImpl();
         InputStream google = http.getResourceAsStream("https://www.google.ch");
-        String content = IOUtil.toString(google);
+        String content = IOUtils.toString(google);
         Assert.assertTrue(content.contains("google.ch"));
     }
 

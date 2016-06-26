@@ -15,6 +15,12 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>ch.sbb.releasetrain</groupId>
+			<artifactId>status</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
 			<artifactId>config</artifactId>
 			<groupId>ch.sbb.releasetrain</groupId>
 			<version>${project.version}</version>
@@ -30,12 +36,6 @@
 			<artifactId>utils</artifactId>
 			<groupId>ch.sbb.releasetrain</groupId>
 			<version>${project.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>ch.sbb.releasetrain</groupId>
-			<artifactId>status</artifactId>
-			<version>0.0.21-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>

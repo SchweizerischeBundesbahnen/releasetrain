@@ -3,10 +3,10 @@
 		 xmlns="http://maven.apache.org/POM/4.0.0"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-<parent>
+	<parent>
 		<artifactId>parent</artifactId>
 		<groupId>ch.sbb.releasetrain</groupId>
-	<version>0.0.21-SNAPSHOT</version>
+		<version>0.0.21-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -15,17 +15,16 @@
 
 	<dependencies>
 
+		<dependency>
+			<groupId>ch.sbb.releasetrain</groupId>
+			<artifactId>utils</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
 			<version>1.17</version>
-		</dependency>
-
-		<dependency>
-			<groupId>ch.sbb.releasetrain</groupId>
-			<artifactId>utils</artifactId>
-			<version>0.0.21-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>
