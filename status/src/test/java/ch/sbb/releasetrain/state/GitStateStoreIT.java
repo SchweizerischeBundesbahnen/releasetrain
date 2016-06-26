@@ -39,19 +39,19 @@ public class GitStateStoreIT {
 
     private GitClientImpl gitClient;
 
+    @Before
+    public void initGitStatusStore() throws IOException {
+        assertNotNull("Missing parameter git.token, please set jvm property -Dgit.token=<your.github.token>", gitToken);
+        gitClient = new GitClientImpl(temporaryFolder.getRoot());
+        gitStateStore = new GitStateStore(gitClient, new StateStoreConfig(URL,BRANCH,gitToken,""));
+    }
+
     @After
     public void deleteTestBranch() {
         if(gitClient != null) {
             GitRepoImpl gitRepo = (GitRepoImpl) gitClient.gitRepo(URL, BRANCH, gitToken, "");
             gitRepo.deleteBranch();
         }
-    }
-
-    @Before
-    public void initGitStatusStore() throws IOException {
-        assertNotNull("Missing parameter git.token, please set jvm property -Dgit.token=<your.github.token>", gitToken);
-        gitClient = new GitClientImpl();
-        gitStateStore = new GitStateStore(gitClient, new StateStoreConfig(URL,BRANCH,gitToken,""));
     }
 
     @Test
