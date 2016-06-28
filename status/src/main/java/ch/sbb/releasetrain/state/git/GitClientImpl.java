@@ -1,12 +1,12 @@
 /*
- * Copyright (C) Schweizerische Bundesbahnen SBB, 2016.
+ * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
+ * and to You under the Apache License, Version 2.0.
  */
-
 package ch.sbb.releasetrain.state.git;
 
-import org.springframework.stereotype.Component;
-
 import java.io.File;
+
+import org.springframework.stereotype.Component;
 
 /**
  * @author u206123 (Florian Seidl)
@@ -25,12 +25,12 @@ public class GitClientImpl implements GitClient {
         this.tempDir = tempDir;
     }
 
+    static String filenameFromUrl(final String url) {
+        return url.trim().replaceAll("[\\W]", "_");
+    }
+
     @Override
     public GitRepo gitRepo(String url, String branch, String user, String password) {
         return new GitRepoImpl(url, branch, user, password, new File(tempDir, filenameFromUrl(url)));
-    }
-
-    static String filenameFromUrl(final String url) {
-        return url.trim().replaceAll("[\\W]", "_");
     }
 }

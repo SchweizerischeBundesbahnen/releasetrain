@@ -1,5 +1,6 @@
 /*
- * Copyright (C) Schweizerische Bundesbahnen SBB, 2016.
+ * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
+ * and to You under the Apache License, Version 2.0.
  */
 package ch.sbb.releasetrain.state.git;
 
@@ -25,7 +26,6 @@ import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
-
 /**
  * Access a git repository via JGit.
  *
@@ -46,11 +46,6 @@ public final class GitRepoImpl implements GitRepo {
 
     private final String password;
 
-
-    @FunctionalInterface
-    private interface GitConsumer<T> {
-        void accept(T t) throws IOException, GitAPIException;
-    }
 
     GitRepoImpl(final String url, final String branch, final String user, final String password, final File tempDir) {
         this.url = url;
@@ -154,7 +149,6 @@ public final class GitRepoImpl implements GitRepo {
         return git;
     }
 
-
     private boolean remoteBranchExists(final Git git) throws GitAPIException {
         List<Ref> branchRefs = git.branchList().setListMode(ListBranchCommand.ListMode.ALL).call();
         final String refsHeadBranch = "refs/remotes/origin/" + branch;
@@ -181,7 +175,6 @@ public final class GitRepoImpl implements GitRepo {
     private CredentialsProvider credentialsProvider() {
         return new UsernamePasswordCredentialsProvider(user, password);
     }
-
 
     /**
      * Use with care!
@@ -219,6 +212,12 @@ public final class GitRepoImpl implements GitRepo {
         } catch (IOException | GitAPIException e) {
             throw new GitException("Delete branch failed", e);
         }
+    }
+
+
+    @FunctionalInterface
+    private interface GitConsumer<T> {
+        void accept(T t) throws IOException, GitAPIException;
     }
 
 

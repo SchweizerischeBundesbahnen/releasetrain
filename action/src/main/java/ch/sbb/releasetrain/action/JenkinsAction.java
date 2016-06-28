@@ -7,6 +7,8 @@ package ch.sbb.releasetrain.action;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +31,23 @@ import ch.sbb.releasetrain.utils.http.HttpUtil;
 public class JenkinsAction extends AbstractAction {
 
     @Autowired
+    @Setter
     private HttpUtil http;
 
     @Value("${jenkins.url}")
+    @Setter
     private String jenkinsUrl;
 
     @Value("${jenkins.buildtoken}")
+    @Setter
     private String jenkinsBuildtoken;
 
     @Value("${jenkins.queue.url}")
+    @Setter
     private String queueURL;
+
+    @Getter
+    private JenkinsJobThread jenkinsThread;
 
     @Override
     public String getName() {
@@ -67,10 +76,10 @@ public class JenkinsAction extends AbstractAction {
             params.put(mV, maintenanceVersion);
         }
 
-        JenkinsJobThread th = new JenkinsJobThread(jobname, "fromReleaseTrainJenkinsAction", jenkinsUrl, jenkinsBuildtoken, queueURL, http, params);
-        th.startBuildJobOnJenkins(true);
-        state.setResultString(th.getBuildColor() + ": " + th.getJobUrl());
-        if (th.getBuildColor().equalsIgnoreCase("green")) {
+        jenkinsThread = new JenkinsJobThread(jobname, "fromReleaseTrainJenkinsAction", jenkinsUrl, jenkinsBuildtoken, queueURL, http, params);
+        jenkinsThread.startBuildJobOnJenkins(true);
+        state.setResultString(jenkinsThread.getBuildColor() + ": " + jenkinsThread.getJobUrl());
+        if (jenkinsThread.getBuildColor().equalsIgnoreCase("green")) {
             return ActionResult.SUCCESS;
         }
         return ActionResult.FAILED;

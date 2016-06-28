@@ -1,12 +1,12 @@
 /*
- * Copyright (C) Schweizerische Bundesbahnen SBB, 2016.
+ * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
+ * and to You under the Apache License, Version 2.0.
  */
-
 package ch.sbb.releasetrain.state.git;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 /**
  * @author u206123 (Florian Seidl)

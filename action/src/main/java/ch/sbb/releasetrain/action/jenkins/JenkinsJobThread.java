@@ -155,18 +155,20 @@ public final class JenkinsJobThread extends Thread {
         String result = this.callURL(url);
         String user = org.apache.commons.lang3.StringUtils.substringBetween(result, "user <a href=\"/user/", "\">");
 
-        if (user == null) {
-            if (result.contains("Started by timer")) {
-                return "timer";
-            }
-
-            String url2 = this.jenkinsUrl + "/job/" + this.jobId + "/lastBuild/changes";
-            String result2 = this.callURL(url2);
-            String user2 = org.apache.commons.lang3.StringUtils.substringBetween(result2, "by <a href=\"/user/", "/\">");
-
-            return user2;
+        if (user != null) {
+            return user;
         }
-        return user;
+
+        String remote = org.apache.commons.lang3.StringUtils.substringBetween(result, "Started by remote host", "</span>");
+        if (remote != null) {
+            return "Started by remote host " + remote;
+        }
+
+        if (result.contains("Started by timer")) {
+            return "timer";
+        }
+
+        return "n/a";
     }
 
     @Override
