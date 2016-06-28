@@ -58,15 +58,11 @@ public final class ReleasetrainMojo extends AbstractMojo {
     private String jenkinsUrl = "";
 
     // the jenkins.buildtoken
-    @Parameter(property = "jenkins.buildtoken", required = true)
-    private String jenkinsBuildtoken = "";
-
-    // the jenkins.buildtoken
-    @Parameter(property = "jenkins.user", required = true)
+    @Parameter(property = "http.user", required = true)
     private String httpUser = "";
 
     // the jenkins.buildtoken
-    @Parameter(property = "jenkins.password", required = true)
+    @Parameter(property = "http.password", required = true)
     private String httpPassword = "";
 
     // host of the Mail Server
