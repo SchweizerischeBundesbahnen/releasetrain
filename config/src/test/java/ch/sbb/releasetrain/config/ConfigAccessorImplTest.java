@@ -15,8 +15,6 @@ import ch.sbb.releasetrain.config.releasecalendar.ConfigAccessorImpl;
 import ch.sbb.releasetrain.utils.http.HttpUtilImpl;
 
 /**
- * Test
- *
  * @author u203244 (Daniel Marthaler)
  * @since 0.0.1, 2016
  */

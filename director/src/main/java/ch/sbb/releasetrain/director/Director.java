@@ -27,6 +27,7 @@ import ch.sbb.releasetrain.state.model.ReleaseState;
  * @author u203244 (Daniel Marthaler)
  * @since 0.0.1, 2016
  */
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 @Component
 @Slf4j
 public class Director {
@@ -78,7 +79,11 @@ public class Director {
                 Action action = evaluateActionForName(actionState.getConfig().getName());
                 try {
                     // will set action state inside this method
-                    rs = action.run(actionState, event.getReleaseVersion(), event.getSnapshotVersion(), event.getSnapshotVersion());
+                    if (action != null) {
+                        rs = action.run(actionState, event.getReleaseVersion(), event.getSnapshotVersion(), event.getSnapshotVersion());
+                    } else {
+                        log.error("action for name: " + actionState.getConfig().getName() + " not available");
+                    }
                 } catch (Exception e) {
                     log.error(e.getMessage(), e);
                     rs = ActionResult.SUCCESS;

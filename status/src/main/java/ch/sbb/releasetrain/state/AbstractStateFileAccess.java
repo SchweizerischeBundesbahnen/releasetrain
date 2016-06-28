@@ -23,6 +23,6 @@ abstract class AbstractStateFileAccess {
     }
 
     protected File file(final String releaseIdentifier) {
-        return new File(dir, releaseIdentifier + "-stored-state.yaml");
+        return new File(dir, releaseIdentifier + "-stored-state.yml");
     }
 }

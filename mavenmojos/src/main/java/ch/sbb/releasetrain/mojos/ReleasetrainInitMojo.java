@@ -63,30 +63,11 @@ public class ReleasetrainInitMojo extends AbstractMojo {
         }
     }
 
-    /**
-     * git.setRepo(gitrepo);
-     * git.setUser(gituser);
-     * git.setPassword(gitpassword);
-     * git.setBranch(gitbranch);
-     * git.writeFile("info.txt", new Date().toString(), "master");
-     * 
-     * if (new File(git.getGitDir(), "/config.properties").exists()) {
-     * log.info("repo is already initialized with a release train config branch ... will not update");
-     * return;
-     * }
-     * 
-     * git.wipeGitWorkspace(null, ".git", "config.properties");
-     * git.stageAndPushDeletedFile();
-     * writer.setWorkspace(git.getGitDir().getAbsolutePath());
-     * writer.writeFileFromCPToWorkspace("/", "config.properties");
-     * git.writeFile("info.txt", new Date().toString(), "");
-     * }
-     **/
-
     private String ask(String text) {
         Scanner sc = new Scanner(System.in);
         System.out.println(text);
-        while (sc.hasNextLine()) {
+
+        if (sc.hasNextLine()) {
             return sc.nextLine();
         }
         return "";

@@ -35,7 +35,7 @@ public class StateFileWriterReaderTest {
     public void testWriteState() throws IOException {
         ReleaseState releaseState = new ReleaseState("test", Collections.<ActionConfig>emptyList());
         new StateFileWriter(temporaryFolder.getRoot()).write(releaseState);
-        assertTrue(new File(temporaryFolder.getRoot(), "test-stored-state.yaml").exists());
+        assertTrue(new File(temporaryFolder.getRoot(), "test-stored-state.yml").exists());
     }
 
     @Test

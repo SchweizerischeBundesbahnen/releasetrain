@@ -49,14 +49,14 @@ public class ConfigAccessorImpl implements ConfigAccessor {
 
     @Override
     public ReleaseConfig readConfig(String name) {
-        String url = baseURL + "/" + name + ".yaml";
+        String url = baseURL + "/" + name + ".yml";
         String page = http.getPageAsString(url);
         return accessorRelease.convertEntry(page);
     }
 
     @Override
     public List<MailReceiver> readMailReceiver() {
-        String url = baseURL + "/mailinglists.yaml";
+        String url = baseURL + "/mailinglists.yml";
         String page = http.getPageAsString(url);
         return accessorMailing.convertEntrys(page);
     }

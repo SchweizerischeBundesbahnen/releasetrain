@@ -11,5 +11,5 @@ package ch.sbb.releasetrain.utils.model;
  * @since 0.0.1, 2016
  */
 public interface Recognizable<T> extends Comparable<T> {
-    public String retreiveIdentifier();
+    String retreiveIdentifier();
 }

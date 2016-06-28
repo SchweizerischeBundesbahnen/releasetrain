@@ -19,6 +19,7 @@ import org.junit.rules.TemporaryFolder;
  * @author u206123 (Florian Seidl)
  * @since 0.0.6, 2016.
  */
+@SuppressWarnings("ALL")
 public class GitRepoTest {
 
     @Rule
@@ -28,7 +29,6 @@ public class GitRepoTest {
     public void isClonedEmpty() throws IOException {
         assertFalse(new GitRepoImpl("", "", "", "", temporaryFolder.newFolder("leer")).isCloned());
     }
-
 
     @Test
     public void isCloned() throws IOException {

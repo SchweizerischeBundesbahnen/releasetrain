@@ -7,11 +7,6 @@ package ch.sbb.releasetrain.action.jenkins;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.runner.RunWith;
@@ -46,16 +41,10 @@ public class JenkinsActionTest {
     @org.junit.Before
     public void setUp() throws Exception {
 
-        String in = IOUtils.toString(getClass().getResourceAsStream("/test-jenkins-action-state.yaml"));
+        String in = IOUtils.toString(getClass().getResourceAsStream("/test-jenkins-action-state.yml"));
         YamlModelAccessor<ActionState> yaml = new YamlModelAccessor<>();
         jenkinsState = yaml.convertEntry(in);
         action = new JenkinsAction();
-
-        List<MailReceiver> receiverList = new ArrayList<>();
-
-        when(mailRec.getEmail()).thenReturn("bla@bla.bl");
-        receiverList.add(mailRec);
-        when(config.readMailReveiverForMailinglist(anyString())).thenReturn(receiverList);
 
     }
 

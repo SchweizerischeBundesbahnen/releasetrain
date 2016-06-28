@@ -46,7 +46,7 @@ public class SendMailActionTest {
     @org.junit.Before
     public void setUp() throws Exception {
 
-        String in = IOUtils.toString(getClass().getResourceAsStream("/test-mail-action-state.yaml"));
+        String in = IOUtils.toString(getClass().getResourceAsStream("/test-mail-action-state.yml"));
         YamlModelAccessor<ActionState> yaml = new YamlModelAccessor<>();
         mailState = yaml.convertEntry(in);
         server = SimpleSmtpServer.start(2525);

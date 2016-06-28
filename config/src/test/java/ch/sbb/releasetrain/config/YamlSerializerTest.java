@@ -50,7 +50,7 @@ public class YamlSerializerTest {
         release.getActions().add(action);
         release.getActions().add(action2);
 
-        File file = new File(testFolder.getRoot(), "action.yaml");
+        File file = new File(testFolder.getRoot(), "action.yml");
         FileUtils.writeStringToFile(file, configSerializer.convertEntry(release), "UTF-8");
 
         ReleaseConfig release2 = configSerializer.convertEntry(FileUtils.readFileToString(file, "UTF-8"));
@@ -68,7 +68,7 @@ public class YamlSerializerTest {
         list.add(createMailReceiver(3, "hallo"));
         list.add(createMailReceiver(4, "hallo"));
 
-        File file = new File(testFolder.getRoot(), "mail.yaml");
+        File file = new File(testFolder.getRoot(), "mail.yml");
         FileUtils.writeStringToFile(file, emailSerializer.convertEntrys(list));
 
         List<MailReceiver> list2 = emailSerializer.convertEntrys(FileUtils.readFileToString(file));

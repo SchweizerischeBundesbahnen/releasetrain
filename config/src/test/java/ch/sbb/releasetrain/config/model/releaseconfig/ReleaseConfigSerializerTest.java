@@ -42,7 +42,7 @@ public class ReleaseConfigSerializerTest {
         action2.getProperties().put("state", "SUCCESS");
         release.getActions().add(action2);
 
-        File file = new File(testFolder.getRoot(), "devType3.yaml");
+        File file = new File(testFolder.getRoot(), "devType3.yml");
         FileUtils.writeStringToFile(file, configSerializer.convertEntry(release));
 
         ReleaseConfig release2 = configSerializer.convertEntry(FileUtils.readFileToString(file));
