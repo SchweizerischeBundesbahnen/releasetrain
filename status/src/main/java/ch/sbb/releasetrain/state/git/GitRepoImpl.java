@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.Git;
@@ -62,6 +63,15 @@ public final class GitRepoImpl implements GitRepo {
     @Override
     public File directory() {
         return gitDir;
+    }
+
+    @Override
+    public void reset() {
+        try {
+            FileUtils.deleteDirectory(this.gitDir);
+        } catch (IOException e) {
+            log.error("not able to delete folder: " + this.gitDir, e);
+        }
     }
 
     public void cloneOrPull() {

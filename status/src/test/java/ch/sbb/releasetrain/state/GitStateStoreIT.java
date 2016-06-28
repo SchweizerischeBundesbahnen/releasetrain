@@ -43,7 +43,7 @@ public class GitStateStoreIT {
     public void initGitStatusStore() throws IOException {
         assertNotNull("Missing parameter git.token, please set jvm property -Dgit.token=<your.github.token>", gitToken);
         gitClient = new GitClientImpl(temporaryFolder.getRoot());
-        gitStateStore = new GitStateStore(gitClient, new StateStoreConfig(URL,BRANCH,gitToken,""));
+        gitStateStore = new GitStateStore(gitClient, new StateStoreConfig(URL, BRANCH, gitToken, ""), true);
     }
 
     @After

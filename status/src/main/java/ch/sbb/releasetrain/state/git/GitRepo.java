@@ -29,4 +29,9 @@ public interface GitRepo {
      */
     File directory();
 
+    /**
+     * clearing the local git Repo
+     */
+    void reset();
+
 }

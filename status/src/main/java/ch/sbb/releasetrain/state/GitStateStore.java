@@ -36,6 +36,8 @@ public class GitStateStore implements StateStore {
     @Autowired
     private StateStoreConfig storeConfig;
 
+    private boolean resetOnStartup = true;
+
     @Override
     public void writeReleaseStatus(final ReleaseState releaseState) {
         GitRepo gitRepo = gitRepo();
@@ -57,6 +59,15 @@ public class GitStateStore implements StateStore {
     }
 
     private GitRepo gitRepo() {
-        return gitClient.gitRepo(storeConfig.getUrl(), storeConfig.getBranch(), storeConfig.getUser(), storeConfig.getPassword());
+
+
+        GitRepo repo = gitClient.gitRepo(storeConfig.getUrl(), storeConfig.getBranch(), storeConfig.getUser(), storeConfig.getPassword());
+
+        // reset if requested and set resetOnStartup to false, so reset is done only at the beginning
+        if (this.resetOnStartup) {
+            repo.reset();
+            this.resetOnStartup = false;
+        }
+        return repo;
     }
 }
