@@ -24,10 +24,10 @@ import ch.sbb.releasetrain.utils.http.HttpUtil;
 @Slf4j
 public final class JenkinsJobThread extends Thread {
 
-    boolean waiting = true;
-    boolean running = false;
-    String jenkinsBuildtoken;
-    String jenkinsQueueUrl;
+    private boolean waiting = true;
+    private boolean running = false;
+    private String jenkinsBuildtoken;
+    private String jenkinsQueueUrl;
     private long start = Long.MAX_VALUE;
     private String apiLatestBuildURL = "";
     @Getter
@@ -41,12 +41,12 @@ public final class JenkinsJobThread extends Thread {
     /**
      * Constructor for jenkins builds with parameters
      */
-    public JenkinsJobThread(final String job, final String cause, String jenkinsUrl, String jenkinsBuildtoken, String jenkinsQueueUrl, HttpUtil http, final Map<String, String> params) {
+    public JenkinsJobThread(final String job, final String cause, String jenkinsUrl, String jenkinsBuildtoken, HttpUtil http, final Map<String, String> params) {
 
         this.http = http;
         this.jenkinsUrl = jenkinsUrl;
         this.jenkinsBuildtoken = jenkinsBuildtoken;
-        this.jenkinsQueueUrl = jenkinsQueueUrl;
+        this.jenkinsQueueUrl = jenkinsUrl + "/queue/api/json";
         apiLatestBuildURL = jenkinsUrl + "/job/" + job + "/lastBuild/api/xml";
         jobUrl = jenkinsUrl + "/job/" + job + "/build?token=" + jenkinsBuildtoken;
         jobId = job;

@@ -42,10 +42,6 @@ public class JenkinsAction extends AbstractAction {
     @Setter
     private String jenkinsBuildtoken;
 
-    @Value("${jenkins.queue.url}")
-    @Setter
-    private String queueURL;
-
     @Getter
     private JenkinsJobThread jenkinsThread;
 
@@ -76,7 +72,7 @@ public class JenkinsAction extends AbstractAction {
             params.put(mV, maintenanceVersion);
         }
 
-        jenkinsThread = new JenkinsJobThread(jobname, "fromReleaseTrainJenkinsAction", jenkinsUrl, jenkinsBuildtoken, queueURL, http, params);
+        jenkinsThread = new JenkinsJobThread(jobname, "fromReleaseTrainJenkinsAction", jenkinsUrl, jenkinsBuildtoken, http, params);
         jenkinsThread.startBuildJobOnJenkins(true);
         state.setResultString(jenkinsThread.getBuildColor() + ": " + jenkinsThread.getJobUrl());
         if (jenkinsThread.getBuildColor().equalsIgnoreCase("green")) {

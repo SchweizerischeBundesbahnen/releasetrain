@@ -63,7 +63,6 @@ public class JenkinsActionTest {
         action.setJenkinsBuildtoken("build");
         String jenkins = "http://87.230.15.247:8080/";
         action.setJenkinsUrl(jenkins);
-        action.setQueueURL(jenkins + "/queue/api/json");
         action.setHttp(http);
 
 
