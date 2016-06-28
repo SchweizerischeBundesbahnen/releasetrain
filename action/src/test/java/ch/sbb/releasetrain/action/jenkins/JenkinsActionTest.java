@@ -83,6 +83,6 @@ public class JenkinsActionTest {
         assertNotNull(result == ActionResult.SUCCESS);
 
         String user = action.getJenkinsThread().getLatestUserForJob();
-        assertTrue(user.contains("Startet by remote host"));
+        assertTrue(user.contains("Started by remote host"));
     }
 }
