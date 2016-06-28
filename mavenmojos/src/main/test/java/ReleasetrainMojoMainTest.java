@@ -16,8 +16,6 @@ import ch.sbb.releasetrain.Application;
 @Mojo(name = "releasetrain", defaultPhase = LifecyclePhase.VALIDATE, requiresOnline = true, requiresProject = false, threadSafe = true)
 public final class ReleasetrainMojo extends AbstractMojo {
 
-
-
     public void execute() throws MojoExecutionException {
         Application.main(new String[0]);
     }
