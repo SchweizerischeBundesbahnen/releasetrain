@@ -5,25 +5,25 @@ config:
   user: marthaler
   password: '***'
 
-store
+store:
   url: 'https://github.com/SchweizerischeBundesbahnen/releasetrain.git'
   branch: feature/releasetrain-state-do-not-touch
   user: marthaler
   password: '***'
 
-jenkins
+jenkins:
   url: https://ci.sbb.ch/
   buildtoken: build
 
-http
+http:
   user: '***'
   password: '***'
 
-smtp
+smtp:
   host: '***'
 
-logging
-  level
+logging:
+  level:
     ch: INFO
-  pattern
+  pattern:
     console: %5p %d{mm:ss} %msg%n
