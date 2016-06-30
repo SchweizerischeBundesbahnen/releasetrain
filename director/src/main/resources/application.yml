@@ -2,8 +2,8 @@ config:
   url: 'https://github.com/SchweizerischeBundesbahnen/releasetrain.git'
   baseurl: 'https://github.com/SchweizerischeBundesbahnen/releasetrain/raw/feature/releasetrainconfig'
   branch: feature/releasetrain
-  user:marthaler
-  password:***
+  user: marthaler
+  password: ***
 
 store
   url: 'https://github.com/SchweizerischeBundesbahnen/releasetrain.git'
@@ -20,7 +20,7 @@ http
   password: ***
 
 smtp
-  host:***
+  host: ***
 
 logging
   level
