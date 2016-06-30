@@ -3,24 +3,24 @@ config:
   baseurl: https://github.com/SchweizerischeBundesbahnen/releasetrain/raw/feature/releasetrainconfig
   branch: feature/releasetrain
   user: marthaler
-  password: ***
+  password: xy
 
 store:
   url: https://github.com/SchweizerischeBundesbahnen/releasetrain.git
   branch: feature/releasetrain-state-do-not-touch
   user: marthaler
-  password: ***
+  password: xy
 
 jenkins:
   url: https://ci.sbb.ch/
   buildtoken: build
 
 http:
-  user: ***
-  password: ***
+  user: xy
+  password: xy
 
 smtp:
-  host: ***
+  host: xy
 
 logging:
   level:
