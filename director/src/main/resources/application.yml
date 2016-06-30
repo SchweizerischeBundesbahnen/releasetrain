@@ -26,4 +26,4 @@ logging:
   level:
     ch: INFO
   pattern:
-    console: %5p %d{mm:ss} %msg%n
+    console: '%5p %d{mm:ss} %msg%n'
