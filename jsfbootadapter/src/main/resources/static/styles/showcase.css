@@ -1,0 +1,180 @@
+#showcase {
+    position: relative;
+    margin: auto;
+    width: 1350px;
+    margin-left: -675px;
+    left: 50%;
+}
+
+#showcase div {
+    border: 0;
+    margin: 0;
+}
+
+#showcase .showcase-onepage .static-caption {
+    background-color: #dfdfdf;
+    color: #333;
+}
+
+/* Caption */
+#showcase .static-caption {
+    text-align: left;
+    font-size: 11px;
+    color: #e0e0e0;
+    padding: 10px 0;
+    margin: 0;
+}
+
+#showcase #awOnePageButton .view-slide {
+    display: none;
+}
+
+/* This class is removed after the showcase is loaded */
+/* Assign the correct showcase height to prevent loading jumps in IE */
+#showcase .showcase-load {
+    /* Same as showcase javascript option */
+    height: 500px;
+    overflow: hidden;
+}
+
+/* Container when content is shown as one page */
+#showcase .showcase-onepage {
+
+}
+
+#showcase .showcase-content-container {
+    padding-top: 10px;
+    width: 100%;
+}
+
+/* Content */
+#showcase .showcase-content {
+    text-align: center;
+    /*overflow-y: auto !important;*/
+}
+
+#showcase .showcase-content-wrapper {
+    text-align: center;
+    height: 470px;
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/* Styling the caption */
+#showcase .showcase-caption {
+    padding: 20px 15px;
+    text-align: left;
+    position: absolute;
+    bottom: 70%;
+    right: 57px;
+    left: 57px;
+    display: none;
+    background: #888;
+    opacity: 0.9;
+    color: white;
+    margin-right: 300px;
+    margin-left: 300px;
+    font-weight: bold;
+}
+
+#showcase .showcase-caption h4 {
+    color: white;
+}
+
+#showcase .showcase-onepage .showcase-content {
+    margin-bottom: 10px;
+}
+
+#showcase .showcase-thumbnail-container {
+
+}
+
+#showcase .showcase-thumbnail-wrapper {
+    overflow: hidden;
+    margin: auto;
+}
+
+#showcase .showcase-thumbnail {
+    width: 120px;
+    height: 50px;
+    cursor: pointer;
+    border: solid 1px #333;
+    position: relative;
+}
+
+#showcase .showcase-thumbnail-caption {
+    position: absolute;
+    bottom: 2px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    background: #888;
+    opacity: 0.8;
+}
+
+#showcase .showcase-thumbnail-content {
+    padding: 10px;
+    text-align: center;
+    padding-top: 25px;
+}
+
+#showcase .showcase-thumbnail-restriction {
+    float: none !important;
+}
+
+#showcase .showcase-thumbnail-cover {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: url(images/black-opacity-40.png);
+}
+
+#showcase .showcase-thumbnail-button-backward, .showcase-thumbnail-button-forward {
+    display: none;
+}
+
+#showcase .showcase-thumbnail:hover {
+    border: solid 1px #999;
+}
+
+#showcase .showcase-thumbnail:hover .showcase-thumbnail-cover {
+    display: none;
+}
+
+#showcase .showcase-thumbnail.active {
+    border: solid 1px #999;
+}
+
+#showcase .showcase-thumbnail.active .showcase-thumbnail-cover {
+    display: none;
+}
+
+#showcase .showcase-thumbnail-wrapper-horizontal {
+    padding: 10px;
+}
+
+#showcase .showcase-thumbnail-wrapper-horizontal .showcase-thumbnail {
+    margin-right: 10px;
+    width: 116px;
+}
+
+.showcase-thumbnail-wrapper-vertical {
+    padding: 10px;
+}
+
+.showcase-thumbnail-wrapper-vertical .showcase-thumbnail {
+    margin-bottom: 10px;
+}
+
+/* Clear (used for horizontal thumbnails) */
+.clear {
+    clear: both;
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    float: none;
+}

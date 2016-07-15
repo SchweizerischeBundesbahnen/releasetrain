@@ -1,12 +1,12 @@
 config:
   url: https://github.com/SchweizerischeBundesbahnen/releasetrain.git
   baseurl: https://github.com/SchweizerischeBundesbahnen/releasetrain/raw/feature/releasetrainconfig
-  branch: feature/releasetrain
+  branch: feature/releasetrain-devl-config
   user: marthaler
   password: xy
 
 store:
-  url: https://github.com/SchweizerischeBundesbahnen/releasetrain.git
+  url: d:/releasetrain
   branch: feature/releasetrain-state-do-not-touch
   user: marthaler
   password: xy
@@ -16,8 +16,8 @@ jenkins:
   buildtoken: build
 
 http:
-  user: xy
-  password: xy
+  user: releasetrain
+  password: releasetrain11
 
 smtp:
   host: xy
@@ -27,3 +27,11 @@ logging:
     ch: INFO
   pattern:
     console: '%5p %d{mm:ss} %msg%n'
+
+security:
+  user:
+    name: user
+    password: user
+    role: USER
+  basic:
+    enabled: false

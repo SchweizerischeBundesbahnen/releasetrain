@@ -1,0 +1,483 @@
+/**
+ * "Yet Another Multicolumn Layout" - (X)HTML/CSS Framework
+ *
+ * (en) Screen layout for YAML examples
+ * (de) Bildschirmlayout für YAML-Beispiele
+ *
+ * @copyright       Copyright 2005-2010, Dirk Jesse
+ * @license         CC-A 2.0 (http://creativecommons.org/licenses/by/2.0/),
+ *                  YAML-C (http://www.yaml.de/en/license/license-conditions.html)
+ * @link            http://www.yaml.de
+ * @package         yaml
+ * @version         3.3
+ * @revision        $Revision: 466 $
+ * @lastmodified    $Date: 2010-09-14 21:19:30 +0200 (Di, 14 Sep 2010) $
+ */
+
+@media screen, projection {
+    /**
+    * (en) Forcing vertical scrollbars in IE8, Firefox, Webkit & Opera
+    * (de) Erzwingen vertikaler Scrollbalken in IE8, Firefox, Webkit & Opera
+    *
+    * @workaround
+    * @affected IE8, FF, Webkit, Opera
+    * @css-for all
+    * @valid CSS3
+    */
+    body {
+        overflow-y: scroll;
+    }
+
+    /*------------------------------------------------------------------------------------------------------*/
+    /**
+    * (en) Formatting YAML's  basic layout elements
+    * (de) Gestaltung des YAML Basis-Layouts
+    */
+    /* (en) Marginal areas & page background */
+    /* (de) Randbereiche & Seitenhintergrund */
+    body {
+        background: #ffffff;
+    }
+
+    /* (en) Centering layout in old IE-versions */
+    /* (de) Zentrierung des Layouts in alten IE-versionen */
+    body {
+        text-align: center;
+    }
+
+    /* (en) Layout: width, background, borders */
+    /* (de) Layout: Breite, Hintergrund, Rahmen */
+    .page_margins {
+        text-align: left;
+        margin: 0 auto;
+        max-width: 90em;
+    }
+
+    .page {
+        margin: 0 20px;
+    }
+
+    #topnav, #header, #nav, #main, #extended, #footer {
+        overflow: hidden;
+        min-width: 720px;
+    }
+
+    /* (en) Designing main layout elements */
+    /* (de) Gestaltung der Hauptelemente des Layouts */
+    #footer {
+        background: #dadada;
+    }
+
+    #breadcrump span.navlinks {
+        float: right;
+    }
+
+    #breadcrump span.navlinks a {
+        float: left;
+    }
+
+    #breadcrump .button, #breadcrump input[type=submit] {
+        padding: 2px 10px;
+        margin-top: 4px;
+    }
+
+    #header {
+        text-align: left;
+        margin-top: 5px;
+    }
+
+    #header h1 {
+        color: #fff !important;
+        letter-spacing: normal;
+    }
+
+    #header img {
+        margin: 0px 0 0 -20px;
+    }
+
+    #header .companylogo {
+        float: right;
+        margin-top: 10px;
+    }
+
+    #nav {
+        background-color: #2767ad;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-top: 2px #666 solid;
+        border-bottom: 1px white solid;
+        font-weight: bold;
+    }
+
+    #nav .hlist ul {
+        float: right;
+    }
+
+    #nav .hlist ul li {
+        margin-right: 5px;
+    }
+
+    #nav .hlist ul li a {
+        color: white;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        text-align: center;
+    }
+
+    #nav .hlist ul li.active a {
+        background-color: #333;
+    }
+
+    #nav .hlist ul li a:hover {
+        background-color: #666;
+        color: white;
+        text-decoration: none;
+    }
+
+    #header .appname {
+        color: black;
+        font-size: 2.5em;
+    }
+
+    #breadcrump {
+        background: #fff;
+        height: 27px;
+    }
+
+    #main {
+        background-color: #ececec;
+        border-top: 0;
+    }
+
+    #main .c25r {
+        border-left: 1px #eee solid;
+    }
+
+    .c20l .subcl {
+        padding: 0 0 0 0;
+    }
+
+    #extended {
+        background: #f0f0f0;
+        border-top: 1px #ccc dotted;
+    }
+
+    #extended .c25l, #extended .c50l {
+        border-right: 1px #88a dashed;
+    }
+
+    #extended .subc {
+        padding: 0 10px;
+    }
+
+    #extended .subcl {
+        padding: 0 10px 0 0;
+    }
+
+    #extended .subcr {
+        padding: 0 0 0 10px;
+    }
+
+    #main, #extended {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    article, .inset {
+        padding: 20px;
+        background-color: white;
+        border: 1px solid #efefef;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        box-shadow: inset 0px 0px 4px #888;
+        -moz-box-shadow: inset 0px 0px 4px #888;
+        -webkit-box-shadow: inset 0px 0px 4px #888;
+    }
+
+    #footer {
+        /*
+                border-top: 1px #9e9e9e solid;
+                border-bottom: 1px #9e9e9e solid;
+        */
+    }
+
+    #footer .page {
+        padding: 10px 0;
+    }
+
+    /**
+    * ------------------------------------------------------------------------------------------------- #
+    *
+    * (en) Modifying "shiny buttons" navigation
+    * (en) Anpassung der "Shiny Buttons" Navigation
+    */
+    .hlist {
+        /* (en) containing floats in IE */
+        /* (de) Einfassen der Floats im IE */
+        width: 100%;
+        overflow: hidden;
+        /* (en) containing floats in all other browsers */
+        /* (de) Einfassen der Floats in allen anderen Browsern */
+        float: left;
+        display: inline;
+        /* (en|de) Bugfix:IE - collapsing horizontal margins */
+        position: relative;
+        /* (en) Repeat the main color from the image */
+        /* (de) Wiederholung der Hauptfarbe aus der Bilddatei */
+        line-height: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    .hlist a img {
+        padding-right: 0;
+    }
+
+    .hlist div {
+        margin: 0;
+        padding: 0;
+    }
+
+    .hlist ul {
+        margin: 0;
+        padding: 0;
+        /* (en|de) Bugfix:IE - Doubled Float Margin Bug */
+        display: inline;
+        float: left; /* LTR */
+    }
+
+    .hlist ul li {
+        line-height: 1.2em;
+        /* (en|de) Bugfix:IE - Doubled Float Margin Bug */
+        display: inline;
+        float: left; /* LTR */
+        font-size: 1.0em;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .floatbox ul li {
+        width: auto;
+    }
+
+    .hlist ul li.last {
+        float: right;
+    }
+
+    .hlist ul li a,
+    .hlist ul li strong {
+        color: #222;
+        width: auto;
+        display: block;
+        margin: 0;
+        padding: 0.5em 0.8em 0.5em 0.8em;
+    }
+
+    .hlist ul li a span {
+        display: block;
+    }
+
+    .hlist ul li strong span {
+        display: block;
+    }
+
+    /**
+    * ------------------------------------------------------------------------------------------------- #
+    *
+    * (en) Styling of layout specific elements
+    * (de) Gestaltung layoutabhängiger Elemente
+    */
+    #header h1 {
+        font-weight: bold;
+        font-size: 2.5em;
+        letter-spacing: -2px;
+        line-height: 65%;
+        color: #000;
+    }
+
+    #header span {
+        color: white;
+    }
+
+    #footer a {
+        color: #fff;
+        background: transparent;
+        font-weight: bold;
+    }
+
+    #footer a:focus,
+    #footer a:hover,
+    #footer a:active {
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    /**
+    * ------------------------------------------------------------------------------------------------- #
+    *
+    * Skiplinks
+    *
+    * (en) Visual styling for skiplink navigation
+    * (de) Visuelle Gestaltung der Skiplink-Navigation
+    *
+    * @section content-skiplinks
+    */
+    #skiplinks a.skip:focus,
+    #skiplinks a.skip:active {
+        color: #fff;
+        background: #333;
+        border-bottom: 1px #000 solid;
+        padding: 10px 0;
+        text-decoration: none;
+    }
+
+    /**
+     * (en) Vertical list navigation "vlist"
+     * (de) Vertikale Navigationsliste "vlist"
+     */
+    .vlist {
+        margin-bottom: 0;
+        border-bottom: 0;
+        border-top: 0;
+        padding: 0;
+    }
+
+    .vlist li.active {
+        border-top: 1px solid #888;
+        border-bottom: 1px solid #888;
+        background: #2767ad;
+    }
+
+    .vlist li a {
+        width: 100%;
+    }
+
+    .vlist li table {
+        display: block;
+        width: 90%;
+        padding-left: 10%;
+    }
+
+    .vlist li.active a {
+        color: white;
+        background: #444;
+        border-right: none;
+    }
+
+    .vlist li.active span {
+        color: white;
+    }
+
+    .vlist ul li a span {
+        display: block;
+        color: #888;
+        font-weight: normal;
+        padding-left: 0;
+    }
+
+    .vlist ul li a:focus,
+    .vlist ul li a:hover,
+    .vlist ul li a:active {
+        background: #2767ad;
+        color: #fff;
+    }
+
+    .vlist ul li.active {
+        background: transparent;
+        border: 0 none;
+    }
+
+    .vlist ul li a:hover span {
+        color: white;
+    }
+
+    .vlist ul li strong span {
+        display: block;
+        color: #aaa;
+    }
+
+    h6.vlist {
+        color: white;
+        background-color: #888888;
+        border-top: none;
+        border-bottom: none;
+        border-right: 1px solid #888888;
+    }
+
+    #main .button {
+        min-height: 22px;
+    }
+
+    #main .button img {
+        max-height: 16px;
+    }
+
+    .button, input[type=submit], .shade {
+        color: black;
+        border: 1px solid #bfbfbf;
+        text-decoration: none;
+        line-height: 22px;
+        background: #FFFFFF; /* old browsers */
+        background: -moz-linear-gradient(top, #FFFFFF 0%, #F3F3F3 50%, #EBEBEB 100%); /* firefox */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FFFFFF), color-stop(50%, #F3F3F3), color-stop(100%, #EBEBEB)); /* webkit */
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#EBEBEB', GradientType=0); /* ie */
+        text-shadow: #fff 0px 1px 1px;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        display: inline-block;
+        margin: 0 10px 2px 0;
+    }
+
+    .button, input[type=submit] {
+        padding: 1px 10px;
+        text-align: center;
+    }
+
+    .button:active, .button:hover, input[type=submit]:hover {
+        background: #ababab;
+        border-color: #ababab;
+        border-top-color: #636363;
+        background: -webkit-gradient(linear, left top, left bottom, from(#bebebe), to(#dddddd));
+        background: -moz-linear-gradient(top, #bebebe, #eeeeee);
+        color: black;
+        text-decoration: none;
+    }
+
+    h1 .button, h2 .button, h3 .button {
+        line-height: inherit;
+    }
+
+    #breadcrump .button {
+        line-height: 11px;
+    }
+
+    .collapsible {
+        border: none;
+    }
+
+    .collapsible table {
+        margin-bottom: 0;
+    }
+
+    .collapsible .button {
+        text-align: left;
+    }
+
+    .collapsible .body {
+        background: #f8f8f8;
+        border: 1px solid #efefef;
+        border-top: none;
+    }
+
+    .tab .header {
+        background: white;
+    }
+
+    .tab .content {
+
+    }
+}
