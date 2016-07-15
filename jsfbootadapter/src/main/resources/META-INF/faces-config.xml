@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<faces-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-			  xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-			  version="2.2">
+<faces-config
+		xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+		version="2.2">
 	<application>
 		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
 		<!--<navigation-handler>org.primefaces.mobile.application.MobileNavigationHandler</navigation-handler>-->
-		<resource-handler>ch.sbb.releasetrain.jsfbootadapter.JSFBootAdapterResourceHandler</resource-handler>
+		<resource-handler>ch.sbb.releasetrain.jsfbootadapter.PrimeBootAdapterResourceHandler
+		</resource-handler>
 	</application>
 
 </faces-config>

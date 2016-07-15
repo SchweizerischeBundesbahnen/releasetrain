@@ -16,13 +16,13 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-public class JSFBootAdapterResourceHandler extends ResourceHandlerWrapper {
+public class PrimeBootAdapterResourceHandler extends ResourceHandlerWrapper {
 
     public Map<String, ViewResource> cache = new HashMap<String, ViewResource>();
     private Log log = LogFactory.getLog(getClass());
     private ResourceHandler handler;
 
-    public JSFBootAdapterResourceHandler(ResourceHandler handler) {
+    public PrimeBootAdapterResourceHandler(ResourceHandler handler) {
         this.handler = handler;
     }
 

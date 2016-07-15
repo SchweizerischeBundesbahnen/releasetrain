@@ -19,10 +19,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import com.sun.faces.config.ConfigureListener;
 
 @Configuration
-public class JSFBootAdapterConfiguration extends WebMvcConfigurerAdapter implements ServletContextAware {
+public class PrimeBootAdapterConfiguration extends WebMvcConfigurerAdapter implements ServletContextAware {
 
     public static void main(String[] args) {
-        SpringApplication.run(JSFBootAdapterConfiguration.class, args);
+        SpringApplication.run(PrimeBootAdapterConfiguration.class, args);
     }
 
     @Override
