@@ -21,12 +21,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>ch.sbb.releasetrain</groupId>
-			<artifactId>webui</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<dependency>
 			<artifactId>config</artifactId>
 			<groupId>ch.sbb.releasetrain</groupId>
 			<version>${project.version}</version>
