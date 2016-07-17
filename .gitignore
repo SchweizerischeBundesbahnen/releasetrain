@@ -20,3 +20,10 @@ target
 /.classpath
 /.settings
 /**.settings
+
+
+/.settings/
+.settings
+.jsdtscope
+
+/WEB-INF/
