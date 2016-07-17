@@ -22,6 +22,7 @@
 			  href="${request.contextPath}/static/styles/css/screen/content.css"/>
 
 		<!--/* custom css */-->
+		
 		<link rel="stylesheet" type="text/css"
 			  href="${request.contextPath}/static/styles/navigation.css"/>
 		<link rel="stylesheet" type="text/css"
@@ -112,9 +113,19 @@
 							<h5>
 								<ui:insert name="caption"/>
 							</h5>
-							<ui:insert name="validation">
-								<ui:include src="validation.xhtml"/>
-							</ui:insert>
+							
+<noscript>
+		<p class="warning">No Javascript available</p>
+	</noscript>
+
+	<h:messages styleClass="validation messages" layout="list"
+				globalOnly="true"
+				escape="false"
+				errorClass="error"
+				warnClass="warning"
+				infoClass="note"
+				fatalClass="error" rendered="#{!nomessage.equals('j')}"/>
+
 							<ui:insert name="messages"/>
 							<ui:insert name="inset">
 								<div class="inset">
