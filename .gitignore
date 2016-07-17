@@ -26,4 +26,5 @@ target
 .settings
 .jsdtscope
 
-/WEB-INF/
+**/src/main/webapp/WEB-INF/classes/
+
