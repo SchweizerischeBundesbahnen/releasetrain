@@ -38,6 +38,7 @@
 		<module>status</module>
 		<module>webui</module>
 		<module>jsfbootadapter</module>
+		<module>git</module>
 	</modules>
 
 	<licenses>
@@ -56,7 +57,7 @@
 		</developer>
 		<developer>
 			<name>Daniel Marthaler</name>
-			<email>daniel.marthaler1@sbb.ch</email>
+			<email>daniel.marthaler@sbb.ch</email>
 			<organization>Schweizerische Bundesbahnen</organization>
 			<organizationUrl>http://www.sbb.ch</organizationUrl>
 		</developer>

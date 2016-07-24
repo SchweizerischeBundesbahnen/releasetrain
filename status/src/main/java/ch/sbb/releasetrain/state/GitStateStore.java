@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import ch.sbb.releasetrain.state.git.GitClient;
-import ch.sbb.releasetrain.state.git.GitRepo;
+import ch.sbb.releasetrain.git.GitClient;
+import ch.sbb.releasetrain.git.GitRepo;
 import ch.sbb.releasetrain.state.model.ReleaseState;
 
 /**
@@ -59,7 +59,6 @@ public class GitStateStore implements StateStore {
     }
 
     private GitRepo gitRepo() {
-
 
         GitRepo repo = gitClient.gitRepo(storeConfig.getUrl(), storeConfig.getBranch(), storeConfig.getUser(), storeConfig.getPassword());
 

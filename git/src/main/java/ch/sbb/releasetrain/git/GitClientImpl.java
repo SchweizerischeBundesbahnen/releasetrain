@@ -2,7 +2,7 @@
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
  * and to You under the Apache License, Version 2.0.
  */
-package ch.sbb.releasetrain.state.git;
+package ch.sbb.releasetrain.git;
 
 import java.io.File;
 
@@ -25,12 +25,12 @@ public class GitClientImpl implements GitClient {
         this.tempDir = tempDir;
     }
 
-    static String filenameFromUrl(final String url) {
-        return url.trim().replaceAll("[\\W]", "_");
+    static String filenameFromUrl(final String url, String branch) {
+        return (url + "_" + branch).trim().replaceAll("[\\W]", "_");
     }
 
     @Override
     public GitRepo gitRepo(String url, String branch, String user, String password) {
-        return new GitRepoImpl(url, branch, user, password, new File(tempDir, filenameFromUrl(url)));
+        return new GitRepoImpl(url, branch, user, password, new File(tempDir, filenameFromUrl(url, branch)));
     }
 }

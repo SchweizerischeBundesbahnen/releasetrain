@@ -17,8 +17,8 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
-import ch.sbb.releasetrain.state.git.GitClientImpl;
-import ch.sbb.releasetrain.state.git.GitRepoImpl;
+import ch.sbb.releasetrain.git.GitClientImpl;
+import ch.sbb.releasetrain.git.GitRepoImpl;
 import ch.sbb.releasetrain.state.model.ReleaseState;
 
 /**

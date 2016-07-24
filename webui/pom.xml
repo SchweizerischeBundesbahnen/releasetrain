@@ -20,6 +20,12 @@
 			<version>${project.version}</version>
 		</dependency>
 
+		<dependency>
+			<artifactId>director</artifactId>
+			<groupId>ch.sbb.releasetrain</groupId>
+			<version>${project.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<!-- Package as an executable war -->
