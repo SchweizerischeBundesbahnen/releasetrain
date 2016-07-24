@@ -1,4 +1,4 @@
-!!ch.sbb.releasetrain.state.model.ActionState
+!!ActionState
 actionResult: NONE
 config:
   name: jenkinsAction

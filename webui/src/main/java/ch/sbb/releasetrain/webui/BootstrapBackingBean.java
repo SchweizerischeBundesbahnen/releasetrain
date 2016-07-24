@@ -4,18 +4,22 @@
  */
 package ch.sbb.releasetrain.webui;
 
+import java.io.File;
+import java.util.Date;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import ch.sbb.releasetrain.git.GitClientImpl;
-import ch.sbb.releasetrain.git.GitRepo;
+import ch.sbb.releasetrain.webui.git.GitClientImpl;
+import ch.sbb.releasetrain.webui.git.GitRepo;
 
 /**
  * Backing Bean to grant access to the 2 required git branches for configuration and storage
@@ -40,13 +44,22 @@ public class BootstrapBackingBean {
     @Value("${config.password:}")
     private String passwordConfig = "";
 
+    private GitRepo repoConfig;
+
+    private GitRepo repoStore;
+
     private Boolean configOk = false;
 
     public String checkConnectionConfig() {
-        GitRepo repo = gitClient.gitRepo(urlConfig, branchConfig, userConfig, passwordConfig);
-        repo.reset();
+        repoConfig = gitClient.gitRepo(urlConfig, branchConfig, userConfig, passwordConfig);
+        repoConfig.reset();
         try {
-            repo.cloneOrPull();
+            repoConfig.cloneOrPull();
+            File dir = repoConfig.directory();
+            FileUtils.writeStringToFile(new File(dir, "test.txt"), new Date().toString());
+            repoConfig.addCommitPush();
+            FileUtils.forceDelete(new File(dir, "test.txt"));
+            repoConfig.addCommitPush();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             configOk = false;
