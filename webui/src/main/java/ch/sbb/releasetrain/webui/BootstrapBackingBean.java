@@ -42,7 +42,21 @@ public class BootstrapBackingBean {
 
     private Boolean configOk = false;
 
-    public String checkConnection() {
+    public String checkConnectionConfig() {
+        GitRepo repo = gitClient.gitRepo(urlConfig, branchConfig, userConfig, passwordConfig);
+        repo.reset();
+        try {
+            repo.cloneOrPull();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            configOk = false;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", e.getMessage()));
+        }
+        configOk = true;
+        return "app.htm";
+    }
+
+    public String checkConnectionStorage() {
         GitRepo repo = gitClient.gitRepo(urlConfig, branchConfig, userConfig, passwordConfig);
         repo.reset();
         try {
