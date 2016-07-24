@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import ch.sbb.releasetrain.webui.Application;
+
 @Configuration
 @ComponentScan("ch.sbb")
 @EnableAutoConfiguration

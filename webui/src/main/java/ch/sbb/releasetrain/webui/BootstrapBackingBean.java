@@ -18,8 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import ch.sbb.releasetrain.webui.git.GitClientImpl;
-import ch.sbb.releasetrain.webui.git.GitRepo;
+import ch.sbb.releasetrain.git.GitClientImpl;
+import ch.sbb.releasetrain.git.GitRepo;
+import ch.sbb.releasetrain.state.GITStateAccessorThread;
 
 /**
  * Backing Bean to grant access to the 2 required git branches for configuration and storage
@@ -28,59 +29,93 @@ import ch.sbb.releasetrain.webui.git.GitRepo;
  * @since 0.0.1, 2016
  */
 @Component
-@Slf4j
-@Data
 public class BootstrapBackingBean {
 
-    @Autowired
-    private GitClientImpl gitClient;
-
-    @Value("${config.url:}")
-    private String urlConfig = "";
-    @Value("${config.branch:}")
-    private String branchConfig = "";
-    @Value("${config.user:}")
-    private String userConfig = "";
-    @Value("${config.password:}")
-    private String passwordConfig = "";
-
-    private GitRepo repoConfig;
-
-    private GitRepo repoStore;
-
     private Boolean configOk = false;
+	
+    @Autowired
+    private GITStateAccessorThread stateAccessor;
 
-    public String checkConnectionConfig() {
-        repoConfig = gitClient.gitRepo(urlConfig, branchConfig, userConfig, passwordConfig);
-        repoConfig.reset();
-        try {
-            repoConfig.cloneOrPull();
-            File dir = repoConfig.directory();
-            FileUtils.writeStringToFile(new File(dir, "test.txt"), new Date().toString());
-            repoConfig.addCommitPush();
-            FileUtils.forceDelete(new File(dir, "test.txt"));
-            repoConfig.addCommitPush();
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            configOk = false;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", e.getMessage()));
-        }
-        configOk = true;
-        return "app.htm";
-    }
+    @Autowired
+    private GITStateAccessorThread configAccessor;
+   
+   
+    // state accessors
+    public String getStateUrl() {
+		return stateAccessor.getConfigUrl();
+	}
 
-    public String checkConnectionStorage() {
-        GitRepo repo = gitClient.gitRepo(urlConfig, branchConfig, userConfig, passwordConfig);
-        repo.reset();
-        try {
-            repo.cloneOrPull();
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            configOk = false;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", e.getMessage()));
-        }
-        configOk = true;
-        return "app.htm";
-    }
+	public void setStateUrl(String configUrl) {
+		stateAccessor.setConfigUrl(configUrl);
+	}
+
+	public String getStateBranch() {
+		return stateAccessor.getConfigBranch();
+	}
+
+	public void setStateBranch(String configBranch) {
+		stateAccessor.setConfigBranch(configBranch);
+	}
+
+	public String getStateUser() {
+		return stateAccessor.getConfigUser();
+	}
+
+	public void setStateUser(String configUser) {
+		stateAccessor.setConfigUser(configUser);
+	}
+
+	public String getStatePassword() {
+		return stateAccessor.getConfigPassword();
+	}
+
+	public void setStatePassword(String configPassword) {
+		stateAccessor.setConfigPassword(configPassword);
+	}
+    
+    
+   // config accessor
+    public String getConfigUrl() {
+		return configAccessor.getConfigUrl();
+	}
+
+	public void setConfigUrl(String configUrl) {
+		configAccessor.setConfigUrl(configUrl);
+	}
+
+	public String getConfigBranch() {
+		return configAccessor.getConfigBranch();
+	}
+
+	public void setConfigBranch(String configBranch) {
+		configAccessor.setConfigBranch(configBranch);
+	}
+
+	public String getConfigUser() {
+		return configAccessor.getConfigUser();
+	}
+
+	public void setConfigUser(String configUser) {
+		configAccessor.setConfigUser(configUser);
+	}
+
+	public String getConfigPassword() {
+		return configAccessor.getConfigPassword();
+	}
+
+	public void setConfigPassword(String configPassword) {
+		configAccessor.setConfigPassword(configPassword);
+	}
+
+	
+	// others
+	public Boolean getConfigOk() {
+		return configOk;
+	}
+
+	public void setConfigOk(Boolean configOk) {
+		this.configOk = configOk;
+	}
+
 
 }

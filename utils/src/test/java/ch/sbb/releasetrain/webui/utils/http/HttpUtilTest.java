@@ -10,6 +10,8 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import ch.sbb.releasetrain.utils.http.HttpUtilImpl;
+
 
 public class HttpUtilTest {
 

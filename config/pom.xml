@@ -20,6 +20,12 @@
 			<artifactId>utils</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>ch.sbb.releasetrain</groupId>
+			<artifactId>git</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 
 
 	</dependencies>

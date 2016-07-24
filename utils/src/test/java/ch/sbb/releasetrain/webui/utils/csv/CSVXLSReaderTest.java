@@ -12,6 +12,8 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import ch.sbb.releasetrain.utils.csv.CSVXLSReaderImpl;
+
 /**
  * CVSXLS Test
  *

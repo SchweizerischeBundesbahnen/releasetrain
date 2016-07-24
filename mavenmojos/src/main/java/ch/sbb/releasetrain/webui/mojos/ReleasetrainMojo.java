@@ -6,7 +6,7 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-import ch.sbb.releasetrain.webui.Application;
+import ch.sbb.releasetrain.Application;
 
 /**
  * Frontend Mojo for the ReleaseTrain
