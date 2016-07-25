@@ -23,13 +23,13 @@ import lombok.Data;
 @Data
 public class GITConfigAccessorThread {
 	
-    @Value("${state.url:https://github.com/SchweizerischeBundesbahnen/releasetrain.git}")
+    @Value("${config.url:https://github.com/SchweizerischeBundesbahnen/releasetrain.git}")
 	private String configUrl;
-    @Value("${state.branch:test26}")
+    @Value("${config.branch:test26}")
 	private String configBranch;
-    @Value("${state.user:marthaler}")
+    @Value("${config.user:marthaler}")
 	private String configUser;
-    @Value("${state.password:}")
+    @Value("${config.password:}")
 	private String configPassword;
     
     @Autowired
