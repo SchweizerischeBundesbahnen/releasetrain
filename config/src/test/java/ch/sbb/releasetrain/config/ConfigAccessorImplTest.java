@@ -4,9 +4,6 @@
  */
 package ch.sbb.releasetrain.config;
 
-import java.util.List;
-
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +14,6 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-
-import ch.sbb.releasetrain.config.ConfigAccessorImpl;
-import ch.sbb.releasetrain.config.model.email.MailReceiver;
-import ch.sbb.releasetrain.config.model.releaseconfig.ReleaseConfig;
-import ch.sbb.releasetrain.utils.http.HttpUtilImpl;
 
 /**
  * @author u203244 (Daniel Marthaler)
@@ -47,14 +39,7 @@ public class ConfigAccessorImplTest {
     @Test
     public void testReadConfigFromGitRepo() throws Exception {
 
-        Thread.sleep(3000);
-        System.out.println( th.isConnecting());
-        
-        Thread.sleep(3000);
-        System.out.println( th.isConnecting());
-        
-        Thread.sleep(3000);
-        System.out.println( th.isConnecting());
+    
         
         
     }

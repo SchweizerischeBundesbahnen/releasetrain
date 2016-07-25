@@ -9,7 +9,8 @@ import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -23,28 +24,36 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Data
-public abstract class GITAccessorThread implements GitRepo{
+@Component
+@Scope("prototype")
+public class GITAccessorThread implements GitRepo{
 	
-	protected boolean connecting = true;
-	protected boolean read = false;
-	protected boolean write = false;
-	protected String err = "";
+	private boolean connecting = true;
+	private boolean read = false;
+	private boolean write = false;
+	private String err = "";
 	
 	protected GitRepo repo;
 	
 	@Autowired
 	private GitClient client;
 	
-	protected String url;
-	protected String branch;
-	protected String user;
-	protected String password;
+	private String url;
+	private String branch;
+	private String user;
+	private String password;
 	
-	protected abstract void init();
-	
-	@Async
-	protected void asyncInit(){
+	@Override
+	public void reset(){
+		
 		repo = client.gitRepo(url, branch, user, password);
+		
+		err = "";
+	 	connecting = true;
+    	read = false;
+    	write= false;
+		repo.reset();
+	
 
         try {
         	repo.cloneOrPull();
@@ -61,28 +70,26 @@ public abstract class GITAccessorThread implements GitRepo{
 	}
 
 	
-    public void cloneOrPull(){
+    @Override
+	public void cloneOrPull(){
     	repo.cloneOrPull();
     }
 
-    public void addCommitPush(){
+    @Override
+	public void addCommitPush(){
     	if(!connecting && write){
     		repo.addCommitPush();
     	}
     	throw new GitException("git connection not ready");
     }
 
-    public File directory(){
+    @Override
+	public File directory(){
     	if(!connecting && read){
     		return repo.directory();
     	}
     	throw new GitException("git connection not ready");
     }
 
-    public void reset(){
-    	connecting = true;
-		repo.reset();
-		asyncInit();
-    }
     
 }

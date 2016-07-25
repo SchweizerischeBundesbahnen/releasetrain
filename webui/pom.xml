@@ -25,6 +25,12 @@
 			<groupId>ch.sbb.releasetrain</groupId>
 			<version>${project.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>ch.sbb.releasetrain</groupId>
+			<artifactId>status</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 
 	</dependencies>
 

@@ -4,26 +4,24 @@
  */
 package ch.sbb.releasetrain.config;
 
-import javax.annotation.PostConstruct;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import ch.sbb.releasetrain.git.GITAccessorThread;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 /**
- * Provides Acces to the Release Configs, stored in a storage like GIT
+ * Connecting config fields with the Real GITAccessorThread 
  *
  * @author u203244 (Daniel Marthaler)
  * @version $Id: $
  * @since 0.0.1, 2016
  */
-@Slf4j
 @Component
 @Data
-public class GITConfigAccessorThread extends GITAccessorThread {
+public class GITConfigAccessorThread {
 	
     @Value("${state.url:https://github.com/SchweizerischeBundesbahnen/releasetrain.git}")
 	private String configUrl;
@@ -33,14 +31,21 @@ public class GITConfigAccessorThread extends GITAccessorThread {
 	private String configUser;
     @Value("${state.password:}")
 	private String configPassword;
+    
+    @Autowired
+    private GITAccessorThread thread;
+
+	public void reset(){
+		thread.setUrl(configUrl);
+		thread.setBranch(configBranch);
+		thread.setUser(configUser);
+		thread.setPassword(configPassword);
+		thread.reset();
+	}
 	
-	@PostConstruct
-	protected void init() {
-		super.url = configUrl;
-		super.branch = configBranch;
-		super.user = configUser;
-		super.password = configPassword;
-		super.asyncInit();
+	@Async
+	public void resetAsync(){
+		reset();
 	}
 
 }

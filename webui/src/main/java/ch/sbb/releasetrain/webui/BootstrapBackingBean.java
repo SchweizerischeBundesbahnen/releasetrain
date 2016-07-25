@@ -33,6 +33,8 @@ public class BootstrapBackingBean {
 
     private Boolean configOk = false;
 	
+    /**
+    
     @Autowired
     private GITStateAccessorThread stateAccessor;
 
@@ -116,6 +118,6 @@ public class BootstrapBackingBean {
 	public void setConfigOk(Boolean configOk) {
 		this.configOk = configOk;
 	}
-
+**/
 
 }

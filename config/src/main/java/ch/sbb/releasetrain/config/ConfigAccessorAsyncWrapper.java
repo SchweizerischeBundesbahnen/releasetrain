@@ -2,7 +2,7 @@
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
  * and to You under the Apache License, Version 2.0.
  */
-package ch.sbb.releasetrain.state;
+package ch.sbb.releasetrain.config;
 
 import javax.annotation.PostConstruct;
 
@@ -13,9 +13,10 @@ import org.springframework.stereotype.Component;
 
 import ch.sbb.releasetrain.git.GITAccessorThread;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * Connecting config fields with the Real GITAccessorThread 
+ * Provides Acces to the Release Configs, stored in a storage like GIT
  *
  * @author u203244 (Daniel Marthaler)
  * @version $Id: $
@@ -23,11 +24,11 @@ import lombok.Data;
  */
 @Component
 @Data
-public class GITStateAccessorThread {
+public class ConfigAccessorAsyncWrapper {
 	
     @Value("${state.url:https://github.com/SchweizerischeBundesbahnen/releasetrain.git}")
 	private String configUrl;
-    @Value("${state.branch:state.dev}")
+    @Value("${state.branch:test26}")
 	private String configBranch;
     @Value("${state.user:marthaler}")
 	private String configUser;
@@ -36,7 +37,12 @@ public class GITStateAccessorThread {
     
     @Autowired
     private GITAccessorThread thread;
-
+	
+	@PostConstruct
+	private void init() {
+		reset();
+	}
+	
 	public void reset(){
 		thread.setUrl(configUrl);
 		thread.setBranch(configBranch);

@@ -74,7 +74,8 @@ public final class GitRepoImpl implements GitRepo {
         }
     }
 
-    public void cloneOrPull() {
+    @Override
+	public void cloneOrPull() {
         callWithRetry(c -> doCloneOrPull(), 0);
     }
 
@@ -89,7 +90,8 @@ public final class GitRepoImpl implements GitRepo {
         }
     }
 
-    public void addCommitPush() {
+    @Override
+	public void addCommitPush() {
         callWithRetry(c -> doAddCommitPush(), 0);
     }
 
@@ -111,7 +113,7 @@ public final class GitRepoImpl implements GitRepo {
             call.accept(null);
         }
         catch (IOException | TransportException e) {
-            if (retry < 3) {
+            if (retry < 2) {
                 try {
                     Thread.sleep(1000L * (retry + 1)); // back off
                     callWithRetry(call, retry + 1);
