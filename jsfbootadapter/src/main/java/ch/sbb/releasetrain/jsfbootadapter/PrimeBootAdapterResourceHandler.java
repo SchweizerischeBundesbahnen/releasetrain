@@ -79,10 +79,13 @@ public class PrimeBootAdapterResourceHandler extends ResourceHandlerWrapper {
             }
             String loc = "file:" + url.getPath().replace("target/classes", "src/main/resources");
 
+            loc = loc.replace("file:file:/", "file:/");
+        
+            
             url2 = new URL(loc);
 
-            if (loc.contains(".war!")) {
-                log.debug("we are in a war file, will not use this one: " + url);
+            if (loc.contains(".war!") || loc.contains(".jar!")) {
+                log.debug("we are in a war / jat file, will not use this one: " + url);
             } else {
                 log.debug("found view in src/main/resources will use this one: " + url);
                 url = url2;
