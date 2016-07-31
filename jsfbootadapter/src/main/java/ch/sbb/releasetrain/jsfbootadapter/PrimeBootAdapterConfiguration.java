@@ -42,6 +42,10 @@ public class PrimeBootAdapterConfiguration extends WebMvcConfigurerAdapter imple
         // Set the project stage to "Development", "UnitTest", "SystemTest", or "Production".
         servletContext.setInitParameter("javax.faces.PROJECT_STAGE", "Production");
 
+        
+        
+        servletContext.setInitParameter("javax.faces.FACELETS_RESOURCE_RESOLVER", "ch.sbb.releasetrain.jsfbootadapter.FaceletsResourceResolver");
+        
     }
 
     @Bean

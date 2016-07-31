@@ -34,11 +34,11 @@ public class JenkinsAction extends AbstractAction {
     @Setter
     private HttpUtil http;
 
-    @Value("${jenkins.url}")
+    @Value("${jenkins.url:}")
     @Setter
     private String jenkinsUrl;
 
-    @Value("${jenkins.buildtoken}")
+    @Value("${jenkins.buildtoken:}")
     @Setter
     private String jenkinsBuildtoken;
 

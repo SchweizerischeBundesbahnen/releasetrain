@@ -4,20 +4,10 @@
  */
 package ch.sbb.releasetrain.state;
 
-import java.io.File;
-import java.util.Date;
-
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
-import ch.sbb.releasetrain.git.GITAccessorThread;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * calling @Async rest Method on  GITStateAccessorThread
