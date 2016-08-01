@@ -12,8 +12,7 @@ import java.util.List;
 import org.junit.Test;
 
 import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
-import ch.sbb.releasetrain.state.model.ActionResult;
-import ch.sbb.releasetrain.state.model.ReleaseState;
+import ch.sbb.releasetrain.config.model.releaseconfig.JenkinsActionConfig;
 
 /**
  * @author u206123 (Florian Seidl)
@@ -31,8 +30,8 @@ public class ReleaseStatusTest  {
     public void newReleaseStatusWithActionNames()  {
         ReleaseState releaseStatus = new ReleaseState("myrelease", createConfigs());
         assertEquals(3, releaseStatus.getActionState().size());
-        assertEquals("myaction1", releaseStatus.getActionState().get(0).getActionName());
-        assertEquals("myaction2", releaseStatus.getActionState().get(1).getActionName());
+        assertEquals("jenkinsAction", releaseStatus.getActionState().get(0).getActionName());
+        assertEquals("jenkinsAction", releaseStatus.getActionState().get(1).getActionName());
     }
 
     @Test
@@ -43,15 +42,13 @@ public class ReleaseStatusTest  {
 
     private List<ActionConfig> createConfigs() {
         List<ActionConfig> configs = new ArrayList<>();
-        ActionConfig action1 = new ActionConfig();
-        action1.setName("myaction1");
+        ActionConfig action1 = new JenkinsActionConfig();
         configs.add(action1);
 
-        ActionConfig action2 = new ActionConfig();
-        action2.setName("myaction2");
+        ActionConfig action2 = new JenkinsActionConfig();
         configs.add(action2);
 
-        configs.add(new ActionConfig());
+        configs.add(new JenkinsActionConfig());
         return configs;
     }
 

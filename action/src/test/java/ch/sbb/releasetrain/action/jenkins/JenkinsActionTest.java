@@ -9,6 +9,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -25,7 +26,9 @@ import ch.sbb.releasetrain.utils.yaml.YamlModelAccessor;
  * @author u203244 (Daniel Marthaler)
  * @since 0.0.1, 2016
  **/
+
 @RunWith(MockitoJUnitRunner.class)
+@Ignore
 public class JenkinsActionTest {
 
     @Mock

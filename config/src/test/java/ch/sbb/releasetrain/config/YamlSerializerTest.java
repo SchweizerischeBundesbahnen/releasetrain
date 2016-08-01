@@ -16,6 +16,7 @@ import org.junit.rules.TemporaryFolder;
 
 import ch.sbb.releasetrain.config.model.email.MailReceiver;
 import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
+import ch.sbb.releasetrain.config.model.releaseconfig.JenkinsActionConfig;
 import ch.sbb.releasetrain.config.model.releaseconfig.ReleaseConfig;
 import ch.sbb.releasetrain.utils.yaml.YamlModelAccessor;
 
@@ -37,13 +38,11 @@ public class YamlSerializerTest {
     public void testSerializeActionConfig() throws Exception {
 
         ReleaseConfig release = new ReleaseConfig();
-        ActionConfig action = new ActionConfig();
-        action.setName("my Action äü");
+        ActionConfig action = new JenkinsActionConfig();
         action.getProperties().put("myProp1", "Hallo Welt1");
         action.getProperties().put("myProp2", "Hallo Welt2");
 
-        ActionConfig action2 = new ActionConfig();
-        action2.setName("my Action äüass");
+        ActionConfig action2 = new JenkinsActionConfig();
         action2.getProperties().put("myProp2", "Hallo asxasxsxWelt");
 
         release.setTyp("demo-release");

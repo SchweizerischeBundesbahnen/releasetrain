@@ -47,6 +47,7 @@ public final class GitRepoImpl implements GitRepo {
 
     private final String password;
 
+    private Git git;
 
     GitRepoImpl(final String url, final String branch, final String user, final String password, final File tempDir) {
         this.url = url;
@@ -68,6 +69,10 @@ public final class GitRepoImpl implements GitRepo {
     @Override
     public void reset() {
         try {
+            if (git == null) {
+                return;
+            }
+            git.close();
             FileUtils.deleteDirectory(this.gitDir);
         } catch (IOException e) {
             log.error("not able to delete folder: " + this.gitDir, e);
@@ -82,6 +87,7 @@ public final class GitRepoImpl implements GitRepo {
     private void doCloneOrPull() throws IOException, GitAPIException {
         if (isCloned()) {
             Git git = pull(gitOpen());
+            this.git = git;
             checkoutOrCreateBranch(git);
         }
         else {
@@ -113,7 +119,7 @@ public final class GitRepoImpl implements GitRepo {
             call.accept(null);
         }
         catch (IOException | TransportException e) {
-            if (retry < 2) {
+            if (retry < 1) {
                 try {
                     Thread.sleep(1000L * (retry + 1)); // back off
                     callWithRetry(call, retry + 1);
@@ -124,7 +130,7 @@ public final class GitRepoImpl implements GitRepo {
             }
         }
         catch (GitAPIException e) {
-            throw new GitException("Git operation failed", e);
+            throw new GitException("Git operation failed:" + e.getMessage(), e);
         }
     }
 
@@ -181,7 +187,8 @@ public final class GitRepoImpl implements GitRepo {
     }
 
     private Git gitOpen() throws IOException {
-        return Git.open(new File(gitDir, ".git"));
+        this.git = Git.open(new File(gitDir, ".git"));
+        return git;
     }
 
     private CredentialsProvider credentialsProvider() {

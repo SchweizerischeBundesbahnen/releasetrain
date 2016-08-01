@@ -1,81 +1,103 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns="http://www.w3.org/1999/xhtml" template="/root.xhtml">
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns="http://www.w3.org/1999/xhtml" template="/root.xhtml">
 
 	<ui:define name="page">
-		<h:form id="formConfig">
-			<h:panelGrid columns="2" id="configPanel" >
-                 
-			 	 	<h:outputLabel for="configurl" value="GIT Url Config:"/>
+
+		<h:form id="form">
+
+			<p:fieldset id="configFieldset" legend="GIT Config for the Config Files" toggleable="true"
+						toggleSpeed="500"
+						collapsed="#{GITConfigAccessorThread.thread.read and GITConfigAccessorThread.thread.write}">
+
+				<h:panelGrid columns="2" id="configPanel">
+
+				<h:outputLabel for="configurl" value="GIT Url Config:"/>
               		<p:inputText id="configurl" value="#{GITConfigAccessorThread.configUrl}" size = "70" />
 
 			  		<h:outputLabel for="configbranch" value="GIT Branch Config:"/>
               		<p:inputText id="configbranch" value="#{GITConfigAccessorThread.configBranch}"  size = "50" />
-			
-			  		<h:outputLabel for="configuser" value="GIT User Config:"/>
+
+					<h:outputLabel for="configuser" value="GIT User Config:"/>
               		<p:inputText id="configuser" value="#{GITConfigAccessorThread.configUser}"  size = "50" />
 
 			  		<h:outputLabel for="configpassword" value="GIT Password Config:"/>
               		<p:inputText id="configpassword" value="#{GITConfigAccessorThread.configPassword}"  size = "50"/>
-	
+
 					<h:outputText value="Read" />
         			<p:selectBooleanButton id="readConfig" value="#{GITConfigAccessorThread.thread.read}" onLabel="Yes" offLabel="No" disabled="true"/>
-        			
-        			<h:outputText value="Write" />
-        			<p:selectBooleanButton id="writeConfig" value="#{GITConfigAccessorThread.thread.write}" onLabel="Yes" offLabel="No" disabled="true"/>
-        			
-        			<h:outputText value="Error" />
-        			<p:inputText id="configError" value="#{GITConfigAccessorThread.thread.err}"  size = "70" disabled="true"/>
-			
-				<p:column>
-					<p:commandButton id="checkConfig" value="Check Connection for Config" action="#{GITConfigAccessorThread.reset()}" ajax="true" process="@form" update=":formConfig:configPanel"/>
-				</p:column>
 
-			</h:panelGrid>
-		
-			<p:blockUI block="configPanel" trigger="checkConfig">
-            	<p:graphicImage value="${request.contextPath}/static/images/ajax-loader.gif"/>
-        	</p:blockUI>
-        	</h:form>
-        	
-        	<h:form id="formState">
-        		<h:panelGrid columns="2" id="storePanel" >
-                 
-			 	 	<h:outputLabel for="storeurl" value="GIT Url Store:"/>
+					<h:outputText value="Write" />
+        			<p:selectBooleanButton id="writeConfig" value="#{GITConfigAccessorThread.thread.write}" onLabel="Yes" offLabel="No" disabled="true"/>
+
+					<h:outputText value="Error" />
+					<p:inputText id="configErrorConfig" value="#{GITConfigAccessorThread.thread.err}"
+								 size="70" disabled="true"/>
+
+					<p:column>
+						<p:commandButton id="checkConfig" value="Check Connection for Config"
+										 action="#{GITConfigAccessorThread.reset()}" ajax="true"
+										 process="@form" update="configFieldset"/>
+					</p:column>
+
+				</h:panelGrid>
+
+
+				<p:blockUI block="configPanel" trigger="checkConfig">
+					<p:graphicImage value="${request.contextPath}/static/images/ajax-loader.gif"/>
+				</p:blockUI>
+
+			</p:fieldset>
+
+			<br/><br/>
+
+			<p:fieldset id="stateFieldset" legend="GIT Config for the Config Files" toggleable="true"
+						toggleSpeed="500"
+						collapsed="#{GITStateAccessorThread.thread.read and GITStateAccessorThread.thread.write}">
+
+			<h:panelGrid columns="2" id="storePanel" >
+
+					<h:outputLabel for="storeurl" value="GIT Url State:"/>
               		<p:inputText id="storeurl" value="#{GITStateAccessorThread.configUrl}" size = "70" />
 
-			  		<h:outputLabel for="storebranch" value="GIT Branch Store:"/>
+					<h:outputLabel for="storebranch" value="GIT Branch State:"/>
               		<p:inputText id="storebranch" value="#{GITStateAccessorThread.configBranch}"  size = "50" />
-			
-			  		<h:outputLabel for="storeuser" value="GIT User Store:"/>
+
+					<h:outputLabel for="storeuser" value="GIT User State:"/>
               		<p:inputText id="storeuser" value="#{GITStateAccessorThread.configUser}"  size = "50" />
 
-			  		<h:outputLabel for="storepassword" value="GIT Password Store:"/>
+					<h:outputLabel for="storepassword" value="GIT Password State:"/>
               		<p:inputText id="storepassword" value="#{GITStateAccessorThread.configPassword}"  size = "50"/>
-	
+
 					<h:outputText value="Read" />
         			<p:selectBooleanButton id="readStore" value="#{GITStateAccessorThread.thread.read}" onLabel="Yes" offLabel="No" disabled="true"/>
-        			
-        			<h:outputText value="Write" />
+
+					<h:outputText value="Write" />
         			<p:selectBooleanButton id="writeStore" value="#{GITStateAccessorThread.thread.write}" onLabel="Yes" offLabel="No" disabled="true"/>
-        			
-        			<h:outputText value="Error" />
-        			<p:inputText id="configError" value="#{GITStateAccessorThread.thread.err}"  size = "70" disabled="true"/>
-			
-				<p:column>
-					<p:commandButton id="checkStore" value="Check Connection for Store" action="#{GITStateAccessorThread.reset()}" ajax="true" process="@form" update=":formState:storePanel"/>
+
+					<h:outputText value="Error" />
+					<p:inputText id="configErrorState" value="#{GITStateAccessorThread.thread.err}" size="70"
+								 disabled="true"/>
+
+					<p:column>
+					<p:commandButton id="checkStore" value="Check Connection for Store"
+									 action="#{GITStateAccessorThread.reset()}" ajax="true" process="@form"
+									 update="stateFieldset"/>
 				</p:column>
 
 			</h:panelGrid>
-		
-			<p:blockUI block="storePanel" trigger="checkStore">
+
+					<p:blockUI block="storePanel" trigger="checkStore">
             	<p:graphicImage value="${request.contextPath}/static/images/ajax-loader.gif"/>
         	</p:blockUI>
+
+				</p:fieldset>
+
 		</h:form>
-		
+
+
 	</ui:define>
 
 </ui:composition>

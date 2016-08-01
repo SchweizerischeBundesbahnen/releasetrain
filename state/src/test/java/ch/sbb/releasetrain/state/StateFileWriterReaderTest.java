@@ -20,8 +20,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
-import ch.sbb.releasetrain.state.StateFileReader;
-import ch.sbb.releasetrain.state.StateFileWriter;
+import ch.sbb.releasetrain.config.model.releaseconfig.JenkinsActionConfig;
 import ch.sbb.releasetrain.state.model.ReleaseState;
 
 /**
@@ -69,8 +68,7 @@ public class StateFileWriterReaderTest {
     }
 
     private ActionConfig createActionConfig(final String name, final int nrProperties) {
-        final ActionConfig actionConfig = new ActionConfig();
-        actionConfig.setName(name);
+        final ActionConfig actionConfig = new JenkinsActionConfig();
         actionConfig.setOffsetHours(42);
         final Map<String, String> properties = new HashMap<>();
         for(int i = 0; i < nrProperties; i++) {

@@ -54,7 +54,7 @@ public final class ReleasetrainMojo extends AbstractMojo {
     private String storePassword = "";
 
     // the url for jenkins
-    @Parameter(property = "jenkins.url", required = true)
+    @Parameter(property = "jenkins.url", required = true, defaultValue = "")
     private String jenkinsUrl = "";
 
     // the jenkins.buildtoken

@@ -7,13 +7,13 @@ package ch.sbb.releasetrain.git;
 import java.io.File;
 import java.util.Date;
 
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Base Thread to initialize a GIT Connection read / write 
@@ -28,13 +28,11 @@ import lombok.extern.slf4j.Slf4j;
 @Scope("prototype")
 public class GITAccessorThread implements GitRepo{
 	
+    protected GitRepo repo;
 	private boolean connecting = true;
 	private boolean read = false;
 	private boolean write = false;
 	private String err = "";
-	
-	protected GitRepo repo;
-	
 	@Autowired
 	private GitClient client;
 	
@@ -53,7 +51,6 @@ public class GITAccessorThread implements GitRepo{
     	read = false;
     	write= false;
 		repo.reset();
-	
 
         try {
         	repo.cloneOrPull();
@@ -69,7 +66,6 @@ public class GITAccessorThread implements GitRepo{
         connecting = false;
 	}
 
-	
     @Override
 	public void cloneOrPull(){
     	repo.cloneOrPull();

@@ -36,7 +36,7 @@
 		<module>utils</module>
 		<module>action</module>
 		<module>config</module>
-		<module>status</module>
+		<module>state</module>
 		<module>webui</module>
 		<module>jsfbootadapter</module>
 		<module>git</module>
@@ -164,11 +164,17 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.4</version>
 		</dependency>
-
+		<!--
+				<dependency>
+					<groupId>org.eclipse.jgit</groupId>
+					<artifactId>org.eclipse.jgit</artifactId>
+					<version>4.4.0.201605250940-rc1</version>
+				</dependency>
+		-->
 		<dependency>
 			<groupId>org.eclipse.jgit</groupId>
 			<artifactId>org.eclipse.jgit</artifactId>
-			<version>4.4.0.201605250940-rc1</version>
+			<version>4.4.1.201607150455-r</version>
 		</dependency>
 
 		<dependency>

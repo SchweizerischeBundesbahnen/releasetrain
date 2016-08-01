@@ -4,7 +4,7 @@
  */
 package ch.sbb.releasetrain.state;
 
-import javax.annotation.PostConstruct;
+import lombok.Data;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +12,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import ch.sbb.releasetrain.git.GITAccessorThread;
-import lombok.Data;
 
 /**
  * Connecting config fields with the Real GITAccessorThread 

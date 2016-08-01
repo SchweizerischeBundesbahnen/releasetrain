@@ -12,8 +12,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
-import ch.sbb.releasetrain.config.model.releaseconfig.ReleaseConfig;
 import ch.sbb.releasetrain.utils.yaml.YamlModelAccessor;
 
 /**
@@ -34,13 +32,11 @@ public class ReleaseConfigSerializerTest {
 
         ReleaseConfig release = new ReleaseConfig();
         release.setTyp("devType");
-        ActionConfig action = new ActionConfig();
-        action.setName("jenkinsAction");
+        ActionConfig action = new EmailActionConfig();
         action.getProperties().put("state", "SUCCESS");
         release.getActions().add(action);
 
-        ActionConfig action2 = new ActionConfig();
-        action2.setName("emailAction");
+        ActionConfig action2 = new EmailActionConfig();
         action2.getProperties().put("state", "SUCCESS");
         release.getActions().add(action2);
 

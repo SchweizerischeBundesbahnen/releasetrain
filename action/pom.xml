@@ -15,13 +15,13 @@
 
 		<dependency>
 			<groupId>ch.sbb.releasetrain</groupId>
-			<artifactId>status</artifactId>
+			<artifactId>state</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>
-			<artifactId>config</artifactId>
 			<groupId>ch.sbb.releasetrain</groupId>
+			<artifactId>config</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

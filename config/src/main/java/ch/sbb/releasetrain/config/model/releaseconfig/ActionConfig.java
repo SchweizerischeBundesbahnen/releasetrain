@@ -7,7 +7,6 @@ package ch.sbb.releasetrain.config.model.releaseconfig;
 import java.util.HashMap;
 import java.util.Map;
 
-import ch.sbb.releasetrain.utils.model.Recognizable;
 import lombok.Data;
 
 /**
@@ -17,21 +16,24 @@ import lombok.Data;
  * @since 0.0.1, 2016
  */
 @Data
-public class ActionConfig implements Recognizable<ActionConfig> {
+public abstract class ActionConfig {
 
-    private String name;
-    private int offsetHours;
-
+    protected int offsetHours;
     private Map<String, String> properties = new HashMap<>();
 
-    @Override
+    public abstract String getName();
+
+    public abstract int getOffsetHours();
+
+    public abstract void setOffsetHours(int hours);
+
     public String retreiveIdentifier() {
-        return name;
+        return getName();
     }
 
-    @Override
+
     public int compareTo(ActionConfig actionConfig) {
-        return actionConfig.retreiveIdentifier().compareTo(name);
+        return actionConfig.retreiveIdentifier().compareTo(getName());
     }
 
 }
