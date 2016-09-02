@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import ch.sbb.releasetrain.state.model.ActionResult;
 import ch.sbb.releasetrain.state.model.ActionState;
 
+import java.util.HashMap;
+
 /**
  * A Interface for a Action (Ex: Runnable Jenkins Job)
  *
@@ -20,6 +22,6 @@ public interface Action {
 
     String getName();
 
-    ActionResult run(ActionState state, String releaseVersion, String snapshotVersion, String maintenanceVersion);
+    ActionResult run(ActionState state,  HashMap<String,String> properties);
 
 }

@@ -1,107 +1,102 @@
+/**
+ * Copyright (C) eMad, 2016.
+ */
 package ch.sbb.releasetrain.jsfbootadapter;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
 import javax.faces.application.ViewResource;
 import javax.faces.context.FacesContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * PrimeBootAdapterConfiguration.
+ *
+ * @author Author: info@emad.ch
+ * @since 0.0.1
+ */
+@Slf4j
 public class PrimeBootAdapterResourceHandler extends ResourceHandlerWrapper {
 
-    public Map<String, ViewResource> cache = new HashMap<String, ViewResource>();
-    private Log log = LogFactory.getLog(getClass());
-    private ResourceHandler handler;
+	private ResourceHandler handler;
 
-    public PrimeBootAdapterResourceHandler(ResourceHandler handler) {
-        this.handler = handler;
-    }
+	public PrimeBootAdapterResourceHandler(ResourceHandler handler) {
+		this.handler = handler;
+	}
 
-    @Override
-    public ResourceHandler getWrapped() {
-        return handler;
-    }
+	@Override
+	public ResourceHandler getWrapped() {
+		return handler;
+	}
 
-    @Override
-    public ViewResource createViewResource(FacesContext context, String resourceName) {
+	@Override
+	public ViewResource createViewResource(FacesContext context, String resourceName) {
 
-        ViewResource view = cache.get(resourceName);
+		PathMatchingResourcePatternResolver res = new PathMatchingResourcePatternResolver();
 
-        if (view != null) {
-            log.debug("found view in cache: " + view.getURL());
-            return view;
-        }
+		Resource template;
 
-        PathMatchingResourcePatternResolver res = new PathMatchingResourcePatternResolver();
+		template = res.getResource("/META-INF/resources" + resourceName);
 
-        Resource template;
+		if (!template.exists()) {
+			template = res.getResource(resourceName);
+		}
 
-        template = res.getResource("/" + resourceName);
+		return getViewResource(template);
 
-        if (!template.exists()) {
-            template = res.getResource(resourceName);
-        }
+	}
 
-        view = getViewResource(template);
-        cache.put(resourceName, view);
-        return view;
-    }
+	private ViewResource getViewResource(Resource template) {
 
-    private ViewResource getViewResource(Resource template) {
-        URL url = null;
-        URL url2 = null;
-        ViewResource view = null;
+		URL url = null;
+		ViewResource view = null;
 
-        try {
+		try {
+			url = template.getURL();
+			log.debug("found view from classpath: " + url);
+		} catch (IOException e) {
+			log.debug("not found view from classpath: " + url + " (" + e.getMessage() + ")");
+		}
 
-            url = template.getURL();
-            log.debug("found view from classpath: " + url);
-        } catch (IOException e) {
-            log.debug("not found view from classpath: " + url + " (" + e.getMessage() + ")");
-        }
+		try {
+			log.debug("will check for view in src/main/resources: " + url);
 
+			if (url == null) {
+				log.error("view not found: " + url + " " + template);
+			}
 
-        try {
-            log.debug("will check for view in src/main/resources: " + url);
+			String locWeb = "file:" + url.getPath().replace("src/main/webapp/WEB-INF/classes", "src/main/resources");
+			String locMod = "file:" + url.getPath().replace("target/classes", "src/main/resources");
+			
+			if(new File(locWeb.replace("file:","")).exists()){
+				log.info("is here: " + url + " use this one");
+				url = new URL(locWeb);
+			} else if(new File(locMod.replace("file:","")).exists()){
+				log.info("is here: " + url + " use this one");
+				url = new URL(locMod);
+			}
+		
+			
+		} catch (MalformedURLException e) {
+			log.debug("not found view in src/main/resources" + url + " (" + e.getMessage() + ")");
+		}
 
-            if (url == null) {
-                log.error("view not found: " + url + " " + template);
-                return null;
-            }
-            String loc = "file:" + url.getPath().replace("target/classes", "src/main/resources");
-
-            loc = loc.replace("file:file:/", "file:/");
-        
-            
-            url2 = new URL(loc);
-
-            if (loc.contains(".war!") || loc.contains(".jar!")) {
-                log.debug("we are in a war / jat file, will not use this one: " + url);
-            } else {
-                log.debug("found view in src/main/resources will use this one: " + url);
-                url = url2;
-            }
-
-        } catch (MalformedURLException e) {
-            log.debug("not found view in src/main/resources" + url + " (" + e.getMessage() + ")");
-        }
-
-        final URL finalUrl = url;
-        view = new ViewResource() {
-            @Override
-            public URL getURL() {
-                return finalUrl;
-            }
-        };
-        return view;
-    }
+		final URL finalUrl = url;
+		view = new ViewResource() {
+			@Override
+			public URL getURL() {
+				return finalUrl;
+			}
+		};
+		return view;
+	}
 }

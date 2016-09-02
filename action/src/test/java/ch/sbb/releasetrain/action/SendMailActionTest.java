@@ -10,6 +10,7 @@ import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
@@ -26,6 +27,7 @@ import ch.sbb.releasetrain.utils.emails.SMTPUtilImpl;
 import ch.sbb.releasetrain.utils.yaml.YamlModelAccessor;
 
 import com.dumbster.smtp.SimpleSmtpServer;
+import org.yaml.snakeyaml.introspector.BeanAccess;
 
 /**
  * @author u203244 (Daniel Marthaler)
@@ -83,7 +85,12 @@ public class SendMailActionTest {
 
     @org.junit.Test
     public void testDoWork() throws Exception {
-        ActionResult result = action.doWork(mailState, "releaseVersion", "snapshotVersion", "maintenanceVersion");
+        HashMap<String,String> map = new HashMap<>();
+        map.put("releaseVersion","releaseVersion");
+        map.put("snapshotVersion","snapshotVersion");
+        map.put("maintenanceVersion","maintenanceVersion");
+
+        ActionResult result = action.doWork(mailState, map);
         assertNotNull(result);
         assertNotNull(result == ActionResult.SUCCESS);
         assertEquals(1, server.getReceivedEmailSize());

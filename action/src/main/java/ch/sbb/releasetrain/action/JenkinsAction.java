@@ -7,6 +7,7 @@ package ch.sbb.releasetrain.action;
 import java.util.HashMap;
 import java.util.Map;
 
+import ch.sbb.releasetrain.config.model.releaseconfig.JenkinsActionConfig;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -34,14 +35,6 @@ public class JenkinsAction extends AbstractAction {
     @Setter
     private HttpUtil http;
 
-    @Value("${jenkins.url:}")
-    @Setter
-    private String jenkinsUrl;
-
-    @Value("${jenkins.buildtoken:}")
-    @Setter
-    private String jenkinsBuildtoken;
-
     @Getter
     private JenkinsJobThread jenkinsThread;
 
@@ -51,28 +44,14 @@ public class JenkinsAction extends AbstractAction {
     }
 
     @Override
-    public ActionResult doWork(ActionState state, String releaseVersion, String snapshotVersion, String maintenanceVersion) {
+    public ActionResult doWork(ActionState state, HashMap properties) {
         Map<String, String> params = new HashMap<>(state.getConfig().getProperties());
-        String jobname = params.remove("jenkins.jobname");
 
-        // set the versions as with values as new keys, if the required keys are in the config
-        String rV = params.remove("releaseVersion");
-        String sV = params.remove("snapshotVersion");
-        String mV = params.remove("maintenanceVersion");
+        properties.putAll(params);
 
-        if (rV != null) {
-            params.put(rV, releaseVersion);
-        }
+        JenkinsActionConfig conf = (JenkinsActionConfig) state.getConfig();
 
-        if (sV != null) {
-            params.put(sV, snapshotVersion);
-        }
-
-        if (mV != null) {
-            params.put(mV, maintenanceVersion);
-        }
-
-        jenkinsThread = new JenkinsJobThread(jobname, "fromReleaseTrainJenkinsAction", jenkinsUrl, jenkinsBuildtoken, http, params);
+        jenkinsThread = new JenkinsJobThread(conf.getJenkinsJobname(), "fromReleaseTrainJenkinsAction", conf.getJenkinsUrl(), conf.getJenkinsBuildToken(), http, properties);
         jenkinsThread.startBuildJobOnJenkins(true);
         state.setResultString(jenkinsThread.getBuildColor() + ": " + jenkinsThread.getJobUrl());
         if (jenkinsThread.getBuildColor().equalsIgnoreCase("green")) {

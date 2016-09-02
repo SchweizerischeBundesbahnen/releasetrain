@@ -16,14 +16,14 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>ch.sbb.releasetrain</groupId>
 			<artifactId>utils</artifactId>
+			<groupId>${project.groupId}</groupId>
 			<version>${project.version}</version>
 		</dependency>
 		
 		<dependency>
-			<groupId>ch.sbb.releasetrain</groupId>
 			<artifactId>git</artifactId>
+			<groupId>${project.groupId}</groupId>
 			<version>${project.version}</version>
 		</dependency>
 

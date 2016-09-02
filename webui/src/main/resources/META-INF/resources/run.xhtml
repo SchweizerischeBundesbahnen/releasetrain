@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml" template="/root.xhtml">
+
+<ui:define name="page">
+
+    <p:fieldset id="fs" legend="Implement your Action Configurations">
+
+        <h:panelGrid columns="2" id="configPanel">
+
+            <h:form id="form2">
+
+                <p:spacer width="10" height="25"/>
+
+                <h:panelGrid columns="3" id="newAction"  cellpadding="5">
+
+                    <p:commandButton  value="#{directorRunnerGui.button}" action="#{directorRunnerGui.go()}" ajax="true"  update="form2"/>
+
+                    <p:commandButton  value="Create" action="#{directorRunnerGui.createJobOnJenkins()}" ajax="true"  update="form2"/>
+
+                    <p:spacer width="10" height="20"/>
+
+                </h:panelGrid>
+            </h:form>
+
+        </h:panelGrid>
+
+    </p:fieldset>
+
+</ui:define>
+
+</ui:composition>

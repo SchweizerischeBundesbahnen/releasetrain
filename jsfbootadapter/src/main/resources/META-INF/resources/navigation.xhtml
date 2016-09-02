@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns="http://www.w3.org/1999/xhtml">
+
+	<div id="mainnav">
+		<h:form id="form_m">
+			<p:menubar id="menubar" styleClass="menubar">
+
+				<!-- home -->
+				<p:menuitem id="m_userhandower" value="Start"
+							title="Start" icon="fa fa-desktop"
+							action="app.htm" ajax="false"/>
+
+				<!-- home -->
+				<p:submenu  label="Default Actions"
+							 icon="fa fa-cloud"
+							action="app.htm" ajax="false" rendered="#{GITAccessor.write and GITAccessor.read}">
+
+				<!-- jenkinsDefault -->
+				<p:menuitem  value="Jenkins Action" rendered="#{GITAccessor.write and GITAccessor.read}"
+							title="LOGOUT" icon="fa fa-cloud"
+							action="jenkinsDefault.htm" ajax="false"/>
+
+					<!-- emailDefault -->
+					<p:menuitem  value="Email Action"
+								title="m_emailDefault" icon="fa fa-cloud"
+								action="emailDefault.htm" ajax="false"/>
+
+				</p:submenu>
+
+				<!-- home -->
+				<p:menuitem  value="Implemented Actions" rendered="#{GITAccessor.write and GITAccessor.read and defaultPersistence.isReady()}"
+							title="Implemented Actions" icon="fa fa-cloud"
+							action="actions.htm" ajax="false"/>
+				<!-- home -->
+				<p:menuitem  value="Calendars" rendered="#{GITAccessor.write and GITAccessor.read and defaultPersistence.isReady()}"
+							title="Implemented Actions" icon="fa fa-cloud"
+							action="calendars.htm" ajax="false"/>
+
+				<p:menuitem value="Run / Create" rendered="#{GITAccessor.write and GITAccessor.read and defaultPersistence.isReady()}"
+							title="Run / Create" icon="fa fa-cloud"
+							action="run.htm" ajax="false"/>
+
+			</p:menubar>
+
+		</h:form>
+	</div>
+</ui:composition>

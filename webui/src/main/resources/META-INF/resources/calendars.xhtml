@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml" template="/root.xhtml">
+
+<ui:define name="page">
+
+    <p:fieldset id="fs" legend="Implement your Action Configurations">
+
+        <h:panelGrid columns="2" id="configPanel">
+            <h:form id="form">
+                <h:panelGrid columns="3" id="newAction">
+                    <p:selectOneMenu id="selectedAction" value="#{calendarBackingBean.selectedCalendar}" onchange="submit()" update="fs" style="center">
+                        <f:selectItem itemLabel="Please select a Calendar..." itemValue=""/>
+                        <f:selectItems value="#{calendarBackingBean.findAllActions()}" var="dt" itemLabel="#{dt}" itemValue="#{dt}"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
+            </h:form>
+
+            <br/>
+
+            <h:form id="form2">
+
+                <p:dataTable var="cal" value="#{calendarBackingBean.config}" editable="true"  editMode="cell">
+
+                    <p:column headerText="Date and Time">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{cal.asDate}">
+                                    <f:convertDateTime pattern="dd.MM.yy HH:mm" timeZone="Europe/Zurich"/>
+                                </h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:calendar id="datetime" value="#{cal.asDate}" pattern="dd.MM.yy HH:mm" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="ReleaseVersion">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{cal.releaseVersion}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{cal.releaseVersion}" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="SnapshotVersion">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{cal.snapshotVersion}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText  value="#{cal.snapshotVersion}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="MaintenanceVersions">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{cal.maintenaceVersion}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{cal.maintenaceVersion}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Custom1">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{cal.custom1}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{cal.custom1}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Custom2">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{cal.custom2}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{cal.custom2}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="State">
+
+                                <h:outputText value="#{cal.state}"/>
+
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:spacer width="10" height="25"/>
+
+                <h:panelGrid columns="5" id="newAction"  cellpadding="5">
+
+                    <p:commandButton  value="New" action="#{calendarBackingBean.newEntry()}" ajax="true"  update="form,form2"/>
+
+                    <p:spacer width="10" height="20"/>
+                    <p:commandButton  value="Save" action="#{calendarBackingBean.save()}" ajax="true"  rendered="#{not empty calendarBackingBean.config}" update="form,form2"/>
+
+                    <p:spacer width="10" height="20"/>
+                    <p:commandButton  value="Reload" action="#{calendarBackingBean.reload()}" ajax="true"  rendered="#{not empty calendarBackingBean.config}" update="form,form2"/>
+
+                </h:panelGrid>
+            </h:form>
+
+        </h:panelGrid>
+
+    </p:fieldset>
+
+</ui:define>
+
+</ui:composition>

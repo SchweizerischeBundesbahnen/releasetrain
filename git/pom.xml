@@ -14,9 +14,14 @@
 
 	<dependencies>
 
-		
 
-		
+		<dependency>
+			<groupId>ch.sbb.releasetrain</groupId>
+			<artifactId>utils</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+
 
 	</dependencies>
 

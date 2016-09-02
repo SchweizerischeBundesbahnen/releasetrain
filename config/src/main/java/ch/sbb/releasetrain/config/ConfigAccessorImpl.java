@@ -4,26 +4,29 @@
  */
 package ch.sbb.releasetrain.config;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import lombok.Setter;
+import ch.sbb.releasetrain.git.GITAccessor;
+
+import com.sun.scenario.effect.impl.state.AccessHelper;
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import ch.sbb.releasetrain.config.model.email.MailReceiver;
-import ch.sbb.releasetrain.config.model.releasecalendar.ReleaseEvent;
+import ch.sbb.releasetrain.config.model.releasecalendar.ReleaseCalendarEvent;
 import ch.sbb.releasetrain.config.model.releaseconfig.ReleaseConfig;
-import ch.sbb.releasetrain.utils.csv.CSVXLSReader;
-import ch.sbb.releasetrain.utils.http.HttpUtil;
 import ch.sbb.releasetrain.utils.yaml.YamlModelAccessor;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.introspector.BeanAccess;
 
 /**
- * Provides Acces to the Release Configs, stored in a storage like GIT
+ * Provides Acces to the Release Configs, stored in a GIT Storage
  *
  * @author u203244 (Daniel Marthaler)
  * @version $Id: $
@@ -34,36 +37,97 @@ import ch.sbb.releasetrain.utils.yaml.YamlModelAccessor;
 public class ConfigAccessorImpl implements ConfigAccessor {
 
     @Autowired
-    @Setter
-    CSVXLSReader calendarReader;
+    private GITAccessor git;
 
-    @Value("${config.baseurl:}")
-    @Setter
-    private String baseURL;
-
-    @Autowired
-    @Setter
-    private HttpUtil http;
     private YamlModelAccessor<ReleaseConfig> accessorRelease = new YamlModelAccessor<>();
-    private YamlModelAccessor<MailReceiver> accessorMailing = new YamlModelAccessor<>();
 
     @Override
     public ReleaseConfig readConfig(String name) {
-        String url = baseURL + "/" + name + ".yml";
-        String page = http.getPageAsString(url);
-        return accessorRelease.convertEntry(page);
+        if(!name.contains("-type")){
+           name = name + "-type";
+        }
+        File dir = git.directory();
+        File file = new File(dir, "/" + name + ".yml");
+        if(!file.exists()){
+            return null;
+        }
+        try {
+            return accessorRelease.convertEntry(FileUtils.readFileToString(file));
+        } catch (IOException e) {
+            log.error(e.getMessage(),e);
+        }
+        return null;
+    }
+
+    @Override
+    public List<String> readAllConfigs() {
+        List<String> ret = new ArrayList<>();
+        File dir = git.getRepo().directory();
+        for (String file: dir.list()) {
+            if(file.contains("-type.yml")){
+                ret.add(file.replace("-type.yml",""));
+            }
+        }
+        ret.remove("defaultConfig");
+        return ret;
+    }
+
+    @Override
+    public void writeConfig(String name, ReleaseConfig config) {
+        File dir = git.getRepo().directory();
+        File file = new File(dir, "/" + name + "-type.yml");
+
+        try {
+            FileUtils.writeStringToFile(file,accessorRelease.convertEntry(config));
+            git.signalCommit();
+        } catch (IOException e) {
+            log.error(e.getMessage(),e);
+        }
+
+        if(this.readReleaseCalendar(name) == null){
+            this.writeReleaseCalendar(new ArrayList<>(),name);
+        }
+
+        git.signalCommit();
+    }
+
+    public void deleteConfig(String name) {
+        List<String> ret = new ArrayList<>();
+        File dir = git.getRepo().directory();
+        for (String file: dir.list()) {
+            if(file.contains(name)){
+                try {
+                    FileUtils.forceDelete(new File(dir,file));
+                } catch (IOException e) {
+                   log.error(e.getMessage(),e);
+                }
+            }
+        }
     }
 
     @Override
     public List<MailReceiver> readMailReceiver() {
-        String url = baseURL + "/mailinglists.yml";
-        String page = http.getPageAsString(url);
-        return accessorMailing.convertEntrys(page);
+        File dir = git.directory();
+        File file = new File(dir, "/mailinglists.yml");
+        if(!file.exists()){
+            return null;
+        }
+        try {
+            Yaml yaml = new Yaml();
+            yaml.setBeanAccess(BeanAccess.FIELD);
+            return (List<MailReceiver>) yaml.load(FileUtils.readFileToString(file));
+        } catch (IOException e) {
+            log.error(e.getMessage(),e);
+        }
+        return null;
     }
 
     @Override
     public List<MailReceiver> readMailReveiverForMailinglist(String... mailinglists) {
         List<MailReceiver> ret = new ArrayList<>();
+        if(readMailReceiver() == null){
+            return ret;
+        }
         for (MailReceiver mailRec : readMailReceiver()) {
             for (String mailinglist : mailinglists) {
                 if (mailRec.getMailinglist().contains(mailinglist)) {
@@ -75,25 +139,43 @@ public class ConfigAccessorImpl implements ConfigAccessor {
     }
 
     @Override
-    public List<ReleaseEvent> readReleaseCalendar() {
-        List<ReleaseEvent> retEvents = new ArrayList<>();
-        if (!baseURL.endsWith("/")) {
-            baseURL = baseURL + "/";
-        }
-        String url = baseURL + "releasecalendar.csv";
-        String page = http.getPageAsString(url);
-        List<List<String>> rows = calendarReader.getAllRows(page);
+    public List<ReleaseCalendarEvent> readReleaseCalendar(String action) {
 
-        for (List<String> cols : rows) {
-            ReleaseEvent event = new ReleaseEvent();
-            event.setDate(cols.get(0));
-            event.setReleaseVersion(cols.get(1));
-            event.setSnapshotVersion(cols.get(2));
-            event.setMaintenaceVersion(cols.get(3));
-            event.setActionType(cols.get(4));
-            retEvents.add(event);
+        File dir = git.directory();
+        File file = new File(dir, "/"+action+"-calendar.yml");
+        if(!file.exists()){
+            return null;
         }
-        Collections.sort(retEvents);
-        return retEvents;
+        try {
+            Yaml yaml = new Yaml();
+            yaml.setBeanAccess(BeanAccess.FIELD);
+            List<ReleaseCalendarEvent> ret = (List<ReleaseCalendarEvent>) yaml.load(FileUtils.readFileToString(file));
+
+            return ret;
+
+        } catch (IOException e) {
+            log.error(e.getMessage(),e);
+        }
+        return null;
+
     }
+
+    @Override
+    public void writeReleaseCalendar(List<ReleaseCalendarEvent> cal, String action) {
+        File dir = git.getRepo().directory();
+        File file = new File(dir, "/" + action + "-calendar.yml");
+
+        try {
+            Yaml yaml = new Yaml();
+            yaml.setBeanAccess(BeanAccess.FIELD);
+            String save = yaml.dump(cal);
+            FileUtils.writeStringToFile(file,save);
+            git.signalCommit();
+        } catch (IOException e) {
+            log.error(e.getMessage(),e);
+        }
+    }
+
+
+
 }

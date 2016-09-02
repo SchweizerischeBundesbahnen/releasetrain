@@ -12,8 +12,14 @@
 
 		<link rel="shortcut icon" href="${request.contextPath}/static/images/favicon.ico"/>
 
-		<meta name="title" content="#{propProvider.readString('appname')}"/>
-		<meta name="description" content="#{propProvider.readString('appname')}"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+		<!--/* yaml */-->
+		<link rel="stylesheet" type="text/css"
+			  href="${request.contextPath}/static/styles/yaml/core/base.css"/>
+		<link rel="stylesheet" type="text/css"
+			  href="${request.contextPath}/static/styles/yaml/screen/forms.css"/>
+
 
 		<!--/* mod */-->
 		<link rel="stylesheet" type="text/css"
@@ -22,134 +28,31 @@
 			  href="${request.contextPath}/static/styles/css/screen/content.css"/>
 
 		<!--/* custom css */-->
-		
-		<link rel="stylesheet" type="text/css"
-			  href="${request.contextPath}/static/styles/navigation.css"/>
 		<link rel="stylesheet" type="text/css"
 			  href="${request.contextPath}/static/styles/customprimefaces.css"/>
 		<link rel="stylesheet" type="text/css"
 			  href="${request.contextPath}/static/styles/webapp.css"/>
 
-		<ui:insert name="stylesheets"/>
 
-		<h:outputText escape="false"
-					  value="&lt;!--[if lte IE 7]&gt;&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;${request.contextPath}/static/styles/css/patches/patch.css&quot;/&gt;&lt;![endif]--&gt;"/>
-
-		<ui:insert name="scripts"/>
-
-
-		<script type="text/javascript">
-			/* <![CDATA[ */
-			jQuery(function () {
-				jQuery(".warning").animate({'background-color': "#fee"}, 300);
-				jQuery(".error").animate({'background-color': "#fee"}, 300);
-			});
-			/* ]]> */
-
-		</script>
-
-		<ui:insert name="keypress">
-			<script type="text/javascript">
-				/* <![CDATA[ */
-				jQuery(function () {
-					jQuery("form input[type=text]").keypress(function (e) {
-						if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
-							jQuery('input[type=submit].default').click();
-							return false;
-						}
-						return true;
-					});
-				});
-				jQuery(function () {
-					jQuery("form input[type=password]").keypress(function (e) {
-						if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
-							jQuery('input[type=submit].default').click();
-							return false;
-						}
-						return true;
-					});
-				});
-				/* ]]> */
-
-			</script>
+		<ui:insert name="title">
+			<title>
+				<h:outputText value="#{contextUtil.getApp()}"/>
+			</title>
 		</ui:insert>
+
+
 	</h:head>
 
 	<h:body>
 
-		<div id="header">
-			<f:view contentType="text/html"/>
-			<div class="page_margins">
-				<div class="page">
-
-                <span class="appname">
-                    <!--<h:outputText value="#{propProvider.readString('appname')}"/>-->
-                </span>
-
-                <span class="companylogo">
-                    <h:outputLink value="#{request.contextPath}/"/>
-      			</span>
-
-				</div>
-			</div>
-		</div>
 
 		<ui:insert name="navigation">
-			<ui:include src="/navigation.xhtml"/>
+			<ui:include src="navigation.xhtml"/>
 		</ui:insert>
-
-
-		<div id="main">
-			<div class="page_margins">
-				<div class="page">
-					<h2>
-						<ui:insert name="pagetitle">
-							<ui:insert name="heading"/>
-						</ui:insert>
-					</h2>
-					<ui:insert name="form">
-
-						<h:form id="page" prependId="false">
-							<h5>
-								<ui:insert name="caption"/>
-							</h5>
-							
-<noscript>
-		<p class="warning">No Javascript available</p>
-	</noscript>
-
-	<h:messages styleClass="validation messages" layout="list"
-				globalOnly="true"
-				escape="false"
-				errorClass="error"
-				warnClass="warning"
-				infoClass="note"
-				fatalClass="error" rendered="#{!nomessage.equals('j')}"/>
-
-							<ui:insert name="messages"/>
-							<ui:insert name="inset">
-								<div class="inset">
-									<ui:insert name="page"/>
-								</div>
-							</ui:insert>
-						</h:form>
-
-					</ui:insert>
-				</div>
-			</div>
-		</div>
-
-
-		<div id="footer">
-			<div class="page_margins">
-				<div class="page">
-					<ui:insert name="copyright">
-
-					</ui:insert>
-				</div>
-			</div>
-		</div>
-
+		<ui:insert name="main">
+			<ui:include src="include/main.xhtml"/>
+		</ui:insert>
+		<ui:include src="include/footer.xhtml"/>
 	</h:body>
 
 </f:view>

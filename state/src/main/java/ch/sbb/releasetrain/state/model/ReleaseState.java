@@ -35,6 +35,25 @@ public class ReleaseState implements Recognizable<ReleaseState> {
     @Setter
     private String releaseName;
 
+    public String getState(){
+        String ret = "-";
+        for(ActionState state : actionState){
+
+            if(state.getActionResult() == ActionResult.NONE){
+                ret = "NONE";
+            }
+
+            if(state.getActionResult() == ActionResult.SUCCESS &&  !ret.equals("NONE")){
+                return "SUCCESS";
+            }
+
+            if(state.getActionResult() == ActionResult.FAILED){
+                return "FAILED";
+            }
+        }
+        return ret;
+    }
+
     public ReleaseState(String releaseName, List<ActionConfig> configs) {
         this.releaseName = releaseName;
         ImmutableList.Builder<ActionState> actionStatus = new ImmutableList.Builder<>();

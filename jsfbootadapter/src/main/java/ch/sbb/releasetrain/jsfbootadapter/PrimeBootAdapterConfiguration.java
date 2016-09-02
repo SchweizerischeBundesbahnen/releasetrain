@@ -1,3 +1,6 @@
+/**
+ * Copyright (C) eMad, 2016.
+ */
 package ch.sbb.releasetrain.jsfbootadapter;
 
 import java.util.EnumSet;
@@ -18,57 +21,63 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.sun.faces.config.ConfigureListener;
 
+/**
+ * PrimeBootAdapterConfiguration.
+ *
+ * @author Author: info@emad.ch
+ * @since 0.0.1
+ */
 @Configuration
 public class PrimeBootAdapterConfiguration extends WebMvcConfigurerAdapter implements ServletContextAware {
 
-    public static void main(String[] args) {
-        SpringApplication.run(PrimeBootAdapterConfiguration.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(PrimeBootAdapterConfiguration.class, args);
+	}
 
-    @Override
-    public void setServletContext(ServletContext servletContext) {
-        servletContext.setInitParameter("com.sun.faces.forceLoadConfiguration", Boolean.TRUE.toString());
-        servletContext.setInitParameter("primefaces.CLIENT_SIDE_VALIDATION", "true");
-        servletContext.setInitParameter("primefaces.THEME", "bootstrap");
-        // servletContext.setInitParameter("javax.faces.CONFIG_FILES", "faces-config.xml");
-
-        servletContext.setInitParameter("facelets.SKIP_COMMENTS", "true");
-
-        servletContext.setInitParameter("javax.faces.FACELETS_SKIP_COMMENTS", "true");
+	@Override
+	public void setServletContext(ServletContext servletContext) {
+		servletContext.setInitParameter("com.sun.faces.forceLoadConfiguration", Boolean.TRUE.toString());
+		servletContext.setInitParameter("primefaces.CLIENT_SIDE_VALIDATION", "true");
+		servletContext.setInitParameter("primefaces.THEME", "bootstrap");
+		servletContext.setInitParameter("primefaces.FONT_AWESOME", "true");
+		servletContext.setInitParameter("javax.faces.STATE_SAVING_METHOD", "client");
 
 
-        // develop
-        servletContext.setInitParameter("javax.faces.FACELETS_REFRESH_PERIOD", "0");
-        // Set the project stage to "Development", "UnitTest", "SystemTest", or "Production".
-        servletContext.setInitParameter("javax.faces.PROJECT_STAGE", "Production");
 
-        
-        
-        servletContext.setInitParameter("javax.faces.FACELETS_RESOURCE_RESOLVER", "ch.sbb.releasetrain.jsfbootadapter.FaceletsResourceResolver");
-        
-    }
+		// servletContext.setInitParameter("javax.faces.CONFIG_FILES",
+		// "faces-config.xml");
 
-    @Bean
-    public ServletRegistrationBean facesServletRegistration() {
-        ServletRegistrationBean registration = new ServletRegistrationBean(
-                new FacesServlet(), "*.htm");
-        registration.setLoadOnStartup(1);
-        return registration;
-    }
+		servletContext.setInitParameter("facelets.SKIP_COMMENTS", "true");
 
-    @Bean
-    public ServletListenerRegistrationBean<ConfigureListener> jsfConfigureListener() {
-        return new ServletListenerRegistrationBean<ConfigureListener>(
-                new ConfigureListener());
-    }
+		servletContext.setInitParameter("javax.faces.FACELETS_SKIP_COMMENTS", "true");
 
-    @Bean
-    public FilterRegistrationBean rewriteFilter() {
-        FilterRegistrationBean rwFilter = new FilterRegistrationBean(new RewriteFilter());
-        rwFilter.setDispatcherTypes(EnumSet.of(DispatcherType.FORWARD, DispatcherType.REQUEST,
-                DispatcherType.ASYNC, DispatcherType.ERROR));
-        rwFilter.addUrlPatterns("/*");
-        return rwFilter;
-    }
+		// develop
+		servletContext.setInitParameter("javax.faces.FACELETS_REFRESH_PERIOD", "0");
+		// Set the project stage to "Development", "UnitTest", "SystemTest", or
+		// "Production". "Development"
+		servletContext.setInitParameter("javax.faces.PROJECT_STAGE", "Production");
+
+	}
+
+	@Bean
+	public ServletRegistrationBean facesServletRegistration() {
+		ServletRegistrationBean registration = new ServletRegistrationBean(new FacesServlet(), "*.htm");
+		registration.setLoadOnStartup(1);
+		return registration;
+	}
+
+	@Bean
+	public ServletListenerRegistrationBean<ConfigureListener> jsfConfigureListener() {
+		return new ServletListenerRegistrationBean<ConfigureListener>(new ConfigureListener());
+	}
+
+	@Bean
+	public FilterRegistrationBean rewriteFilter() {
+		FilterRegistrationBean rwFilter = new FilterRegistrationBean(new RewriteFilter());
+		rwFilter.setDispatcherTypes(
+				EnumSet.of(DispatcherType.FORWARD, DispatcherType.REQUEST, DispatcherType.ASYNC, DispatcherType.ERROR));
+		rwFilter.addUrlPatterns("/*");
+		return rwFilter;
+	}
 
 }

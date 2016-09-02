@@ -4,6 +4,8 @@
  */
 package ch.sbb.releasetrain.state;
 
+import ch.sbb.releasetrain.git.GITAccessor;
+import ch.sbb.releasetrain.git.GitException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -31,28 +33,33 @@ import ch.sbb.releasetrain.state.model.ReleaseState;
 public class GitStateStore implements StateStore {
 
     @Autowired
-    private GitClient gitClient;
-
-    @Autowired
-    private StateStoreConfig storeConfig;
+    private GITAccessor git;
 
     private boolean resetOnStartup = true;
 
     @Override
     public void writeReleaseStatus(final ReleaseState releaseState) {
-        GitRepo gitRepo = gitRepo();
-        gitRepo.cloneOrPull();
+
+        if(!git.isWrite()){
+            log.error("GIT Repo not writable !");
+            throw new GitException("GIT Repo not writable!");
+        }
+
         log.debug("Writing releaseState {}", releaseState);
-        new StateFileWriter(gitRepo.directory()).write(releaseState);
+        new StateFileWriter(git.directory()).write(releaseState);
         log.info("Wrote releaseState for release={}", releaseState.getReleaseName());
-        gitRepo.addCommitPush();
+        git.signalCommit();
     }
 
     @Override
     public ReleaseState readReleaseStatus(final String releaseIdentifier) {
-        GitRepo gitRepo = gitRepo();
-        gitRepo.cloneOrPull();
-        ReleaseState releaseState = new StateFileReader(gitRepo.directory()).read(releaseIdentifier);
+
+        if(!git.isRead()){
+            log.error("GIT Repo not readble !");
+            throw new GitException("GIT Repo not readble !");
+        }
+
+        ReleaseState releaseState = new StateFileReader(git.directory()).read(releaseIdentifier);
         log.info("Read releaseState for release={}", releaseIdentifier);
         log.debug("Read releaseState={}", releaseState);
         return releaseState;
@@ -60,7 +67,7 @@ public class GitStateStore implements StateStore {
 
     private GitRepo gitRepo() {
 
-        GitRepo repo = gitClient.gitRepo(storeConfig.getUrl(), storeConfig.getBranch(), storeConfig.getUser(), storeConfig.getPassword());
+        GitRepo repo = git.getRepo();
 
         // reset if requested and set resetOnStartup to false, so reset is done only at the beginning
         if (this.resetOnStartup) {

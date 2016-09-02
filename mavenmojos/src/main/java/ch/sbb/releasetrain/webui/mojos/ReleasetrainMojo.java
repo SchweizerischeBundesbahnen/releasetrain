@@ -19,57 +19,42 @@ public final class ReleasetrainMojo extends AbstractMojo {
 
     // repo url ex: git repo
     @Parameter(property = "config.url", required = true)
-    private String configUrl = "";
-
-    // root of the repo to get the files via http (ex: raw file of git repo)
-    @Parameter(property = "config.baseurl", required = true)
-    private String configBaseUrl = "";
+    protected String configUrl = "";
 
     // the branch to get the config from
     @Parameter(property = "config.branch", required = true)
-    private String configBranch = "";
+    protected String configBranch = "";
 
     // the user to access the config repo
     @Parameter(property = "config.user", required = true)
-    private String configUser = "";
+    protected String configUser = "";
 
     // the user to access the config repo
     @Parameter(property = "config.password", required = true)
-    private String configPassword = "";
-
-    // repo url ex: git repo, where the states are stored
-    @Parameter(property = "store.url", required = true)
-    private String storeUrl = "";
-
-    // the branch to store the states
-    @Parameter(property = "store.branch", required = true)
-    private String storeBranch = "";
-
-    // the user to access the store
-    @Parameter(property = "store.user", required = true)
-    private String storeUser = "";
-
-    // the user to access the store repo
-    @Parameter(property = "store.password", required = true)
-    private String storePassword = "";
-
-    // the url for jenkins
-    @Parameter(property = "jenkins.url", required = true, defaultValue = "")
-    private String jenkinsUrl = "";
-
-    // the jenkins.buildtoken
-    @Parameter(property = "http.user", required = true)
-    private String httpUser = "";
-
-    // the jenkins.buildtoken
-    @Parameter(property = "http.password", required = true)
-    private String httpPassword = "";
-
-    // host of the Mail Server
-    @Parameter(property = "smtp.host", required = true)
-    private String smtpHost = "";
+    protected String configPassword = "";
 
     public void execute() throws MojoExecutionException {
         Application.main(new String[0]);
+    }
+
+    public static void main(String[] args) {
+
+        ReleasetrainMojo mojo = new ReleasetrainMojo();
+
+        mojo.configUrl = "https://u203244@code.sbb.ch/scm/~u203244/test2.git";
+        mojo.configBranch = "marthaler";
+        mojo.configUser = "u203244";
+        mojo.configPassword = "pHrKmap9A6bLoyM4MEwEmOCfrTClh+9H";
+
+        System.setProperty("config.url",mojo.configUrl);
+        System.setProperty("config.branch",mojo.configBranch);
+        System.setProperty("config.user",  mojo.configUser);
+        System.setProperty("config.password",mojo.configPassword);
+
+        try {
+            mojo.execute();
+        } catch (MojoExecutionException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.yaml.snakeyaml.Yaml;
 
 import ch.sbb.releasetrain.utils.model.Recognizable;
+import org.yaml.snakeyaml.introspector.BeanAccess;
 
 /**
  * Marshaling / unmarsahling models from / to xstream strings
@@ -24,6 +25,10 @@ import ch.sbb.releasetrain.utils.model.Recognizable;
 public class YamlModelAccessor<T extends Recognizable> {
 
     Yaml yaml = new Yaml();
+
+    public YamlModelAccessor(){
+        yaml.setBeanAccess(BeanAccess.FIELD);
+    }
 
     public String convertEntrys(List<T> in) {
         return yaml.dump(in);

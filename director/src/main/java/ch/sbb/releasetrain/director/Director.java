@@ -5,16 +5,22 @@
 package ch.sbb.releasetrain.director;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
+import ch.sbb.releasetrain.git.GITPusherThread;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
 
 import ch.sbb.releasetrain.action.Action;
 import ch.sbb.releasetrain.config.ConfigAccessor;
-import ch.sbb.releasetrain.config.model.releasecalendar.ReleaseEvent;
+import ch.sbb.releasetrain.config.model.releasecalendar.ReleaseCalendarEvent;
 import ch.sbb.releasetrain.config.model.releaseconfig.ReleaseConfig;
 import ch.sbb.releasetrain.state.StateStore;
 import ch.sbb.releasetrain.state.model.ActionResult;
@@ -32,6 +38,9 @@ import ch.sbb.releasetrain.state.model.ReleaseState;
 @Slf4j
 public class Director {
 
+    @Setter
+    private boolean shutdown = true;
+
     @Autowired
     private ConfigAccessor config;
 
@@ -41,22 +50,33 @@ public class Director {
     @Autowired
     private List<Action> actions;
 
-    public void direct() {
+    @Autowired
+    private GITPusherThread git;
 
-        List<ReleaseEvent> calendar = config.readReleaseCalendar();
-        log.info("calendar found in config [" + calendar.size() + "]: " + calendar);
-        for (ReleaseEvent event : calendar) {
-            // is not in future
-            if (laysInPast(event.retreiveAsDate())) {
-                handleEvent(event);
+    public void direct() {List<String> configs = config.readAllConfigs();
+        // go for all the action calendars and look out for work to do
+        for (String action : configs){
+            List<ReleaseCalendarEvent> calendar = config.readReleaseCalendar(action);
+            log.info("calendar found in config [" + calendar.size() + "]: " + calendar);
+            for (ReleaseCalendarEvent event : calendar) {
+                // is not in future
+                if (laysInPast(event.retreiveAsDate())) {
+                    handleEvent(event);
+                }
             }
         }
+
+        if(shutdown){
+            git.commit();
+            System.exit(0);
+        }
+
     }
 
-    private void handleEvent(ReleaseEvent event) {
+    private void handleEvent(ReleaseCalendarEvent event) {
 
         // if state inexisting
-        ReleaseState state = stateStore.readReleaseStatus(event.retreiveIdentifier());
+        ReleaseState state = stateStore.readReleaseStatus(event.getActionType() + "-" +event.retreiveIdentifier());
         // ... create new one
         if (state == null) {
             state = createReleaseState(event);
@@ -68,7 +88,7 @@ public class Director {
         stateStore.writeReleaseStatus(state);
     }
 
-    private void handleAction(ReleaseEvent event, ReleaseState state) {
+    private void handleAction(ReleaseCalendarEvent event, ReleaseState state) {
         // if one of the action state in past and not executet execute it
         for (ActionState actionState : state.getActionState()) {
             LocalDateTime actionStartDate = event.retreiveAsDate().plusHours(actionState.getConfig().getOffsetHours());
@@ -80,7 +100,15 @@ public class Director {
                 try {
                     // will set action state inside this method
                     if (action != null) {
-                        rs = action.run(actionState, event.getReleaseVersion(), event.getSnapshotVersion(), event.getSnapshotVersion());
+
+                        HashMap<String,String> map = new HashMap<>();
+                        map.put("releaseVersion",event.getReleaseVersion());
+                        map.put("snapshotVersion",event.getSnapshotVersion());
+                        map.put("maintenanceVersion",event.getSnapshotVersion());
+                        map.put("custom1",event.getCustom1());
+                        map.put("custom2",event.getCustom2());
+                        map.put("custom3",event.getCustom3());
+                        rs = action.run(actionState, map);
                     } else {
                         log.error("action for name: " + actionState.getConfig().getName() + " not available");
                     }
@@ -114,9 +142,9 @@ public class Director {
         return date.isBefore(LocalDateTime.now());
     }
 
-    private ReleaseState createReleaseState(ReleaseEvent event) {
-        ReleaseConfig releaseConfig = config.readConfig(event.getActionType());
-        return new ReleaseState(event.retreiveIdentifier(), releaseConfig.getActions());
+    private ReleaseState createReleaseState(ReleaseCalendarEvent event) {
+        ReleaseConfig releaseConfig = config.readConfig(event.getActionType() + "-type");
+        return new ReleaseState(event.getActionType() + "-" + event.retreiveIdentifier(), releaseConfig.getActions());
     }
 
 }

@@ -6,6 +6,7 @@ package ch.sbb.releasetrain.state;
 
 import java.io.File;
 
+import ch.sbb.releasetrain.git.GITAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -23,15 +24,15 @@ import ch.sbb.releasetrain.state.model.ReleaseState;
 public class FileStateStore implements StateStore {
 
     @Autowired
-    private StateStoreConfig storeConfig;
+    private GITAccessor git;
 
     @Override
     public void writeReleaseStatus(ReleaseState releaseStatus) {
-        new StateFileWriter(new File(storeConfig.getUrl())).write(releaseStatus);
+        new StateFileWriter(new File(git.directory().toURI())).write(releaseStatus);
     }
 
     @Override
     public ReleaseState readReleaseStatus(String releaseName) {
-        return new StateFileReader(new File(storeConfig.getUrl())).read(releaseName);
+        return new StateFileReader(new File(git.directory().toURI())).read(releaseName);
     }
 }

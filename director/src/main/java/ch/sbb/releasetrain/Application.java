@@ -16,9 +16,6 @@ public class Application {
 
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(Application.class, args);
-        List<String> profiles = Arrays.asList(context.getEnvironment().getActiveProfiles());
-        if (!profiles.contains("springboot")) {
-            context.getBean(Director.class).direct();
-        }
+        context.getBean(Director.class).direct();
     }
 }

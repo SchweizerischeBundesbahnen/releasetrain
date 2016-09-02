@@ -22,6 +22,8 @@ import ch.sbb.releasetrain.state.model.ActionState;
 import ch.sbb.releasetrain.utils.http.HttpUtilImpl;
 import ch.sbb.releasetrain.utils.yaml.YamlModelAccessor;
 
+import java.util.HashMap;
+
 /**
  * @author u203244 (Daniel Marthaler)
  * @since 0.0.1, 2016
@@ -63,13 +65,15 @@ public class JenkinsActionTest {
         http.setUser("releasetrain");
         http.setPassword("releasetrain11");
 
-        action.setJenkinsBuildtoken("build");
         String jenkins = "http://87.230.15.247:8080/";
-        action.setJenkinsUrl(jenkins);
         action.setHttp(http);
 
+        HashMap<String,String> map = new HashMap<>();
+        map.put("releaseVersion","releaseVersion");
+        map.put("snapshotVersion","snapshotVersion");
+        map.put("maintenanceVersion","maintenanceVersion");
 
-        ActionResult result = action.doWork(jenkinsState, "releaseVersion", "snapshotVersion", "maintenanceVersion");
+        ActionResult result = action.doWork(jenkinsState, map);
         assertNotNull(result);
         assertNotNull(result == ActionResult.SUCCESS);
 

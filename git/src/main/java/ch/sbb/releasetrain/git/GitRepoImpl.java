@@ -98,7 +98,11 @@ public final class GitRepoImpl implements GitRepo {
 
     @Override
 	public void addCommitPush() {
-        callWithRetry(c -> doAddCommitPush(), 0);
+        try {
+            doAddCommitPush();
+        } catch (Exception e) {
+            throw new GitException(e.getMessage(),e);
+        }
     }
 
     public void doAddCommitPush() throws IOException, GitAPIException {
@@ -138,7 +142,7 @@ public final class GitRepoImpl implements GitRepo {
         if(remoteBranchExists(git)) {
             PullResult result = git
                     .pull()
-                    .setStrategy(MergeStrategy.THEIRS)
+                    .setStrategy(MergeStrategy.THEIRS).setCredentialsProvider( this.credentialsProvider() )
                     .call();
             if (result.isSuccessful()) {
                 return git;
@@ -187,7 +191,9 @@ public final class GitRepoImpl implements GitRepo {
     }
 
     private Git gitOpen() throws IOException {
-        this.git = Git.open(new File(gitDir, ".git"));
+        if(this.git == null ){
+            this.git = Git.open(new File(gitDir, ".git"));
+        }
         return git;
     }
 

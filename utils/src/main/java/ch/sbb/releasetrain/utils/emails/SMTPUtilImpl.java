@@ -25,11 +25,10 @@ import org.springframework.stereotype.Component;
 public class SMTPUtilImpl implements SMTPUtil {
 
     @Setter
-    @Value("${smtp.port:25}")
-    private int mailport;
-    @Value("${smtp.host: }")
+    private int mailport = 25;
+
     @Setter
-    private String mailhost = "smtpout.sbb.ch";
+    private String mailhost = "";
 
     @Override
     public void send(String absender, String empfaenger, String betreff, String text) {

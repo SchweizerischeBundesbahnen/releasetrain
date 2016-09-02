@@ -55,6 +55,9 @@ public final class JenkinsJobThread extends Thread {
         String par = "";
         if (params != null) {
             for (final String param : params.keySet()) {
+                if(param == null || params.get(param) == null){
+                    continue;
+                }
                 final String poormanUrlEncoded = param.replace(" ", "+") + "=" + params.get(param).replace(" ", "+");
                 par = par + "&" + poormanUrlEncoded;
             }
@@ -232,6 +235,24 @@ public final class JenkinsJobThread extends Thread {
         } catch (InterruptedException e) {
             log.error(e.getMessage(), e);
         }
+    }
+
+    public String readConfig(){
+        String url = this.jenkinsUrl + "/job/" + this.jobId + "/config.xml";
+        String result = this.callURL(url);
+        return result;
+    }
+
+    public String writeConfig(String config){
+        String url = this.jenkinsUrl + "/job/" + this.jobId + "/config.xml";
+        String result = http.postContentToUrl(url,config);
+        return result;
+    }
+
+    public String writeNewConfig(String config){
+        String url = this.jenkinsUrl + "/createItem?name="+this.jobId ;
+        String result = http.postContentToUrl(url,config);
+        return result;
     }
 
 }

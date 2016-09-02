@@ -5,9 +5,10 @@
 package ch.sbb.releasetrain.action;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import ch.sbb.releasetrain.config.model.releaseconfig.EmailActionConfig;
+import ch.sbb.releasetrain.utils.emails.SMTPUtilImpl;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,10 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ch.sbb.releasetrain.config.ConfigAccessor;
-import ch.sbb.releasetrain.config.model.email.MailReceiver;
 import ch.sbb.releasetrain.state.model.ActionResult;
 import ch.sbb.releasetrain.state.model.ActionState;
-import ch.sbb.releasetrain.utils.emails.SMTPUtil;
 
 /**
  * Sending Mails to Mailinglists (ex: send pre release info to the team)
@@ -32,7 +31,7 @@ public class SendMailAction extends AbstractAction {
 
     @Autowired
     @Setter
-    private SMTPUtil smtpUtil;
+    private SMTPUtilImpl smtpUtil;
 
     @Autowired
     @Setter
@@ -44,33 +43,36 @@ public class SendMailAction extends AbstractAction {
     }
 
     @Override
-    public ActionResult doWork(ActionState state, String releaseVersion, String snapshotVersion, String maintenanceVersion) {
+    public ActionResult doWork(ActionState state, HashMap properties) {
 
-        Map<String, String> params = new HashMap<>(state.getConfig().getProperties());
+        EmailActionConfig config = (EmailActionConfig) state.getConfig();
 
-        for (String key : params.keySet()) {
-            String value = state.getConfig().getProperties().get(key);
-            value = replaceVersions(value, "${releaseVersion}", releaseVersion);
-            value = replaceVersions(value, "${snapshotVersion}", snapshotVersion);
-            value = replaceVersions(value, "${maintenanceVersion}", maintenanceVersion);
-            params.put(key, value);
-        }
+        Map<String, String> params = new HashMap<>(config.getProperties());
 
-        String subject = state.getConfig().getProperties().get("subject");
-        String body = state.getConfig().getProperties().get("body");
-        String sender = state.getConfig().getProperties().get("sender");
-        String mailinglist = state.getConfig().getProperties().get("mailinglist");
+        properties.putAll(params);
 
-        List<MailReceiver> receiver = config.readMailReveiverForMailinglist(mailinglist);
+        String subject = replaceVars(config.getSubject(),properties);
+        String text = replaceVars(config.getText(),properties);
 
-        for (MailReceiver rec : receiver) {
-            smtpUtil.send(sender, rec.getEmail(), subject, body);
+        // List<MailReceiver> receiver = config.readMailReveiverForMailinglist(mailinglist);
+
+        String[] arr = config.getReceiver().split(",");
+
+        smtpUtil.setMailhost(config.getSmtpServer());
+        for (String rec : arr) {
+            smtpUtil.send(config.getSender(), rec, subject, text);
         }
         return ActionResult.SUCCESS;
 
-    }
+     }
 
-    private String replaceVersions(String in, String marker, String replacer) {
-        return in.replace(marker, replacer);
+    private String replaceVars(String in, Map<String, String> params) {
+        for(String key : params.keySet()){
+            if(key == null || params.get(key) == null){
+                continue;
+            }
+           in = in.replace("@"+key+"@", params.get(key));
+        }
+        return in;
     }
 }

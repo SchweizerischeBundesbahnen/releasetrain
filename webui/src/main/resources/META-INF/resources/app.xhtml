@@ -8,95 +8,41 @@
 
 		<h:form id="form">
 
-			<p:fieldset id="configFieldset" legend="GIT Config for the Config Files" toggleable="true"
-						toggleSpeed="500"
-						collapsed="#{GITConfigAccessorThread.thread.read and GITConfigAccessorThread.thread.write}">
+			<p:fieldset id="fs" legend="Git Connection">
 
 				<h:panelGrid columns="2" id="configPanel">
 
+
 				<h:outputLabel for="configurl" value="GIT Url Config:"/>
-              		<p:inputText id="configurl" value="#{GITConfigAccessorThread.configUrl}" size = "70" />
+              		<p:inputText id="configurl" value="#{GITAccessor.model.configUrl}" size = "70" />
 
 			  		<h:outputLabel for="configbranch" value="GIT Branch Config:"/>
-              		<p:inputText id="configbranch" value="#{GITConfigAccessorThread.configBranch}"  size = "50" />
+              		<p:inputText id="configbranch" value="#{GITAccessor.model.configBranch}"  size = "50"/>
 
 					<h:outputLabel for="configuser" value="GIT User Config:"/>
-              		<p:inputText id="configuser" value="#{GITConfigAccessorThread.configUser}"  size = "50" />
+              		<p:inputText id="configuser" value="#{GITAccessor.model.configUser}"  size = "50" />
 
 			  		<h:outputLabel for="configpassword" value="GIT Password Config:"/>
-              		<p:inputText id="configpassword" value="#{GITConfigAccessorThread.configPassword}"  size = "50"/>
+              		<p:password id="configpassword" redisplay="true" value="#{GITAccessor.model.encPassword}"  size = "50"/>
 
 					<h:outputText value="Read" />
-        			<p:selectBooleanButton id="readConfig" value="#{GITConfigAccessorThread.thread.read}" onLabel="Yes" offLabel="No" disabled="true"/>
+        			<p:selectBooleanButton id="readConfig" value="#{GITAccessor.read}" onLabel="Yes" offLabel="No" disabled="true"/>
 
 					<h:outputText value="Write" />
-        			<p:selectBooleanButton id="writeConfig" value="#{GITConfigAccessorThread.thread.write}" onLabel="Yes" offLabel="No" disabled="true"/>
+        			<p:selectBooleanButton id="writeConfig" value="#{GITAccessor.write}" onLabel="Yes" offLabel="No" disabled="true"/>
 
 					<h:outputText value="Error" />
-					<p:inputText id="configErrorConfig" value="#{GITConfigAccessorThread.thread.err}"
-								 size="70" disabled="true"/>
+					<p:inputText id="configErrorConfig" value="#{GITAccessor.err}" size="70" disabled="true"/>
 
 					<p:column>
-						<p:commandButton id="checkConfig" value="Check Connection for Config"
-										 action="#{GITConfigAccessorThread.reset()}" ajax="true"
-										 process="@form" update="configFieldset"/>
+						<p:commandButton id="checkConfig" value="Check Connection for Config"  action="#{GITAccessor.reset()}" ajax="false" process="@form" update="configFieldset"/>
 					</p:column>
 
 				</h:panelGrid>
 
-
-				<p:blockUI block="configPanel" trigger="checkConfig">
-					<p:graphicImage value="${request.contextPath}/static/images/ajax-loader.gif"/>
-				</p:blockUI>
-
 			</p:fieldset>
 
-			<br/><br/>
-
-			<p:fieldset id="stateFieldset" legend="GIT Config for the Config Files" toggleable="true"
-						toggleSpeed="500"
-						collapsed="#{GITStateAccessorThread.thread.read and GITStateAccessorThread.thread.write}">
-
-			<h:panelGrid columns="2" id="storePanel" >
-
-					<h:outputLabel for="storeurl" value="GIT Url State:"/>
-              		<p:inputText id="storeurl" value="#{GITStateAccessorThread.configUrl}" size = "70" />
-
-					<h:outputLabel for="storebranch" value="GIT Branch State:"/>
-              		<p:inputText id="storebranch" value="#{GITStateAccessorThread.configBranch}"  size = "50" />
-
-					<h:outputLabel for="storeuser" value="GIT User State:"/>
-              		<p:inputText id="storeuser" value="#{GITStateAccessorThread.configUser}"  size = "50" />
-
-					<h:outputLabel for="storepassword" value="GIT Password State:"/>
-              		<p:inputText id="storepassword" value="#{GITStateAccessorThread.configPassword}"  size = "50"/>
-
-					<h:outputText value="Read" />
-        			<p:selectBooleanButton id="readStore" value="#{GITStateAccessorThread.thread.read}" onLabel="Yes" offLabel="No" disabled="true"/>
-
-					<h:outputText value="Write" />
-        			<p:selectBooleanButton id="writeStore" value="#{GITStateAccessorThread.thread.write}" onLabel="Yes" offLabel="No" disabled="true"/>
-
-					<h:outputText value="Error" />
-					<p:inputText id="configErrorState" value="#{GITStateAccessorThread.thread.err}" size="70"
-								 disabled="true"/>
-
-					<p:column>
-					<p:commandButton id="checkStore" value="Check Connection for Store"
-									 action="#{GITStateAccessorThread.reset()}" ajax="true" process="@form"
-									 update="stateFieldset"/>
-				</p:column>
-
-			</h:panelGrid>
-
-					<p:blockUI block="storePanel" trigger="checkStore">
-            	<p:graphicImage value="${request.contextPath}/static/images/ajax-loader.gif"/>
-        	</p:blockUI>
-
-				</p:fieldset>
-
 		</h:form>
-
 
 	</ui:define>
 

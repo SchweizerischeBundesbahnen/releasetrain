@@ -4,6 +4,7 @@
  */
 package ch.sbb.releasetrain.config.model.releaseconfig;
 
+import ch.sbb.releasetrain.utils.crypt.EncryptorImpl;
 import lombok.Data;
 import ch.sbb.releasetrain.utils.model.Recognizable;
 
@@ -21,6 +22,21 @@ public class JenkinsActionConfig extends ActionConfig implements Recognizable<Je
     private String jenkinsBuildToken;
 
     private String jenkinsJobname;
+
+    private String jenkinsUser;
+
+    private String jenkinsPassword;
+
+    public String getEncPassword(){
+        if(jenkinsPassword == null){
+            return null;
+        }
+        return EncryptorImpl.decrypt(jenkinsPassword);
+    }
+
+    public void setEncPassword(String jenkinsPassword){
+        this.jenkinsPassword = EncryptorImpl.encrypt(jenkinsPassword);
+    }
 
     @Override
     public int compareTo(JenkinsActionConfig jenkinsActionConfig) {

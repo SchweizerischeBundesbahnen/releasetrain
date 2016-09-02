@@ -10,6 +10,8 @@ import ch.sbb.releasetrain.state.model.ActionResult;
 import ch.sbb.releasetrain.state.model.ActionState;
 import ch.sbb.releasetrain.utils.model.Recognizable;
 
+import java.util.HashMap;
+
 /**
  * Marshaling / unmarsahling models from / to xstream strings
  *
@@ -29,13 +31,15 @@ public abstract class AbstractAction<T extends Recognizable> implements Action {
         return true;
     }
 
-    public ActionResult run(ActionState state, String releaseVersion, String snapshotVersion, String maintenanceVersion) {
+
+
+    public ActionResult run(ActionState state, HashMap<String,String> properties) {
         if (!doWeRun(state)) {
             return state.getActionResult();
         }
-        return doWork(state, releaseVersion, snapshotVersion, maintenanceVersion);
+        return doWork(state, properties);
     }
 
-    abstract ActionResult doWork(ActionState state, String releaseVersion, String snapshotVersion, String maintenanceVersion);
+    abstract ActionResult doWork(ActionState state, HashMap<String,String> properties);
 
 }

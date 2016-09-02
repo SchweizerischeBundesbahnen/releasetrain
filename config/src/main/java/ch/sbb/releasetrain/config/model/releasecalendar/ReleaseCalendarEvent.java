@@ -4,9 +4,11 @@
  */
 package ch.sbb.releasetrain.config.model.releasecalendar;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import ch.sbb.releasetrain.utils.model.Recognizable;
 import lombok.Data;
@@ -22,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @Slf4j
 @ToString
-public class ReleaseEvent implements Recognizable<ReleaseEvent> {
+public class ReleaseCalendarEvent implements Recognizable<ReleaseCalendarEvent> {
 
     private transient final static String DATE_PATTERN = "yyyy-MM-dd HH:mm";
 
@@ -34,7 +36,15 @@ public class ReleaseEvent implements Recognizable<ReleaseEvent> {
 
     private String maintenaceVersion;
 
+    private String custom1;
+
+    private String custom2;
+
+    private String custom3;
+
     private String actionType;
+
+    private String state;
 
     public LocalDateTime retreiveAsDate() {
         DateTimeFormatter formater = DateTimeFormatter.ofPattern(DATE_PATTERN);
@@ -46,8 +56,24 @@ public class ReleaseEvent implements Recognizable<ReleaseEvent> {
         date = format.format(dateTime);
     }
 
+
+    public Date getAsDate(){
+        SimpleDateFormat formater = new SimpleDateFormat(DATE_PATTERN);
+        try {
+            return formater.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void setAsDate(Date date){
+        SimpleDateFormat format = new SimpleDateFormat(DATE_PATTERN);
+        this.date = format.format(date);
+    }
+
     @Override
-    public int compareTo(ReleaseEvent o) {
+    public int compareTo(ReleaseCalendarEvent o) {
         return this.date.compareTo(o.getDate());
     }
 
