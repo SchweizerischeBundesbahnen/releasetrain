@@ -62,100 +62,12 @@
                     </p:columns>
 
 
-
-
-
-
-
-
-
-
                     <p:column headerText="State">
                         <h:outputText value="#{cal.state}"/>
                     </p:column>
 
                 </p:dataTable>
 
-
-
-
-                <p:dataTable var="cal" value="#{calendarBackingBean.config}" editable="true"  editMode="cell">
-
-                    <p:column headerText="Date and Time">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{cal.asDate}">
-                                    <f:convertDateTime pattern="dd.MM.yy HH:mm" timeZone="Europe/Zurich"/>
-                                </h:outputText>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:calendar id="datetime" value="#{cal.asDate}" pattern="dd.MM.yy HH:mm" />
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-
-                    <p:column headerText="ReleaseVersion">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{cal.releaseVersion}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText value="#{cal.releaseVersion}" />
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-
-                    <p:column headerText="SnapshotVersion">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{cal.snapshotVersion}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText  value="#{cal.snapshotVersion}"/>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-
-                    <p:column headerText="MaintenanceVersions">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{cal.maintenaceVersion}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText value="#{cal.maintenaceVersion}"/>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-
-                    <p:column headerText="Custom1">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{cal.custom1}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText value="#{cal.custom1}"/>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-
-                    <p:column headerText="Custom2">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{cal.custom2}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText value="#{cal.custom2}"/>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-
-                    <p:column headerText="State">
-
-                                <h:outputText value="#{cal.state}"/>
-
-                    </p:column>
-
-                </p:dataTable>
 
                 <p:spacer width="10" height="25"/>
 
@@ -164,10 +76,10 @@
                     <p:commandButton  value="New" action="#{calendarBackingBean.newEntry()}" ajax="true"  update="form,form2"/>
 
                     <p:spacer width="10" height="20"/>
-                    <p:commandButton  value="Save" action="#{calendarBackingBean.save()}" ajax="true"  rendered="#{not empty calendarBackingBean.config}" update="form,form2"/>
+                    <p:commandButton  value="Save" action="#{calendarBackingBean.save()}" ajax="true"  rendered="#{not empty calendarBackingBean.calend}" update="form,form2"/>
 
                     <p:spacer width="10" height="20"/>
-                    <p:commandButton  value="Reload" action="#{calendarBackingBean.reload()}" ajax="true"  rendered="#{not empty calendarBackingBean.config}" update="form,form2"/>
+                    <p:commandButton  value="Reload" action="#{calendarBackingBean.reload()}" ajax="true"  rendered="#{not empty calendarBackingBean.calend}" update="form,form2"/>
 
                 </h:panelGrid>
             </h:form>

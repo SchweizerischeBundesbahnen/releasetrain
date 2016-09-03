@@ -45,9 +45,6 @@ public class CalendarBackingBean {
 	private GITAccessor git;
 
 	@Getter @Setter
-	private List<ReleaseCalendarEvent> config;
-
-	@Getter @Setter
 	private ReleaseCalendar calend;
 
 	@Getter
@@ -56,14 +53,12 @@ public class CalendarBackingBean {
 	public void setSelectedCalendar(String selecteCalendar) {
 		if(selecteCalendar.isEmpty()){
 			this.selectedCalendar = "";
-			this.config = null;
 			return;
 		}
 		this.selectedCalendar = selecteCalendar;
-		this.config = configAccessor.readReleaseCalendar(selecteCalendar);
 		this.calend = configAccessor.readCalendar(selecteCalendar);
 
-		for(ReleaseCalendarEvent ev: this.config){
+		for(ReleaseCalendarEvent ev: this.calend.getEvents()){
 			ReleaseState state = stateStore.readReleaseStatus(ev.getActionType() + "-" + ev.retreiveIdentifier());
 			if(state == null){
 				ev.setState("NEW");
@@ -79,7 +74,6 @@ public class CalendarBackingBean {
 
 	public void save(){
 		sortList();
-		configAccessor.writeReleaseCalendar(this.config,selectedCalendar);
 		configAccessor.writeCalendar(this.calend,selectedCalendar);
 		git.signalCommit();
 	}
@@ -91,23 +85,8 @@ public class CalendarBackingBean {
 	}
 
 	public void newEntry(){
-		ReleaseCalendarEvent cal = new ReleaseCalendarEvent();
-		cal.setActionType(selectedCalendar);
-		ReleaseCalendarEvent latest = null;
-		if(config.size() > 0) {
-			latest = config.get(config.size() - 1);
-		}
-		if(latest != null){
-			long time = latest.getAsDate().getTime() ;
-			time = time + 1000 * 60 * 60 * 24;
-			cal.setAsDate(new Date(time));
-		} else {
-			cal.setAsDate(new Date());
-		}
-		cal.setState("NEW");
-		config.add(cal);
 
-		//
+		ReleaseCalendarEvent latest=null;
 		ReleaseCalendarEvent cal2 = new ReleaseCalendarEvent();
 		cal2.setActionType(selectedCalendar);
 		ReleaseCalendarEvent latest2 = null;
@@ -122,12 +101,11 @@ public class CalendarBackingBean {
 			cal2.setAsDate(new Date());
 		}
 		cal2.setState("NEW");
-		calend.getEvents().add(cal);
+		calend.getEvents().add(cal2);
 	}
 
 	public void sortList(){
 		BeanComparator<ReleaseCalendarEvent> eintraegeComp = new BeanComparator<ReleaseCalendarEvent>("date");
-		Collections.sort(config, eintraegeComp);
 		Collections.sort(calend.getEvents(), eintraegeComp);
 	}
 }

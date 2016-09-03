@@ -86,8 +86,7 @@ public class ConfigAccessorImpl implements ConfigAccessor {
             log.error(e.getMessage(),e);
         }
 
-        if(this.readReleaseCalendar(name) == null){
-            this.writeReleaseCalendar(new ArrayList<>(),name);
+        if(this.readCalendar(name) == null){
             this.writeCalendar(new ReleaseCalendar(),name);
         }
 
@@ -139,42 +138,6 @@ public class ConfigAccessorImpl implements ConfigAccessor {
             }
         }
         return ret;
-    }
-
-    @Override
-    public List<ReleaseCalendarEvent> readReleaseCalendar(String action) {
-        File dir = git.directory();
-        File file = new File(dir, "/"+action+"-calendar.yml");
-        if(!file.exists()){
-            return null;
-        }
-        try {
-            Yaml yaml = new Yaml();
-            yaml.setBeanAccess(BeanAccess.FIELD);
-            List<ReleaseCalendarEvent> ret = (List<ReleaseCalendarEvent>) yaml.load(FileUtils.readFileToString(file));
-
-            return ret;
-
-        } catch (IOException e) {
-            log.error(e.getMessage(),e);
-        }
-        return null;
-    }
-
-    @Override
-    public void writeReleaseCalendar(List<ReleaseCalendarEvent> cal, String action) {
-        File dir = git.getRepo().directory();
-        File file = new File(dir, "/" + action + "-calendar.yml");
-
-        try {
-            Yaml yaml = new Yaml();
-            yaml.setBeanAccess(BeanAccess.FIELD);
-            String save = yaml.dump(cal);
-            FileUtils.writeStringToFile(file,save);
-            git.signalCommit();
-        } catch (IOException e) {
-            log.error(e.getMessage(),e);
-        }
     }
 
     @Override

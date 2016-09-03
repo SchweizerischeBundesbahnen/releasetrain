@@ -32,10 +32,6 @@ public interface ConfigAccessor {
 
     List<MailReceiver> readMailReveiverForMailinglist(String... mailinglists);
 
-    List<ReleaseCalendarEvent> readReleaseCalendar(String action);
-
-    void writeReleaseCalendar(List<ReleaseCalendarEvent> cal, String action);
-
     ReleaseCalendar readCalendar(String action);
 
     void writeCalendar(ReleaseCalendar cal, String action);
