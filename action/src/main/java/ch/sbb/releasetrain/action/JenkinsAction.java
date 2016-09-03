@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ch.sbb.releasetrain.config.model.releaseconfig.JenkinsActionConfig;
+import ch.sbb.releasetrain.utils.http.HttpUtilImpl;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,7 @@ public class JenkinsAction extends AbstractAction {
 
     @Autowired
     @Setter
-    private HttpUtil http;
+    private HttpUtilImpl http;
 
     @Getter
     private JenkinsJobThread jenkinsThread;
@@ -50,6 +51,9 @@ public class JenkinsAction extends AbstractAction {
         properties.putAll(params);
 
         JenkinsActionConfig conf = (JenkinsActionConfig) state.getConfig();
+
+        http.setPassword(conf.getEncPassword());
+        http.setUser(conf.getJenkinsUser());
 
         jenkinsThread = new JenkinsJobThread(conf.getJenkinsJobname(), "fromReleaseTrainJenkinsAction", conf.getJenkinsUrl(), conf.getJenkinsBuildToken(), http, properties);
         jenkinsThread.startBuildJobOnJenkins(true);

@@ -5,6 +5,7 @@
 package ch.sbb.releasetrain.webui.backingbeans;
 
 import ch.sbb.releasetrain.config.ConfigAccessor;
+import ch.sbb.releasetrain.config.model.releasecalendar.ReleaseCalendar;
 import ch.sbb.releasetrain.config.model.releasecalendar.ReleaseCalendarEvent;
 
 
@@ -46,6 +47,9 @@ public class CalendarBackingBean {
 	@Getter @Setter
 	private List<ReleaseCalendarEvent> config;
 
+	@Getter @Setter
+	private ReleaseCalendar calend;
+
 	@Getter
 	private String selectedCalendar;
 
@@ -57,6 +61,7 @@ public class CalendarBackingBean {
 		}
 		this.selectedCalendar = selecteCalendar;
 		this.config = configAccessor.readReleaseCalendar(selecteCalendar);
+		this.calend = configAccessor.readCalendar(selecteCalendar);
 
 		for(ReleaseCalendarEvent ev: this.config){
 			ReleaseState state = stateStore.readReleaseStatus(ev.getActionType() + "-" + ev.retreiveIdentifier());
@@ -75,6 +80,7 @@ public class CalendarBackingBean {
 	public void save(){
 		sortList();
 		configAccessor.writeReleaseCalendar(this.config,selectedCalendar);
+		configAccessor.writeCalendar(this.calend,selectedCalendar);
 		git.signalCommit();
 	}
 
@@ -100,10 +106,28 @@ public class CalendarBackingBean {
 		}
 		cal.setState("NEW");
 		config.add(cal);
+
+		//
+		ReleaseCalendarEvent cal2 = new ReleaseCalendarEvent();
+		cal2.setActionType(selectedCalendar);
+		ReleaseCalendarEvent latest2 = null;
+		if(calend.getEvents().size() > 0) {
+			latest = calend.getEvents().get(calend.getEvents().size() - 1);
+		}
+		if(latest != null){
+			long time = latest.getAsDate().getTime() ;
+			time = time + 1000 * 60 * 60 * 24;
+			cal2.setAsDate(new Date(time));
+		} else {
+			cal2.setAsDate(new Date());
+		}
+		cal2.setState("NEW");
+		calend.getEvents().add(cal);
 	}
 
 	public void sortList(){
 		BeanComparator<ReleaseCalendarEvent> eintraegeComp = new BeanComparator<ReleaseCalendarEvent>("date");
 		Collections.sort(config, eintraegeComp);
+		Collections.sort(calend.getEvents(), eintraegeComp);
 	}
 }

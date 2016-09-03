@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
+import ch.sbb.releasetrain.config.model.releasecalendar.ReleaseCalendar;
 import ch.sbb.releasetrain.git.GITPusherThread;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +57,8 @@ public class Director {
     public void direct() {List<String> configs = config.readAllConfigs();
         // go for all the action calendars and look out for work to do
         for (String action : configs){
-            List<ReleaseCalendarEvent> calendar = config.readReleaseCalendar(action);
+            ReleaseCalendar cal = config.readCalendar(action);
+            List<ReleaseCalendarEvent> calendar = cal.getEvents();
             log.info("calendar found in config [" + calendar.size() + "]: " + calendar);
             for (ReleaseCalendarEvent event : calendar) {
                 // is not in future
@@ -100,15 +102,7 @@ public class Director {
                 try {
                     // will set action state inside this method
                     if (action != null) {
-
-                        HashMap<String,String> map = new HashMap<>();
-                        map.put("releaseVersion",event.getReleaseVersion());
-                        map.put("snapshotVersion",event.getSnapshotVersion());
-                        map.put("maintenanceVersion",event.getSnapshotVersion());
-                        map.put("custom1",event.getCustom1());
-                        map.put("custom2",event.getCustom2());
-                        map.put("custom3",event.getCustom3());
-                        rs = action.run(actionState, map);
+                        rs = action.run(actionState, event.getParameters());
                     } else {
                         log.error("action for name: " + actionState.getConfig().getName() + " not available");
                     }
@@ -144,7 +138,7 @@ public class Director {
 
     private ReleaseState createReleaseState(ReleaseCalendarEvent event) {
         ReleaseConfig releaseConfig = config.readConfig(event.getActionType() + "-type");
-        return new ReleaseState(event.getActionType() + "-" + event.retreiveIdentifier(), releaseConfig.getActions());
+        return new ReleaseState(event.getActionType() + "-" + event.getDate().replace(" ","_").replace(":",""), releaseConfig.getActions());
     }
 
 }

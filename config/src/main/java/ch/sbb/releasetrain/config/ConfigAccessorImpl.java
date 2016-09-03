@@ -9,8 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.sbb.releasetrain.config.model.releasecalendar.ReleaseCalendar;
 import ch.sbb.releasetrain.git.GITAccessor;
 
+import ch.sbb.releasetrain.utils.yaml.YamlUtil;
 import com.sun.scenario.effect.impl.state.AccessHelper;
 import lombok.extern.slf4j.Slf4j;
 
@@ -86,6 +88,7 @@ public class ConfigAccessorImpl implements ConfigAccessor {
 
         if(this.readReleaseCalendar(name) == null){
             this.writeReleaseCalendar(new ArrayList<>(),name);
+            this.writeCalendar(new ReleaseCalendar(),name);
         }
 
         git.signalCommit();
@@ -140,7 +143,6 @@ public class ConfigAccessorImpl implements ConfigAccessor {
 
     @Override
     public List<ReleaseCalendarEvent> readReleaseCalendar(String action) {
-
         File dir = git.directory();
         File file = new File(dir, "/"+action+"-calendar.yml");
         if(!file.exists()){
@@ -157,7 +159,6 @@ public class ConfigAccessorImpl implements ConfigAccessor {
             log.error(e.getMessage(),e);
         }
         return null;
-
     }
 
     @Override
@@ -176,6 +177,31 @@ public class ConfigAccessorImpl implements ConfigAccessor {
         }
     }
 
+    @Override
+    public ReleaseCalendar readCalendar(String action) {
+        File dir = git.directory();
+        File file = new File(dir, "/"+action+"-cal.yml");
+        if(!file.exists()){
+            return null;
+        }
+        try {
+            return (ReleaseCalendar) YamlUtil.unMarshall(FileUtils.readFileToString(file));
+        } catch (IOException e) {
+            log.error(e.getMessage(),e);
+        }
+        return null;
+    }
 
+    @Override
+    public void writeCalendar(ReleaseCalendar cal, String action) {
+        File dir = git.getRepo().directory();
+        File file = new File(dir, "/" + action + "-cal.yml");
 
+        try {
+            FileUtils.writeStringToFile(file,YamlUtil.marshall(cal));
+            git.signalCommit();
+        } catch (IOException e) {
+            log.error(e.getMessage(),e);
+        }
+    }
 }

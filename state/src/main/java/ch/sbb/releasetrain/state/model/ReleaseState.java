@@ -65,7 +65,7 @@ public class ReleaseState implements Recognizable<ReleaseState> {
 
     @Override
     public String retreiveIdentifier() {
-        return releaseName;
+        return releaseName.replace(":","").replace(" ","_");
     }
 
     @Override

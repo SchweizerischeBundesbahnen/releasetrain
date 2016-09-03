@@ -7,6 +7,7 @@ package ch.sbb.releasetrain.config;
 import java.util.List;
 
 import ch.sbb.releasetrain.config.model.email.MailReceiver;
+import ch.sbb.releasetrain.config.model.releasecalendar.ReleaseCalendar;
 import ch.sbb.releasetrain.config.model.releasecalendar.ReleaseCalendarEvent;
 import ch.sbb.releasetrain.config.model.releaseconfig.ReleaseConfig;
 
@@ -34,6 +35,10 @@ public interface ConfigAccessor {
     List<ReleaseCalendarEvent> readReleaseCalendar(String action);
 
     void writeReleaseCalendar(List<ReleaseCalendarEvent> cal, String action);
+
+    ReleaseCalendar readCalendar(String action);
+
+    void writeCalendar(ReleaseCalendar cal, String action);
 
 
 }

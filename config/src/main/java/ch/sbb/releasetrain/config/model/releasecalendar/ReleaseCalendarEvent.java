@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import ch.sbb.releasetrain.utils.model.Recognizable;
 import lombok.Data;
@@ -30,6 +32,8 @@ public class ReleaseCalendarEvent implements Recognizable<ReleaseCalendarEvent> 
 
     private String date = "1900-01-01 00:01";
 
+    private HashMap<String,String> parameters = new HashMap<>();
+
     private String releaseVersion;
 
     private String snapshotVersion;
@@ -43,6 +47,19 @@ public class ReleaseCalendarEvent implements Recognizable<ReleaseCalendarEvent> 
     private String custom3;
 
     private String actionType;
+
+    private ReleaseCalendar root;
+
+
+    public Map<String,String> retriveFilteredParams(){
+        Map<String,String> ret = new HashMap<>();
+        for(ReleaseColumn col:root.getColoumns()){
+                if(col.getOn()){
+                    ret.put(col.getName(),parameters.get(col.getName()));
+                }
+        }
+        return ret;
+    }
 
     private String state;
 
@@ -79,7 +96,7 @@ public class ReleaseCalendarEvent implements Recognizable<ReleaseCalendarEvent> 
 
     @Override
     public String retreiveIdentifier() {
-        return releaseVersion;
+        return date.replace(" ","_").replace(":","");
     }
 
 }

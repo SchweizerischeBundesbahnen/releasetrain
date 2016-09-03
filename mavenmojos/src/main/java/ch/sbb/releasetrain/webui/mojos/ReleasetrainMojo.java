@@ -44,7 +44,7 @@ public final class ReleasetrainMojo extends AbstractMojo {
         mojo.configUrl = "https://u203244@code.sbb.ch/scm/~u203244/test2.git";
         mojo.configBranch = "marthaler";
         mojo.configUser = "u203244";
-        mojo.configPassword = "pHrKmap9A6bLoyM4MEwEmOCfrTClh+9H";
+        mojo.configPassword = "";
 
         System.setProperty("config.url",mojo.configUrl);
         System.setProperty("config.branch",mojo.configBranch);

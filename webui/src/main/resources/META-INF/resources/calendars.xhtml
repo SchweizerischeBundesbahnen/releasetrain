@@ -3,6 +3,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns="http://www.w3.org/1999/xhtml" template="/root.xhtml">
 
 <ui:define name="page">
@@ -22,6 +23,61 @@
             <br/>
 
             <h:form id="form2">
+
+
+
+                <ui:repeat var="col" value="#{calendarBackingBean.calend.coloumns}">
+                    <p:selectBooleanButton value="#{col.on}" onLabel="#{col.name}" offLabel="#{col.name}" />
+                </ui:repeat>
+
+
+                <p:dataTable var="ev" value="#{calendarBackingBean.calend.events}" editable="true"  editMode="cell">
+
+                    <p:column headerText="Date and Time">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{ev.asDate}">
+                                    <f:convertDateTime pattern="dd.MM.yy HH:mm" timeZone="Europe/Zurich"/>
+                                </h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:calendar id="datetime" value="#{ev.asDate}" pattern="dd.MM.yy HH:mm" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+
+                    <p:columns value="#{calendarBackingBean.calend.getColoumnsFiltered()}" var="col" >
+                        <f:facet name="header">
+                            <h:outputText value="#{col}" />
+                        </f:facet>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{ev.parameters[col]}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{ev.parameters[col]}" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:columns>
+
+
+
+
+
+
+
+
+
+
+                    <p:column headerText="State">
+                        <h:outputText value="#{cal.state}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+
+
 
                 <p:dataTable var="cal" value="#{calendarBackingBean.config}" editable="true"  editMode="cell">
 
