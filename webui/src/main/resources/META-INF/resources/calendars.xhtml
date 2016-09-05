@@ -8,7 +8,7 @@
 
 <ui:define name="page">
 
-    <p:fieldset id="fs" legend="Implement your Action Configurations">
+    <p:fieldset id="fs" legend="Calendar for Actions">
 
         <h:panelGrid columns="2" id="configPanel">
             <h:form id="form">
@@ -24,16 +24,50 @@
 
             <h:form id="form2">
 
+                <p:commandButton  value="New Entry" action="#{calendarBackingBean.newEntry()}" ajax="true"  update="form,form2" rendered="#{not empty calendarBackingBean.calend}"/>
 
+                <p:spacer width="10" height="25"/>
 
-                <ui:repeat var="col" value="#{calendarBackingBean.calend.coloumns}">
-                    <p:selectBooleanButton value="#{col.on}" onLabel="#{col.name}" offLabel="#{col.name}" />
-                </ui:repeat>
+                <p:selectCheckboxMenu value="#{calendarBackingBean.calend.coloumnsFiltered}" label="Activate Coloums" rendered="#{not empty calendarBackingBean.calend}">
+                    <f:selectItems value="#{calendarBackingBean.calend.allColoumsNames}"/>
+                    <p:ajax update="calendar"></p:ajax>
+                </p:selectCheckboxMenu>
 
+                <p:spacer width="10" height="25"/>
 
-                <p:dataTable var="ev" value="#{calendarBackingBean.calend.events}" editable="true"  editMode="cell">
+                <h:commandButton value="New Column" onclick="PF('dlg').show();" rendered="#{not empty calendarBackingBean.calend}">
+                    <f:ajax execute="@form" render="@none"/>
+                </h:commandButton>
 
-                    <p:column headerText="Date and Time">
+                <p:dialog header="New Column" widgetVar="dlg" resizable="false">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="nl" value="Name:"/>
+                        <p:inputText id="nl" value="#{calendarBackingBean.newColumn}"
+                                     label="nl"/>
+                        <f:facet name="footer">
+                            <br/>
+                            <p:commandButton value="Create" actionListener="#{calendarBackingBean.newColumn()}"  update="form2" />
+
+                            <script type="text/javascript">
+                                        function handleLoginRequest() {
+                                            PF('dlg').hide();
+                                        }
+
+                                </script>
+                        </f:facet>
+                    </h:panelGrid>
+
+                </p:dialog>
+
+                <p:commandButton  value="Save" action="#{calendarBackingBean.save()}" ajax="true"  rendered="#{not empty calendarBackingBean.calend}" update="form,form2"/>
+
+                <br/><br/>
+
+                <p:dataTable var="ev" id="calendar" value="#{calendarBackingBean.calend.events}" editable="true"  editMode="cell" rendered="#{not empty calendarBackingBean.calend}" style="width:101%">
+
+                    <p:ajax event="cellEdit" listener="#{calendarBackingBean.onCellEdit}" update=":form2:calendar"/>
+
+                    <p:column headerText="Date and Time" style="text-align: left">
                         <p:cellEditor>
                             <f:facet name="output">
                                 <h:outputText value="#{ev.asDate}">
@@ -46,8 +80,7 @@
                         </p:cellEditor>
                     </p:column>
 
-
-                    <p:columns value="#{calendarBackingBean.calend.getColoumnsFiltered()}" var="col" >
+                    <p:columns value="#{calendarBackingBean.calend.getColoumnsFiltered()}" var="col" style="text-align: left">
                         <f:facet name="header">
                             <h:outputText value="#{col}" />
                         </f:facet>
@@ -61,27 +94,12 @@
                         </p:cellEditor>
                     </p:columns>
 
-
-                    <p:column headerText="State">
-                        <h:outputText value="#{cal.state}"/>
+                    <p:column headerText="State" style="text-align: left">
+                        <h:outputText value="#{ev.state}"/>
                     </p:column>
 
                 </p:dataTable>
 
-
-                <p:spacer width="10" height="25"/>
-
-                <h:panelGrid columns="5" id="newAction"  cellpadding="5">
-
-                    <p:commandButton  value="New" action="#{calendarBackingBean.newEntry()}" ajax="true"  update="form,form2"/>
-
-                    <p:spacer width="10" height="20"/>
-                    <p:commandButton  value="Save" action="#{calendarBackingBean.save()}" ajax="true"  rendered="#{not empty calendarBackingBean.calend}" update="form,form2"/>
-
-                    <p:spacer width="10" height="20"/>
-                    <p:commandButton  value="Reload" action="#{calendarBackingBean.reload()}" ajax="true"  rendered="#{not empty calendarBackingBean.calend}" update="form,form2"/>
-
-                </h:panelGrid>
             </h:form>
 
         </h:panelGrid>

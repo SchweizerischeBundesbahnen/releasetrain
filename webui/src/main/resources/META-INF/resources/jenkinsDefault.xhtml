@@ -2,9 +2,8 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
 				xmlns:h="http://java.sun.com/jsf/html"
 				xmlns:p="http://primefaces.org/ui"
-				xmlns="http://www.w3.org/1999/xhtml" template="/root.xhtml">
+				xmlns="http://www.w3.org/1999/xhtml" >
 
-	<ui:define name="page">
 
 		<h:form id="form">
 
@@ -28,6 +27,7 @@
 					<p:password id="jenkinsPassword" value="#{jenkinsActionBackingBean.jenkins.encPassword}" redisplay="true" size = "30" />
 
 					<br/>
+
 					<p:commandButton id="save" value="Save"
 									 action="#{jenkinsActionBackingBean.save()}" ajax="false" process="@form"
 									 update=":form"/>
@@ -36,6 +36,5 @@
 
 			</p:fieldset>
 		</h:form>
-	</ui:define>
 
 </ui:composition>

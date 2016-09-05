@@ -56,7 +56,7 @@ public class DefaultPersistence {
 			return Boolean.FALSE;
 		}
 
-		if(jenkins == null || jenkins.getJenkinsBuildToken().isEmpty()){
+		if(jenkins == null || jenkins.getJenkinsBuildToken() == null|| jenkins.getJenkinsBuildToken().isEmpty()){
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;

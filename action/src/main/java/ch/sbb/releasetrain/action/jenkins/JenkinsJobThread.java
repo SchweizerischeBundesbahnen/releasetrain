@@ -243,15 +243,42 @@ public final class JenkinsJobThread extends Thread {
         return result;
     }
 
-    public String writeConfig(String config){
-        String url = this.jenkinsUrl + "/job/" + this.jobId + "/config.xml";
+    public Boolean isJobPresent(){
+        String result = "";
+        try {
+            String url = this.jenkinsUrl + "/job/" + this.jobId + "/config.xml";
+            result = this.callURL(url);
+        } catch (Exception e){
+            log.debug(e.getMessage(),e);
+            return Boolean.FALSE;
+        }
+        if(result.isEmpty() || result.contains("404 Not Found")){
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
+    }
+
+    public String writeConfig(String config,String job){
+        String url = this.jenkinsUrl + "/job/" + job + "/config.xml";
         String result = http.postContentToUrl(url,config);
         return result;
     }
 
-    public String writeNewConfig(String config){
-        String url = this.jenkinsUrl + "/createItem?name="+this.jobId ;
+    public String writeNewConfig(String config,String job){
+        String url = this.jenkinsUrl + "/createItem?name="+job ;
         String result = http.postContentToUrl(url,config);
+        return result;
+    }
+
+    public String disable(String job){
+        String url = this.jenkinsUrl + "/disable" ;
+        String result = http.getPageAsString(url);
+        return result;
+    }
+
+    public String enable(String job){
+        String url = this.jenkinsUrl + "/enable" ;
+        String result = http.getPageAsString(url);
         return result;
     }
 

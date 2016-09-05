@@ -51,7 +51,6 @@
 
                     <p:accordionPanel multiple="true" rendered="#{not empty actionBackingBean.config}" value="#{actionBackingBean.config.actions}" var="action">
 
-
                         <p:tab title="#{action.offsetHours} #{action.name}">
                             <h:panelGrid columns="2" rendered="#{action.name.equals('EmailAction')}">
 
@@ -122,7 +121,6 @@
 
                     </h:panelGrid>
                 </h:form>
-
 
             </h:panelGrid>
 

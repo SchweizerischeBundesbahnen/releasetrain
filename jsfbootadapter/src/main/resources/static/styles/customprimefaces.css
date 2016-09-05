@@ -11,15 +11,17 @@ body {
     border-color: rgb(190,190,190) !important;
     max-width: 78em !important;
     border-radius: 3px !important;
- 	background: rgb(217,217,217)!important;
+    background: rgb(217,217,217)!important;
 }
+
+
 
 .ui-menuitem-text {
     margin-right: 15px;
 }
 
 .ui-menubar {
- 	height: 32px;
+    height: 32px;
 }
 
 

@@ -20,6 +20,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanComparator;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -50,6 +52,15 @@ public class CalendarBackingBean {
 	@Getter
 	private String selectedCalendar;
 
+	@Getter @Setter
+	private String newColumn;
+
+	public void newColumn(){
+      this.calend.addColoumn(newColumn);
+		newColumn = "";
+		save();
+	}
+
 	public void setSelectedCalendar(String selecteCalendar) {
 		if(selecteCalendar.isEmpty()){
 			this.selectedCalendar = "";
@@ -57,6 +68,10 @@ public class CalendarBackingBean {
 		}
 		this.selectedCalendar = selecteCalendar;
 		this.calend = configAccessor.readCalendar(selecteCalendar);
+
+		if(this.calend.getEvents().size() < 1){
+			newEntry();
+		}
 
 		for(ReleaseCalendarEvent ev: this.calend.getEvents()){
 			ReleaseState state = stateStore.readReleaseStatus(ev.getActionType() + "-" + ev.retreiveIdentifier());
@@ -102,10 +117,16 @@ public class CalendarBackingBean {
 		}
 		cal2.setState("NEW");
 		calend.getEvents().add(cal2);
+		save();
 	}
 
 	public void sortList(){
 		BeanComparator<ReleaseCalendarEvent> eintraegeComp = new BeanComparator<ReleaseCalendarEvent>("date");
 		Collections.sort(calend.getEvents(), eintraegeComp);
+	}
+
+	public void onCellEdit(CellEditEvent event) {
+	log.info("row changed... " + event);
+		save();
 	}
 }

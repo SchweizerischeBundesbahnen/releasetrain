@@ -2,11 +2,10 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
 				xmlns:h="http://java.sun.com/jsf/html"
 				xmlns:p="http://primefaces.org/ui"
-				xmlns="http://www.w3.org/1999/xhtml" template="/root.xhtml">
+				xmlns="http://www.w3.org/1999/xhtml">
 
-	<ui:define name="page">
 
-		<h:form id="form">
+		<h:form id="formu">
 
 			<p:fieldset id="configFieldset" legend="Default Email Configuration">
 
@@ -19,13 +18,13 @@
 					<p:inputText  value="#{emailActionBackingBean.email.sender}" />
 
 					<h:outputLabel  value="Receiver Ex: t1@a.com,t2@b.com :"/>
-					<p:inputText  value="#{emailActionBackingBean.email.receiver}" size="100" />
+					<p:inputText  value="#{emailActionBackingBean.email.receiver}" size="80" />
 
 					<h:outputLabel  value="Subject"/>
-					<p:inputText  value="#{emailActionBackingBean.email.subject}" size="100"/>
+					<p:inputText  value="#{emailActionBackingBean.email.subject}" size="80"/>
 
 					<h:outputLabel for="text" value="Text:"/>
-					<p:inputTextarea id="text" value="#{emailActionBackingBean.email.text}" rows="10" cols="52" />
+					<p:inputTextarea id="text" value="#{emailActionBackingBean.email.text}" rows="10" cols="50" />
 
 					<h:outputLabel for="text" value="Variables:"/>
 					<h:outputLabel for="text" value="@releaseVersion@ / @snapshotVersion@ / @maintenanceVersion@ / @custom1@ / @custom2@"/>
@@ -40,6 +39,5 @@
 
 			</p:fieldset>
 		</h:form>
-	</ui:define>
 
 </ui:composition>

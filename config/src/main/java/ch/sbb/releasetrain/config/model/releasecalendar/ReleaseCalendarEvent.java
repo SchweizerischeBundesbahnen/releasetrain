@@ -34,22 +34,11 @@ public class ReleaseCalendarEvent implements Recognizable<ReleaseCalendarEvent> 
 
     private HashMap<String,String> parameters = new HashMap<>();
 
-    private String releaseVersion;
-
-    private String snapshotVersion;
-
-    private String maintenaceVersion;
-
-    private String custom1;
-
-    private String custom2;
-
-    private String custom3;
-
     private String actionType;
 
     private ReleaseCalendar root;
 
+    private String state;
 
     public Map<String,String> retriveFilteredParams(){
         Map<String,String> ret = new HashMap<>();
@@ -61,7 +50,7 @@ public class ReleaseCalendarEvent implements Recognizable<ReleaseCalendarEvent> 
         return ret;
     }
 
-    private String state;
+
 
     public LocalDateTime retreiveAsDate() {
         DateTimeFormatter formater = DateTimeFormatter.ofPattern(DATE_PATTERN);
@@ -98,5 +87,7 @@ public class ReleaseCalendarEvent implements Recognizable<ReleaseCalendarEvent> 
     public String retreiveIdentifier() {
         return date.replace(" ","_").replace(":","");
     }
+
+
 
 }

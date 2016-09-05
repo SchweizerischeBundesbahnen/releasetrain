@@ -52,6 +52,35 @@ public class ReleaseCalendar {
         return ret;
     }
 
+    public List<String> getAllColoumsNames(){
+        List<String> ret = new ArrayList<>();
+        for (ReleaseColumn col : coloumns) {
+                ret.add(col.getName());
+        }
+        return ret;
+    }
+
+    public void setColoumnsFiltered(List<String> in) {
+
+        List<String> nc = new ArrayList<>();
+
+        for (ReleaseColumn col : coloumns) {
+           col.setOn(Boolean.FALSE);
+        }
+
+        for (String colN : in) {
+            ReleaseColumn col = getColForName(colN);
+            if(col == null){
+                nc.add(colN);
+            } else {
+                col.setOn(true);
+            }
+        }
+        for(String name:nc){
+            addColoumn(name);
+        }
+    }
+
     public void addColoumn(String name){
         coloumns.add(new ReleaseColumn(name,Boolean.TRUE));
         for(ReleaseCalendarEvent ev:events){
@@ -65,6 +94,15 @@ public class ReleaseCalendar {
             ev.getParameters().put(col.getName(),"");
             ev.setRoot(this);
         }
+    }
+
+    private ReleaseColumn getColForName(String name){
+        for (ReleaseColumn col : coloumns) {
+            if (col.getName().equals(name)) {
+                return col;
+            }
+        }
+        return null;
     }
 
 }
