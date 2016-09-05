@@ -118,4 +118,5 @@ public class ActionBackingBean {
 		BeanComparator<ActionConfig> eintraegeComp = new BeanComparator<ActionConfig>("offsetHours");
 		Collections.sort(config.getActions(), eintraegeComp);
 	}
+
 }

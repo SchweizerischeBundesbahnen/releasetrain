@@ -12,19 +12,19 @@
 				<h:panelGrid columns="2" id="configPanel">
 
 					<h:outputLabel value="SMTP Host:"/>
-              		<p:inputText value="#{emailActionBackingBean.email.smtpServer}" size="50" />
+              		<p:inputText value="#{emailActionBackingBean.email.smtpServer}" size="60" />
 
 					<h:outputLabel  value="Sender Ex: test@host.com :"/>
-					<p:inputText  value="#{emailActionBackingBean.email.sender}" />
+					<p:inputText  value="#{emailActionBackingBean.email.sender}" size="60"/>
 
 					<h:outputLabel  value="Receiver Ex: t1@a.com,t2@b.com :"/>
-					<p:inputText  value="#{emailActionBackingBean.email.receiver}" size="80" />
+					<p:inputText  value="#{emailActionBackingBean.email.receiver}" size="60" />
 
 					<h:outputLabel  value="Subject"/>
-					<p:inputText  value="#{emailActionBackingBean.email.subject}" size="80"/>
+					<p:inputText  value="#{emailActionBackingBean.email.subject}" size="60"/>
 
 					<h:outputLabel for="text" value="Text:"/>
-					<p:inputTextarea id="text" value="#{emailActionBackingBean.email.text}" rows="10" cols="50" />
+					<p:inputTextarea id="text" value="#{emailActionBackingBean.email.text}" rows="10" cols="62" />
 
 					<h:outputLabel for="text" value="Variables:"/>
 					<h:outputLabel for="text" value="@releaseVersion@ / @snapshotVersion@ / @maintenanceVersion@ / @custom1@ / @custom2@"/>

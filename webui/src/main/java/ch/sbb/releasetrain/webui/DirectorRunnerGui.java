@@ -44,14 +44,11 @@ public class DirectorRunnerGui {
     @Autowired
     private GITAccessor git;
 
-
-
     private String templateJob = "user.u203244.template.git.custom";
 
     private String templateText;
 
-    private String newJob = "user.u203244.releasetrain-01.git.custom";
-
+    private String newJob = "user.u203244.releasetrain01.git.custom";
 
     public String getButton(){
 
