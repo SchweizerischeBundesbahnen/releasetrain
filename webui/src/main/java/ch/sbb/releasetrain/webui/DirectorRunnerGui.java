@@ -60,7 +60,7 @@ public class DirectorRunnerGui {
 
 	private String newJob = "user.u203244.releasetrain01.git.custom";
 
-	private String releasetrainVersion = "0.0.29";
+	private String releasetrainVersion = "0.0.30";
 	private String spec = "H/5 * * * *";
 	private String jdk = "Oracle JDK 1.8 64-Bit";
 
