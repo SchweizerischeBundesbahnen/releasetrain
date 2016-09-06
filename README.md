@@ -23,7 +23,7 @@ Main goal ist to schedule Builds with custom Release Numbers and other Parameter
 
 ### Usage
 #### On the Menu open Start as shown below:
-![](docs/2016-09-06_2018_13_23-localhost_8080_app.htm.png)
+![](docs/2016-09-06_18_13_23-localhost_8080_app.htm.png)
 - Here you have to provide Connection informations to a existing Git Repo
 - The Git Branch will be created if not already exists, this one will be used to store the Configuration Files in Yaml Format
 - You can see the 2 green Buttons for read and write acces to the Git connection and branch. 
