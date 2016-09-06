@@ -6,13 +6,10 @@ package ch.sbb.releasetrain.utils.emails;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 
 /**
  * Email Util
@@ -24,28 +21,27 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class SMTPUtilImpl implements SMTPUtil {
 
-    @Setter
-    private int mailport = 25;
+	@Setter
+	private int mailport = 25;
 
-    @Setter
-    private String mailhost = "";
+	@Setter
+	private String mailhost = "";
 
-    @Override
-    public void send(String absender, String empfaenger, String betreff, String text) {
-        try {
-            final Email email = new SimpleEmail();
-            email.setHostName(mailhost);
-            email.setSmtpPort(mailport);
-            email.setFrom(absender);
-            email.setSubject(betreff);
-            email.setMsg(text);
-            email.addTo(empfaenger);
-            email.send();
-            log.info("mail sent to: " + empfaenger);
-        } catch (final EmailException e) {
-            log.error(e.getMessage(), e);
-        }
-    }
-
+	@Override
+	public void send(String absender, String empfaenger, String betreff, String text) {
+		try {
+			final Email email = new SimpleEmail();
+			email.setHostName(mailhost);
+			email.setSmtpPort(mailport);
+			email.setFrom(absender);
+			email.setSubject(betreff);
+			email.setMsg(text);
+			email.addTo(empfaenger);
+			email.send();
+			log.info("mail sent to: " + empfaenger);
+		} catch (final EmailException e) {
+			log.error(e.getMessage(), e);
+		}
+	}
 
 }

@@ -14,7 +14,7 @@ import ch.sbb.releasetrain.state.model.ReleaseState;
  */
 public interface StateStore {
 
-    void writeReleaseStatus(ReleaseState releaseStatus);
+	void writeReleaseStatus(ReleaseState releaseStatus);
 
-    ReleaseState readReleaseStatus(String releaseIdentifier);
+	ReleaseState readReleaseStatus(String releaseIdentifier);
 }

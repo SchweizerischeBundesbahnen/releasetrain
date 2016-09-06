@@ -4,14 +4,13 @@
  */
 package ch.sbb.releasetrain.state;
 
+import ch.sbb.releasetrain.state.model.ReleaseState;
+
 import java.io.File;
 import java.io.IOException;
 
 import lombok.extern.slf4j.Slf4j;
-
 import org.apache.commons.io.FileUtils;
-
-import ch.sbb.releasetrain.state.model.ReleaseState;
 
 /**
  * @author u206123 (Florian Seidl)
@@ -20,22 +19,22 @@ import ch.sbb.releasetrain.state.model.ReleaseState;
 @Slf4j
 public class StateFileReader extends AbstractStateFileAccess {
 
-    public StateFileReader(File dir) {
-        super(dir);
-    }
+	public StateFileReader(File dir) {
+		super(dir);
+	}
 
-    public ReleaseState read(String releaseIdentifier) {
-        try {
-            File file = file(releaseIdentifier);
+	public ReleaseState read(String releaseIdentifier) {
+		try {
+			File file = file(releaseIdentifier);
 
-            if (!file.exists()) {
-                log.debug("File %s not existing", file);
-                return null;
-            }
+			if (!file.exists()) {
+				log.debug("File %s not existing", file);
+				return null;
+			}
 
-            return converter.convertEntry(FileUtils.readFileToString(file));
-        } catch (IOException e) {
-            throw new RuntimeException(String.format("Error reading state from file %s", file(releaseIdentifier)), e);
-        }
-    }
+			return converter.convertEntry(FileUtils.readFileToString(file));
+		} catch (IOException e) {
+			throw new RuntimeException(String.format("Error reading state from file %s", file(releaseIdentifier)), e);
+		}
+	}
 }

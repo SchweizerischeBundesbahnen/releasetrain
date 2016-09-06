@@ -4,12 +4,10 @@
  */
 package ch.sbb.releasetrain.config.model.releasecalendar;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -24,6 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReleaseColumn {
-    private String name;
-    private Boolean on;
+	private String name;
+	private Boolean on;
 }

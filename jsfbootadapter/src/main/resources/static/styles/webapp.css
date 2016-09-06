@@ -4,6 +4,6 @@
     margin-bottom: 15px;
 }
 
-.ui-button.ui-state-hover, .ui-button.ui-state-active{
-     background-color: LightGreen;
+.ui-button.ui-state-hover, .ui-button.ui-state-active {
+    background-color: LightGreen;
 }

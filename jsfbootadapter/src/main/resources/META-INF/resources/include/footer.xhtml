@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <ui:composition xmlns:h="http://java.sun.com/jsf/html"
-				xmlns:ui="http://java.sun.com/jsf/facelets"
-				xmlns:f="http://java.sun.com/jsf/core"
-				xmlns="http://www.w3.org/1999/xhtml">
-	<div id="footer">
-		<div class="page_margins">
-			<div class="page">
-				<ui:insert name="copyright">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <div id="footer">
+        <div class="page_margins">
+            <div class="page">
+                <ui:insert name="copyright">
                     <h:outputText value="#{contextUtil.getFooter()}"/>
-					<h:outputText value="#{contextUtil.getBuildDate()}">
-						<f:convertDateTime pattern="dd.MM.yyyy HH:mm" timeZone="GMT+4" />
-					</h:outputText>
-				</ui:insert>
-			</div>
-		</div>
-	</div>
+                    <h:outputText value="#{contextUtil.getBuildDate()}">
+                        <f:convertDateTime pattern="dd.MM.yyyy HH:mm" timeZone="GMT+4"/>
+                    </h:outputText>
+                </ui:insert>
+            </div>
+        </div>
+    </div>
 </ui:composition>

@@ -28,8 +28,17 @@
                                 <h:outputText value="Template available?"/>
                                 <p:selectBooleanButton id="readConfig" value="#{directorRunnerGui.isTemplateAvailable()}" onLabel="Yes" offLabel="No" disabled="true"/>
 
+                                <h:outputLabel value="Replace in Job: releasetrainVersion (Release Train Version)"/>
+                                <p:inputText value="#{directorRunnerGui.releasetrainVersion}" size="20"/>
+
+                                <h:outputLabel value="Replace in Job: spec (Crone Trigger fo Job)"/>
+                                <p:inputText value="#{directorRunnerGui.spec}" size="20"/>
+
+                                <h:outputLabel value="Replace in Job: jdk"/>
+                                <p:inputText value="#{directorRunnerGui.jdk}" size="20"/>
+
                                 <h:outputLabel for="text" value="Text:"/>
-                                <p:inputTextarea id="text" value="#{directorRunnerGui.templateText}" rows="10" cols="100"/>
+                                <p:inputTextarea id="text" value="#{directorRunnerGui.templateText}" rows="10" cols="80"/>
 
                                 <h:outputLabel value="New Jenkins Job"/>
                                 <p:inputText value="#{directorRunnerGui.newJob}" size="40"/>

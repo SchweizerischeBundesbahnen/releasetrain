@@ -4,8 +4,11 @@
  */
 package ch.sbb.releasetrain.config.model.releaseconfig;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import lombok.Data;
 
@@ -18,22 +21,35 @@ import lombok.Data;
 @Data
 public abstract class ActionConfig {
 
-    protected int offsetHours;
-    private Map<String, String> properties = new HashMap<>();
+	protected long offseMinutes = 0;
 
-    public abstract String getName();
+	private Map<String, String> properties = new HashMap<>();
 
-    public abstract int getOffsetHours();
+	public abstract String getName();
 
-    public abstract void setOffsetHours(int hours);
+	public Date getOffset() {
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+		return new Date(offseMinutes * 60000);
+	}
 
-    public String retreiveIdentifier() {
-        return getName();
-    }
+	public void setOffset(Date date) {
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+		offseMinutes = date.getTime() / 60000;
+	}
 
+	public String getOffsetStr() {
+		SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
+		fmt.setTimeZone(TimeZone.getTimeZone("UTC"));
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+		return fmt.format(new Date(offseMinutes * 60000));
+	}
 
-    public int compareTo(ActionConfig actionConfig) {
-        return actionConfig.retreiveIdentifier().compareTo(getName());
-    }
+	public String retreiveIdentifier() {
+		return getName();
+	}
+
+	public int compareTo(ActionConfig actionConfig) {
+		return actionConfig.retreiveIdentifier().compareTo(getName());
+	}
 
 }

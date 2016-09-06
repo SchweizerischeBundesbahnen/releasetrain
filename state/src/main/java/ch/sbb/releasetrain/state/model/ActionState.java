@@ -4,11 +4,12 @@
  */
 package ch.sbb.releasetrain.state.model;
 
+import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
+import ch.sbb.releasetrain.utils.model.Recognizable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
-import ch.sbb.releasetrain.utils.model.Recognizable;
 
 /**
  * The state of a release event.
@@ -21,27 +22,27 @@ import ch.sbb.releasetrain.utils.model.Recognizable;
 @Data
 public class ActionState implements Recognizable<ActionState> {
 
-    private String resultString;
+	private String resultString;
 
-    private ActionConfig config;
+	private ActionConfig config;
 
-    private ActionResult actionResult = ActionResult.NONE;
+	private ActionResult actionResult = ActionResult.NONE;
 
-    public ActionState(final ActionConfig actionConfig) {
-        this.config = actionConfig;
-    }
+	public ActionState(final ActionConfig actionConfig) {
+		this.config = actionConfig;
+	}
 
-    public String getActionName() {
-        return config.getName();
-    }
+	public String getActionName() {
+		return config.getName();
+	}
 
-    @Override
-    public String retreiveIdentifier() {
-        return getActionName();
-    }
+	@Override
+	public String retreiveIdentifier() {
+		return getActionName();
+	}
 
-    @Override
-    public int compareTo(ActionState actionState) {
-        return actionState.retreiveIdentifier().compareTo(this.retreiveIdentifier());
-    }
+	@Override
+	public int compareTo(ActionState actionState) {
+		return actionState.retreiveIdentifier().compareTo(this.retreiveIdentifier());
+	}
 }

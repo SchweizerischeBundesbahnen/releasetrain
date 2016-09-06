@@ -4,24 +4,19 @@
  */
 package ch.sbb.releasetrain.webui.backingbeans;
 
-import javax.annotation.PostConstruct;
-
-import ch.sbb.releasetrain.config.model.releaseconfig.JenkinsActionConfig;
-import ch.sbb.releasetrain.utils.yaml.YamlUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Controller;
-
 import ch.sbb.releasetrain.config.ConfigAccessor;
 import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
 import ch.sbb.releasetrain.config.model.releaseconfig.EmailActionConfig;
+import ch.sbb.releasetrain.config.model.releaseconfig.JenkinsActionConfig;
 import ch.sbb.releasetrain.config.model.releaseconfig.ReleaseConfig;
-
-import lombok.extern.slf4j.Slf4j;
-
+import ch.sbb.releasetrain.utils.yaml.YamlUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 /**
  * JenkinsActionBackingBean.
@@ -33,74 +28,70 @@ import java.util.List;
 @Slf4j
 public class DefaultPersistence {
 
-	private EmailActionConfig email;
-
-	private JenkinsActionConfig jenkins;
-
-	private ReleaseConfig config;
-
 	private final static String NAME = "defaultConfig";
-
+	private EmailActionConfig email;
+	private JenkinsActionConfig jenkins;
+	private ReleaseConfig config;
 	@Autowired
 	private ConfigAccessor configAccessor;
 
 	private boolean init = false;
 
-	public Boolean isReady(){
+	public Boolean isReady() {
 		init();
-		if(email == null || jenkins == null){
+		if (email == null || jenkins == null) {
 			return Boolean.FALSE;
 		}
 
-		if(email.getSmtpServer() == null || email.getSmtpServer().isEmpty()){
+		if (email.getSmtpServer() == null || email.getSmtpServer().isEmpty()) {
 			return Boolean.FALSE;
 		}
 
-		if(jenkins == null || jenkins.getJenkinsBuildToken() == null|| jenkins.getJenkinsBuildToken().isEmpty()){
+		if (jenkins == null || jenkins.getJenkinsBuildToken() == null || jenkins.getJenkinsBuildToken().isEmpty()) {
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;
 	}
 
-	public void init(){
+	public void init() {
 
-		if(init){
+		if (init) {
 			return;
 		}
 
 		config = configAccessor.readConfig(NAME);
 
-		if(config == null){
+		if (config == null) {
 			config = new ReleaseConfig();
-			configAccessor.writeConfig(NAME,config);
+			configAccessor.writeConfig(NAME, config);
 		}
-		for (ActionConfig cf: config.getActions()) {
-			if(cf instanceof EmailActionConfig){
+		for (ActionConfig cf : config.getActions()) {
+			if (cf instanceof EmailActionConfig) {
 				EmailActionConfig emailActionConfig = (EmailActionConfig) cf;
 				email = emailActionConfig;
 			}
 
-			if(cf instanceof JenkinsActionConfig){
+			if (cf instanceof JenkinsActionConfig) {
 				JenkinsActionConfig jenkinsActionConfig = (JenkinsActionConfig) cf;
 				jenkins = jenkinsActionConfig;
 			}
 
 		}
 
-		if(email == null){
+		if (email == null) {
 			EmailActionConfig emailActionConfig = new EmailActionConfig();
 			config.getActions().add(emailActionConfig);
 		}
 
-		if(jenkins == null){
+		if (jenkins == null) {
 			JenkinsActionConfig jenkinsAction = new JenkinsActionConfig();
 			config.getActions().add(jenkinsAction);
 		}
 		init = true;
 	}
 
-	public List<ActionConfig> findAllConfigs(){
-		if(!init){
+	public List<ActionConfig> findAllConfigs() {
+		if (!init) {
 			init();
 		}
 		List<ActionConfig> ret = new ArrayList<>();
@@ -109,32 +100,31 @@ public class DefaultPersistence {
 		return ret;
 	}
 
-	public ActionConfig getNewForName(String name){
+	public ActionConfig getNewForName(String name) {
 
-		if(name.isEmpty()){
+		if (name.isEmpty()) {
 			return null;
 		}
 
-		if(name.equalsIgnoreCase("JenkinsAction")){
+		if (name.equalsIgnoreCase("JenkinsAction")) {
 			try {
 				return (ActionConfig) YamlUtil.clone(jenkins);
 			} catch (Exception e) {
-				log.error(e.getMessage(),e);
+				log.error(e.getMessage(), e);
 			}
 		}
 
-		if(name.equalsIgnoreCase("EmailAction")){
+		if (name.equalsIgnoreCase("EmailAction")) {
 			try {
 				return (ActionConfig) YamlUtil.clone(email);
 			} catch (Exception e) {
-				log.error(e.getMessage(),e);
+				log.error(e.getMessage(), e);
 			}
 		}
 		throw new RuntimeException("no Action found for name: " + name);
 	}
 
-	@Async
-	public void  save(){
+	public void save() {
 
 		init();
 
@@ -142,9 +132,8 @@ public class DefaultPersistence {
 		config.getActions().add(jenkins);
 		config.getActions().add(email);
 
-		configAccessor.writeConfig(NAME,config);
+		configAccessor.writeConfig(NAME, config);
 	}
-
 
 	public EmailActionConfig getEmail() {
 		init();

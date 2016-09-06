@@ -4,6 +4,8 @@
  */
 package ch.sbb.releasetrain.config.model.releaseconfig;
 
+import ch.sbb.releasetrain.utils.yaml.YamlModelAccessor;
+
 import java.io.File;
 
 import org.apache.commons.io.FileUtils;
@@ -11,8 +13,6 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-
-import ch.sbb.releasetrain.utils.yaml.YamlModelAccessor;
 
 /**
  * Test
@@ -22,31 +22,31 @@ import ch.sbb.releasetrain.utils.yaml.YamlModelAccessor;
  */
 public class ReleaseConfigSerializerTest {
 
-    @Rule
-    public TemporaryFolder testFolder = new TemporaryFolder();
+	@Rule
+	public TemporaryFolder testFolder = new TemporaryFolder();
 
-    private YamlModelAccessor<ReleaseConfig> configSerializer = new YamlModelAccessor<>();
+	private YamlModelAccessor<ReleaseConfig> configSerializer = new YamlModelAccessor<>();
 
-    @Test
-    public void testSerializeReleaseConfig() throws Exception {
+	@Test
+	public void testSerializeReleaseConfig() throws Exception {
 
-        ReleaseConfig release = new ReleaseConfig();
-        release.setTyp("devType");
-        ActionConfig action = new EmailActionConfig();
-        action.getProperties().put("state", "SUCCESS");
-        release.getActions().add(action);
+		ReleaseConfig release = new ReleaseConfig();
+		release.setTyp("devType");
+		ActionConfig action = new EmailActionConfig();
+		action.getProperties().put("state", "SUCCESS");
+		release.getActions().add(action);
 
-        ActionConfig action2 = new EmailActionConfig();
-        action2.getProperties().put("state", "SUCCESS");
-        release.getActions().add(action2);
+		ActionConfig action2 = new EmailActionConfig();
+		action2.getProperties().put("state", "SUCCESS");
+		release.getActions().add(action2);
 
-        File file = new File(testFolder.getRoot(), "devType3.yml");
-        FileUtils.writeStringToFile(file, configSerializer.convertEntry(release));
+		File file = new File(testFolder.getRoot(), "devType3.yml");
+		FileUtils.writeStringToFile(file, configSerializer.convertEntry(release));
 
-        ReleaseConfig release2 = configSerializer.convertEntry(FileUtils.readFileToString(file));
-        Assert.assertNotNull(release2);
-        Assert.assertEquals(release, release2);
+		ReleaseConfig release2 = configSerializer.convertEntry(FileUtils.readFileToString(file));
+		Assert.assertNotNull(release2);
+		Assert.assertEquals(release, release2);
 
-    }
+	}
 
 }

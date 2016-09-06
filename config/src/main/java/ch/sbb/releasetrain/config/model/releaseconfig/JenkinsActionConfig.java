@@ -5,11 +5,13 @@
 package ch.sbb.releasetrain.config.model.releaseconfig;
 
 import ch.sbb.releasetrain.utils.crypt.EncryptorImpl;
-import lombok.Data;
 import ch.sbb.releasetrain.utils.model.Recognizable;
 
+import lombok.Data;
+
 /**
- * Representation of a Jenkins Action Config retreived from a storage provider (Ex: GIT Repo)
+ * Representation of a Jenkins Action Config retreived from a storage provider
+ * (Ex: GIT Repo)
  *
  * @author u203244 (Daniel Marthaler)
  * @since 0.0.1, 2016
@@ -17,44 +19,35 @@ import ch.sbb.releasetrain.utils.model.Recognizable;
 @Data
 public class JenkinsActionConfig extends ActionConfig implements Recognizable<JenkinsActionConfig> {
 
-    private String jenkinsUrl;
+	private String jenkinsUrl;
 
-    private String jenkinsBuildToken;
+	private String jenkinsBuildToken;
 
-    private String jenkinsJobname;
+	private String jenkinsJobname;
 
-    private String jenkinsUser;
+	private String jenkinsUser;
 
-    private String jenkinsPassword;
+	private String jenkinsPassword;
 
-    public String getEncPassword(){
-        if(jenkinsPassword == null){
-            return null;
-        }
-        return EncryptorImpl.decrypt(jenkinsPassword);
-    }
+	public String getEncPassword() {
+		if (jenkinsPassword == null) {
+			return null;
+		}
+		return EncryptorImpl.decrypt(jenkinsPassword);
+	}
 
-    public void setEncPassword(String jenkinsPassword){
-        this.jenkinsPassword = EncryptorImpl.encrypt(jenkinsPassword);
-    }
+	public void setEncPassword(String jenkinsPassword) {
+		this.jenkinsPassword = EncryptorImpl.encrypt(jenkinsPassword);
+	}
 
-    @Override
-    public int compareTo(JenkinsActionConfig jenkinsActionConfig) {
-        return super.compareTo(jenkinsActionConfig);
-    }
+	@Override
+	public int compareTo(JenkinsActionConfig jenkinsActionConfig) {
+		return super.compareTo(jenkinsActionConfig);
+	}
 
-    @Override
-    public String getName() {
-        return "jenkinsAction";
-    }
+	@Override
+	public String getName() {
+		return "jenkinsAction";
+	}
 
-    @Override
-    public int getOffsetHours() {
-        return super.offsetHours;
-    }
-
-    @Override
-    public void setOffsetHours(int hours) {
-        super.offsetHours = hours;
-    }
 }

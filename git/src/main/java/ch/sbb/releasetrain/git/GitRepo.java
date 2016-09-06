@@ -14,24 +14,24 @@ import java.io.File;
  * @since 0.0.1, 2016
  */
 public interface GitRepo {
-    /**
-     * Clone the repo if it does not exist or pull if it does
-     */
-    void cloneOrPull();
+	/**
+	 * Clone the repo if it does not exist or pull if it does
+	 */
+	void cloneOrPull();
 
-    /**
-     * add all unadded files, commit to local repo and push to remote
-     */
-    void addCommitPush();
+	/**
+	 * add all unadded files, commit to local repo and push to remote
+	 */
+	void addCommitPush();
 
-    /**
-     * Return the current workspace directory
-     */
-    File directory();
+	/**
+	 * Return the current workspace directory
+	 */
+	File directory();
 
-    /**
-     * clearing the local git Repo
-     */
-    void reset();
+	/**
+	 * clearing the local git Repo
+	 */
+	void reset();
 
 }

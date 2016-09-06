@@ -15,19 +15,19 @@ import java.util.Map;
  */
 public interface CSVXLSReader {
 
-    /**
-     * return's a column as List
-     */
-    List<String> getColoumnAsList(String spalte, String content);
+	/**
+	 * return's a column as List
+	 */
+	List<String> getColoumnAsList(String spalte, String content);
 
-    /**
-     * return's a column as List
-     */
-    List<List<String>> getAllRows(String content);
+	/**
+	 * return's a column as List
+	 */
+	List<List<String>> getAllRows(String content);
 
-    /**
-     * returns 2 coloums as Map getMapFrom2Coloums("id","ear")
-     */
-    Map<String, String> getMapFrom2Coloums(String coloumn1, String coloumn2, String content);
+	/**
+	 * returns 2 coloums as Map getMapFrom2Coloums("id","ear")
+	 */
+	Map<String, String> getMapFrom2Coloums(String coloumn1, String coloumn2, String content);
 
 }

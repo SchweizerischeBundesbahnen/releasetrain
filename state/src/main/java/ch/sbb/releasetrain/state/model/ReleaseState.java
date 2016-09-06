@@ -4,17 +4,13 @@
  */
 package ch.sbb.releasetrain.state.model;
 
-import java.util.List;
-
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
 import ch.sbb.releasetrain.utils.model.Recognizable;
 
+import java.util.List;
+
 import com.google.common.collect.ImmutableList;
+import lombok.*;
 
 /**
  * The state of a release event.
@@ -27,49 +23,49 @@ import com.google.common.collect.ImmutableList;
 @ToString
 public class ReleaseState implements Recognizable<ReleaseState> {
 
-    @Getter
-    @Setter
-    private List<ActionState> actionState;
+	@Getter
+	@Setter
+	private List<ActionState> actionState;
 
-    @Getter
-    @Setter
-    private String releaseName;
+	@Getter
+	@Setter
+	private String releaseName;
 
-    public String getState(){
-        String ret = "-";
-        for(ActionState state : actionState){
+	public ReleaseState(String releaseName, List<ActionConfig> configs) {
+		this.releaseName = releaseName;
+		ImmutableList.Builder<ActionState> actionStatus = new ImmutableList.Builder<>();
+		for (ActionConfig actionName : configs) {
+			actionStatus.add(new ActionState(actionName));
+		}
+		this.actionState = actionStatus.build();
+	}
 
-            if(state.getActionResult() == ActionResult.NONE){
-                ret = "NONE";
-            }
+	public String getState() {
+		String ret = "-";
+		for (ActionState state : actionState) {
 
-            if(state.getActionResult() == ActionResult.SUCCESS &&  !ret.equals("NONE")){
-                return "SUCCESS";
-            }
+			if (state.getActionResult() == ActionResult.NONE) {
+				ret = "NONE";
+			}
 
-            if(state.getActionResult() == ActionResult.FAILED){
-                return "FAILED";
-            }
-        }
-        return ret;
-    }
+			if (state.getActionResult() == ActionResult.SUCCESS && !ret.equals("NONE")) {
+				return "SUCCESS";
+			}
 
-    public ReleaseState(String releaseName, List<ActionConfig> configs) {
-        this.releaseName = releaseName;
-        ImmutableList.Builder<ActionState> actionStatus = new ImmutableList.Builder<>();
-        for (ActionConfig actionName : configs) {
-            actionStatus.add(new ActionState(actionName));
-        }
-        this.actionState = actionStatus.build();
-    }
+			if (state.getActionResult() == ActionResult.FAILED) {
+				return "FAILED";
+			}
+		}
+		return ret;
+	}
 
-    @Override
-    public String retreiveIdentifier() {
-        return releaseName.replace(":","").replace(" ","_");
-    }
+	@Override
+	public String retreiveIdentifier() {
+		return releaseName.replace(":", "").replace(" ", "_");
+	}
 
-    @Override
-    public int compareTo(ReleaseState releaseState) {
-        return releaseState.retreiveIdentifier().compareTo(this.retreiveIdentifier());
-    }
+	@Override
+	public int compareTo(ReleaseState releaseState) {
+		return releaseState.retreiveIdentifier().compareTo(this.retreiveIdentifier());
+	}
 }

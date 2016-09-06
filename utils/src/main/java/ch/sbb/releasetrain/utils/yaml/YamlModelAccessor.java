@@ -4,14 +4,13 @@
  */
 package ch.sbb.releasetrain.utils.yaml;
 
+import ch.sbb.releasetrain.utils.model.Recognizable;
+
 import java.util.Collections;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
-
 import org.yaml.snakeyaml.Yaml;
-
-import ch.sbb.releasetrain.utils.model.Recognizable;
 import org.yaml.snakeyaml.introspector.BeanAccess;
 
 /**
@@ -24,28 +23,28 @@ import org.yaml.snakeyaml.introspector.BeanAccess;
 @SuppressWarnings("unchecked")
 public class YamlModelAccessor<T extends Recognizable> {
 
-    Yaml yaml = new Yaml();
+	Yaml yaml = new Yaml();
 
-    public YamlModelAccessor(){
-        yaml.setBeanAccess(BeanAccess.FIELD);
-    }
+	public YamlModelAccessor() {
+		yaml.setBeanAccess(BeanAccess.FIELD);
+	}
 
-    public String convertEntrys(List<T> in) {
-        return yaml.dump(in);
-    }
+	public String convertEntrys(List<T> in) {
+		return yaml.dump(in);
+	}
 
-    public List<T> convertEntrys(String in) {
-        List<T> list = (List<T>) yaml.load(in);
-        Collections.sort(list);
-        return list;
-    }
+	public List<T> convertEntrys(String in) {
+		List<T> list = (List<T>) yaml.load(in);
+		Collections.sort(list);
+		return list;
+	}
 
-    public String convertEntry(T in) {
-        return yaml.dump(in);
-    }
+	public String convertEntry(T in) {
+		return yaml.dump(in);
+	}
 
-    public T convertEntry(String in) {
-        return (T) yaml.load(in);
-    }
+	public T convertEntry(String in) {
+		return (T) yaml.load(in);
+	}
 
 }

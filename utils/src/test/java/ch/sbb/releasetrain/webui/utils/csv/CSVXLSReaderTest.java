@@ -4,6 +4,8 @@
  */
 package ch.sbb.releasetrain.webui.utils.csv;
 
+import ch.sbb.releasetrain.utils.csv.CSVXLSReaderImpl;
+
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +13,6 @@ import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
-
-import ch.sbb.releasetrain.utils.csv.CSVXLSReaderImpl;
 
 /**
  * CVSXLS Test
@@ -22,25 +22,25 @@ import ch.sbb.releasetrain.utils.csv.CSVXLSReaderImpl;
  */
 public class CSVXLSReaderTest {
 
-    @Test
-    public void testIsBuildRUNNING() throws Exception {
+	@Test
+	public void testIsBuildRUNNING() throws Exception {
 
-        InputStream in = this.getClass().getResourceAsStream("/products.csv");
-        String text = IOUtils.toString(in, "UTF-8");
+		InputStream in = this.getClass().getResourceAsStream("/products.csv");
+		String text = IOUtils.toString(in, "UTF-8");
 
-        CSVXLSReaderImpl reader = new CSVXLSReaderImpl();
+		CSVXLSReaderImpl reader = new CSVXLSReaderImpl();
 
-        List<String> list = reader.getColoumnAsList("id", text);
-        Assert.assertEquals(3, list.size());
+		List<String> list = reader.getColoumnAsList("id", text);
+		Assert.assertEquals(3, list.size());
 
-        Map<String, String> map = reader.getMapFrom2Coloums("id", "ear", text);
-        Assert.assertEquals("ch.sbb.releasetrain.product1:ch.sbb.releasetrain.product1.ear", map.get("product1"));
+		Map<String, String> map = reader.getMapFrom2Coloums("id", "ear", text);
+		Assert.assertEquals("ch.sbb.releasetrain.product1:ch.sbb.releasetrain.product1.ear", map.get("product1"));
 
-        List<List<String>> rows = reader.getAllRows(text);
+		List<List<String>> rows = reader.getAllRows(text);
 
-        Assert.assertEquals(3, rows.size());
-        Assert.assertEquals(5, rows.get(2).size());
+		Assert.assertEquals(3, rows.size());
+		Assert.assertEquals(5, rows.get(2).size());
 
-    }
+	}
 
 }

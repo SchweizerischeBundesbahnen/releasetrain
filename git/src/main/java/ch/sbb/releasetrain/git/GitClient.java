@@ -12,5 +12,5 @@ package ch.sbb.releasetrain.git;
  */
 public interface GitClient {
 
-    GitRepo gitRepo(final String repo, final String branch, final String user, final String password);
+	GitRepo gitRepo(final String repo, final String branch, final String user, final String password);
 }

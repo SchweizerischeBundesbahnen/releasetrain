@@ -14,10 +14,10 @@ import java.io.InputStream;
  */
 public interface HttpUtil {
 
-    String getPageAsString(String url);
+	String getPageAsString(String url);
 
-    InputStream getResourceAsStream(String url);
+	InputStream getResourceAsStream(String url);
 
-    String postContentToUrl(String url, String content);
+	String postContentToUrl(String url, String content);
 
 }

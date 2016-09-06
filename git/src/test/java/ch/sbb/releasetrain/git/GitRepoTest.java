@@ -14,9 +14,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import ch.sbb.releasetrain.git.GitRepoImpl;
-
-
 /**
  * @author u206123 (Florian Seidl)
  * @since 0.0.6, 2016.
@@ -24,18 +21,18 @@ import ch.sbb.releasetrain.git.GitRepoImpl;
 @SuppressWarnings("ALL")
 public class GitRepoTest {
 
-    @Rule
-    public TemporaryFolder temporaryFolder = new TemporaryFolder();
+	@Rule
+	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-    @Test
-    public void isClonedEmpty() throws IOException {
-        assertFalse(new GitRepoImpl("", "", "", "", temporaryFolder.newFolder("leer")).isCloned());
-    }
+	@Test
+	public void isClonedEmpty() throws IOException {
+		assertFalse(new GitRepoImpl("", "", "", "", temporaryFolder.newFolder("leer")).isCloned());
+	}
 
-    @Test
-    public void isCloned() throws IOException {
-        File dir = temporaryFolder.newFolder("cloned");
-        new File(dir, ".git").mkdir();
-        assertTrue(new GitRepoImpl("", "", "", "", dir).isCloned());
-    }
+	@Test
+	public void isCloned() throws IOException {
+		File dir = temporaryFolder.newFolder("cloned");
+		new File(dir, ".git").mkdir();
+		assertTrue(new GitRepoImpl("", "", "", "", dir).isCloned());
+	}
 }

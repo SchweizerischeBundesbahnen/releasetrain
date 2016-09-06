@@ -1,11 +1,11 @@
 package ch.sbb.releasetrain.mojos;
 
+import ch.sbb.releasetrain.Application;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
-
-import ch.sbb.releasetrain.Application;
 
 /**
  * Frontend Mojo for the ReleaseTrain
@@ -16,7 +16,7 @@ import ch.sbb.releasetrain.Application;
 @Mojo(name = "releasetrain", defaultPhase = LifecyclePhase.VALIDATE, requiresOnline = true, requiresProject = false, threadSafe = true)
 public final class ReleasetrainMojo extends AbstractMojo {
 
-    public void execute() throws MojoExecutionException {
-        Application.main(new String[0]);
-    }
+	public void execute() throws MojoExecutionException {
+		Application.main(new String[0]);
+	}
 }

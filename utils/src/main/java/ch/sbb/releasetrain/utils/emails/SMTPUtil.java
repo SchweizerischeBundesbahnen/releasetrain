@@ -12,6 +12,6 @@ package ch.sbb.releasetrain.utils.emails;
  */
 public interface SMTPUtil {
 
-    void send(final String sender, final String receiver, final String subject, final String body);
+	void send(final String sender, final String receiver, final String subject, final String body);
 
 }

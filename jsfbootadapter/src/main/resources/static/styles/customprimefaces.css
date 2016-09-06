@@ -6,15 +6,13 @@ body {
     border-radius: 0px !important;
 }
 
-.ui-menubar,.ui-menu-child,.ui-menu,.ui-submenu,.ui-menu-link {
+.ui-menubar, .ui-menu-child, .ui-menu, .ui-submenu, .ui-menu-link {
     border: 1px solid !important;
-    border-color: rgb(190,190,190) !important;
+    border-color: rgb(190, 190, 190) !important;
     max-width: 78em !important;
     border-radius: 3px !important;
-    background: rgb(217,217,217)!important;
+    background: rgb(217, 217, 217) !important;
 }
-
-
 
 .ui-menuitem-text {
     margin-right: 15px;
@@ -24,8 +22,7 @@ body {
     height: 32px;
 }
 
-
-th, td, tr{
+th, td, tr {
     padding: 3px;
     border: 0px !important;
 }

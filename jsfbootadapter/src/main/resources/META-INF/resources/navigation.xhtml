@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-				xmlns:h="http://java.sun.com/jsf/html"
-				xmlns:p="http://primefaces.org/ui"
-				xmlns="http://www.w3.org/1999/xhtml">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
 
-	<div id="mainnav">
-		<h:form id="form_m">
-			<p:menubar id="menubar" styleClass="menubar">
+    <div id="mainnav">
+        <h:form id="form_m">
+            <p:menubar id="menubar" styleClass="menubar">
 
-				<!-- home -->
-				<p:menuitem id="m_userhandower" value="Start"
-							title="Start" icon="fa fa-git"
-							action="app.htm" ajax="false"/>
+                <!-- home -->
+                <p:menuitem id="m_userhandower" value="Start"
+                            title="Start" icon="fa fa-git"
+                            action="app.htm" ajax="false"/>
 
-				<!-- jenkinsDefault -->
-				<p:menuitem  value="Default Actions" rendered="#{GITAccessor.write and GITAccessor.read}"
-							 icon="fa fa-globe"
-							action="defaults.htm" ajax="false"/>
+                <!-- jenkinsDefault -->
+                <p:menuitem value="Default Actions" rendered="#{GITAccessor.write and GITAccessor.read}"
+                            icon="fa fa-globe"
+                            action="defaults.htm" ajax="false"/>
 
-				<!-- home -->
-				<p:menuitem  value="Implemented Actions" rendered="#{GITAccessor.write and GITAccessor.read and defaultPersistence.isReady()}"
-							title="Implemented Actions" icon="fa fa-refresh"
-							action="actions.htm" ajax="false"/>
-				<!-- home -->
-				<p:menuitem  value="Calendars" rendered="#{GITAccessor.write and GITAccessor.read and defaultPersistence.isReady()}"
-							title="Implemented Actions" icon="fa fa-calendar"
-							action="calendars.htm" ajax="false"/>
+                <!-- home -->
+                <p:menuitem value="Implemented Actions" rendered="#{GITAccessor.write and GITAccessor.read and defaultPersistence.isReady()}"
+                            title="Implemented Actions" icon="fa fa-refresh"
+                            action="actions.htm" ajax="false"/>
+                <!-- home -->
+                <p:menuitem value="Calendars" rendered="#{GITAccessor.write and GITAccessor.read and defaultPersistence.isReady()}"
+                            title="Implemented Actions" icon="fa fa-calendar"
+                            action="calendars.htm" ajax="false"/>
 
-				<p:menuitem value="Run / Create" rendered="#{GITAccessor.write and GITAccessor.read and defaultPersistence.isReady()}"
-							title="Run / Create" icon="fa fa-gear"
-							action="run.htm" ajax="false"/>
+                <p:menuitem value="Run / Create" rendered="#{GITAccessor.write and GITAccessor.read and defaultPersistence.isReady()}"
+                            title="Run / Create" icon="fa fa-gear"
+                            action="run.htm" ajax="false"/>
 
-			</p:menubar>
+            </p:menubar>
 
-		</h:form>
-	</div>
+        </h:form>
+    </div>
 </ui:composition>

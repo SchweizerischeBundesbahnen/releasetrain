@@ -9,6 +9,7 @@ import javax.faces.webapp.FacesServlet;
 import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
 
+import com.sun.faces.config.ConfigureListener;
 import org.ocpsoft.rewrite.servlet.RewriteFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
@@ -18,8 +19,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-import com.sun.faces.config.ConfigureListener;
 
 /**
  * PrimeBootAdapterConfiguration.
@@ -41,8 +40,6 @@ public class PrimeBootAdapterConfiguration extends WebMvcConfigurerAdapter imple
 		servletContext.setInitParameter("primefaces.THEME", "bootstrap");
 		servletContext.setInitParameter("primefaces.FONT_AWESOME", "true");
 		servletContext.setInitParameter("javax.faces.STATE_SAVING_METHOD", "client");
-
-
 
 		// servletContext.setInitParameter("javax.faces.CONFIG_FILES",
 		// "faces-config.xml");
@@ -74,8 +71,7 @@ public class PrimeBootAdapterConfiguration extends WebMvcConfigurerAdapter imple
 	@Bean
 	public FilterRegistrationBean rewriteFilter() {
 		FilterRegistrationBean rwFilter = new FilterRegistrationBean(new RewriteFilter());
-		rwFilter.setDispatcherTypes(
-				EnumSet.of(DispatcherType.FORWARD, DispatcherType.REQUEST, DispatcherType.ASYNC, DispatcherType.ERROR));
+		rwFilter.setDispatcherTypes(EnumSet.of(DispatcherType.FORWARD, DispatcherType.REQUEST, DispatcherType.ASYNC, DispatcherType.ERROR));
 		rwFilter.addUrlPatterns("/*");
 		return rwFilter;
 	}

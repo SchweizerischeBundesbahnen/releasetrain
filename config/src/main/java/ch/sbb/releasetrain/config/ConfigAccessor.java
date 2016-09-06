@@ -4,12 +4,11 @@
  */
 package ch.sbb.releasetrain.config;
 
-import java.util.List;
-
 import ch.sbb.releasetrain.config.model.email.MailReceiver;
 import ch.sbb.releasetrain.config.model.releasecalendar.ReleaseCalendar;
-import ch.sbb.releasetrain.config.model.releasecalendar.ReleaseCalendarEvent;
 import ch.sbb.releasetrain.config.model.releaseconfig.ReleaseConfig;
+
+import java.util.List;
 
 /**
  * Provides Acces to the Release Configs, stored in a storage like GIT
@@ -20,21 +19,20 @@ import ch.sbb.releasetrain.config.model.releaseconfig.ReleaseConfig;
  */
 public interface ConfigAccessor {
 
-    ReleaseConfig readConfig(String name);
+	ReleaseConfig readConfig(String name);
 
-    List<String> readAllConfigs();
+	List<String> readAllConfigs();
 
-    void writeConfig(String name, ReleaseConfig config);
+	void writeConfig(String name, ReleaseConfig config);
 
-    void deleteConfig(String name);
+	void deleteConfig(String name);
 
-    List<MailReceiver> readMailReceiver();
+	List<MailReceiver> readMailReceiver();
 
-    List<MailReceiver> readMailReveiverForMailinglist(String... mailinglists);
+	List<MailReceiver> readMailReveiverForMailinglist(String... mailinglists);
 
-    ReleaseCalendar readCalendar(String action);
+	ReleaseCalendar readCalendar(String action);
 
-    void writeCalendar(ReleaseCalendar cal, String action);
-
+	void writeCalendar(ReleaseCalendar cal, String action);
 
 }

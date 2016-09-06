@@ -4,10 +4,11 @@
  */
 package ch.sbb.releasetrain.config.model.email;
 
+import ch.sbb.releasetrain.utils.model.Recognizable;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import ch.sbb.releasetrain.utils.model.Recognizable;
 import lombok.Data;
 
 /**
@@ -19,17 +20,17 @@ import lombok.Data;
 @Data
 public class MailReceiver implements Recognizable<MailReceiver> {
 
-    private String email;
-    private Set<String> mailinglist = new HashSet<String>();
+	private String email;
+	private Set<String> mailinglist = new HashSet<String>();
 
-    @Override
-    public int compareTo(MailReceiver o) {
-        return this.retreiveIdentifier().compareTo(o.retreiveIdentifier());
-    }
+	@Override
+	public int compareTo(MailReceiver o) {
+		return this.retreiveIdentifier().compareTo(o.retreiveIdentifier());
+	}
 
-    @Override
-    public String retreiveIdentifier() {
-        return email;
-    }
+	@Override
+	public String retreiveIdentifier() {
+		return email;
+	}
 
 }

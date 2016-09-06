@@ -15,20 +15,20 @@ import org.yaml.snakeyaml.introspector.BeanAccess;
  */
 public class YamlUtil {
 
-    public static String marshall(Object obj){
-        Yaml yaml = new Yaml();
-        yaml.setBeanAccess(BeanAccess.FIELD);
-        return yaml.dump(obj);
-    }
+	public static String marshall(Object obj) {
+		Yaml yaml = new Yaml();
+		yaml.setBeanAccess(BeanAccess.FIELD);
+		return yaml.dump(obj);
+	}
 
-    public static Object unMarshall(String str){
-        Yaml yaml = new Yaml();
-        yaml.setBeanAccess(BeanAccess.FIELD);
-        return yaml.load(str);
-    }
+	public static Object unMarshall(String str) {
+		Yaml yaml = new Yaml();
+		yaml.setBeanAccess(BeanAccess.FIELD);
+		return yaml.load(str);
+	}
 
-    public static Object clone(Object obj){
-        return unMarshall(marshall(obj));
-    }
+	public static Object clone(Object obj) {
+		return unMarshall(marshall(obj));
+	}
 
 }

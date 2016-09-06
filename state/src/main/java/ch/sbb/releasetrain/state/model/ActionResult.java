@@ -11,5 +11,5 @@ package ch.sbb.releasetrain.state.model;
  * @since 0.0.6, 2016.
  */
 public enum ActionResult {
-    FAILED, SUCCESS, NONE
+	FAILED, SUCCESS, NONE
 }

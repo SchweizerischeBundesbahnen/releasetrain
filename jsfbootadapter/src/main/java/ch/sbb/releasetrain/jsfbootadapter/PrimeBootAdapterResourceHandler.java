@@ -13,10 +13,9 @@ import javax.faces.application.ResourceHandlerWrapper;
 import javax.faces.application.ViewResource;
 import javax.faces.context.FacesContext;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * PrimeBootAdapterConfiguration.
@@ -76,16 +75,15 @@ public class PrimeBootAdapterResourceHandler extends ResourceHandlerWrapper {
 
 			String locWeb = "file:" + url.getPath().replace("src/main/webapp/WEB-INF/classes", "src/main/resources");
 			String locMod = "file:" + url.getPath().replace("target/classes", "src/main/resources");
-			
-			if(new File(locWeb.replace("file:","")).exists()){
-				log.info("is here: " + url + " use this one");
+
+			if (new File(locWeb.replace("file:", "")).exists()) {
+				log.debug("is here: " + url + " use this one");
 				url = new URL(locWeb);
-			} else if(new File(locMod.replace("file:","")).exists()){
-				log.info("is here: " + url + " use this one");
+			} else if (new File(locMod.replace("file:", "")).exists()) {
+				log.debug("is here: " + url + " use this one");
 				url = new URL(locMod);
 			}
-		
-			
+
 		} catch (MalformedURLException e) {
 			log.debug("not found view in src/main/resources" + url + " (" + e.getMessage() + ")");
 		}

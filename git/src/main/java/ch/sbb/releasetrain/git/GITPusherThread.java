@@ -4,13 +4,12 @@
  */
 package ch.sbb.releasetrain.git;
 
-import lombok.Data;
+import javax.annotation.PreDestroy;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PreDestroy;
 
 /**
  * Base Thread to initialize a GIT Connection read / write
@@ -27,15 +26,15 @@ public class GITPusherThread {
 	private GITAccessor th;
 
 	@Scheduled(fixedRate = 2 * 60 * 1000)
-	public void commit(){
-		if (th.isDirty()){
+	public void commit() {
+		if (th.isDirty()) {
 			th.addCommitPush();
 			th.setDirty(false);
 		}
 	}
 
 	@PreDestroy
-	private void shutdown(){
+	private void shutdown() {
 		commit();
 	}
 
