@@ -39,6 +39,45 @@ the Password is encrypted so anyone can't read it in plaintext. It's easy to fin
 - Provide the Tempalte Email Information. In this Version there is no Option for a SMTP Server with Autentication, Please request a Ticket or open a Pullrequest if you need this option
 - The Default Action's will be the first Config Files on the branch on the configured Git Repo
 
+#### Implement your new Actions:
+![](docs/2016-09-06_20_15_39-localhost_8080_actions.htm.png)
+- First insert the Name of the Action, the Action will have hes own Calendar wit 1 to n Scheduled Events
+- A Action can have one or more Actions (Jenkins and Email Actions)
+
+![](docs/2016-09-06_20_16_27-localhost_8080_actions.htm.png)
+- A Action can have one or more Actions (Jenkins and Email Actions)
+
+![](docs/2016-09-06_20_17_01-localhost_8080_actions.htm.png)
+- Every Action has his own Configuration
+- You can set a offest Time on each Action, an Action with offset 0:00 will start right on time given in the schedule
+- An Offset Time means that the execution of this step will wayt for the provided time to finish
+
+#### Create the Calendar for each Action:
+![](docs/2016-09-06_20_19_52-localhost_8080_actions.htm.png)
+- You can add coloums as shown above. The Column Name will be automatically mapped to Jenkins Action Parameters and to Email Text Variables
+
+![](docs/2016-09-06_20_20_30-localhost_8080_actions.htm.png)
+- As shown above you can disable Colums if not required for the action
+
+![](docs/2016-09-06_20_21_21-localhost_8080_actions.htm.png)
+- With New Entry you now can schedule your Actions whenever you need to run them
+- In the State Column you can see the State of Actions already Succeded or in Error State
+
+#### Run Create Actions
+![](docs/2016-09-06_20_22_11-localhost_8080_calendars.htm.png)
+- For local Testing you can hit the Start local Button
+
+![](docs/2016-09-06_20_24_04-localhost_8080_app.htm.png)
+- As shown above you can export a Jenkins Job by providing an existing Template Job on your Jenkins
+- Frst you have to load the Config as XML
+- Then you can Publish the Job to jenkins
+- Filds above will be replaced in the XML or you can edit the Config in the Text Field...
+
+
+
+
+
+
 
 
 
