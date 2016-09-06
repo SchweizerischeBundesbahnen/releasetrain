@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<f:view contentType="text/html" encoding="UTF-8" locale="de">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+        <link rel="shortcut icon" href="${request.contextPath}/static/images/favicon.ico"/>
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+        <!--/* yaml */-->
+        <link rel="stylesheet" type="text/css"
+              href="${request.contextPath}/static/styles/yaml/core/base.css"/>
+        <link rel="stylesheet" type="text/css"
+              href="${request.contextPath}/static/styles/yaml/screen/forms.css"/>
+
+
+        <!--/* mod */-->
+        <link rel="stylesheet" type="text/css"
+              href="${request.contextPath}/static/styles/css/screen/basemod.css"/>
+        <link rel="stylesheet" type="text/css"
+              href="${request.contextPath}/static/styles/css/screen/content.css"/>
+
+        <!--/* custom css */-->
+        <link rel="stylesheet" type="text/css"
+              href="${request.contextPath}/static/styles/customprimefaces.css"/>
+        <link rel="stylesheet" type="text/css"
+              href="${request.contextPath}/static/styles/webapp.css"/>
+
+
+        <ui:insert name="title">
+            <title>
+                <h:outputText value="#{contextUtil.getApp()}"/>
+            </title>
+        </ui:insert>
+
+
+    </h:head>
+
+    <h:body>
+
+
+        <ui:insert name="navigation">
+            <ui:include src="navigation.xhtml"/>
+        </ui:insert>
+        <ui:insert name="main">
+            <ui:include src="include/main.xhtml"/>
+        </ui:insert>
+        <ui:include src="include/footer.xhtml"/>
+    </h:body>
+
+</f:view>
+</html>

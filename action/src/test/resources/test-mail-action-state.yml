@@ -1,0 +1,7 @@
+!!ch.sbb.releasetrain.state.model.ActionState
+actionResult: NONE
+config:
+  offsetHours: 0
+  properties: {subject: release ankündigung, body: bla bla bla \n bla hallo, sender: info@test.ch,
+    mailinglist: test}
+resultString: null

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml" template="/root.xhtml">
+
+    <ui:define name="page">
+
+        <p:fieldset id="configFieldset" legend="Default's ">
+
+            <h:form id="form">
+
+                <p:accordionPanel multiple="false">
+
+                    <p:tab title="Jenkins Default Action">
+                        <ui:include src="jenkinsDefault.xhtml"/>
+                    </p:tab>
+
+                    <p:tab title="Email Default Action">
+                        <ui:include src="emailDefault.xhtml"/>
+                    </p:tab>
+
+                </p:accordionPanel>
+
+            </h:form>
+        </p:fieldset>
+
+    </ui:define>
+
+</ui:composition>

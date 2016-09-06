@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml" template="/root.xhtml">
+
+    <ui:define name="page">
+
+        <p:fieldset id="fs" legend="Implement your Action Configurations">
+
+            <h:panelGrid columns="2" id="configPanel">
+                <h:form id="form">
+                    <h:panelGrid columns="3" id="newAction">
+                        <p:selectOneMenu id="selectedAction" value="#{actionBackingBean.selectedAction}" onchange="submit()" update="fs" style="center">
+                            <f:selectItem itemLabel="Please open existing Action or..." itemValue=""/>
+                            <f:selectItems value="#{actionBackingBean.findAllActions()}" var="dt" itemLabel="#{dt}" itemValue="#{dt}"/>
+                        </p:selectOneMenu>
+                        <p:spacer width="10" height="20"/>
+                        <h:commandButton value="... Create new One" onclick="PF('dlg').show();">
+                            <f:ajax execute="@form" render="@none"/>
+                        </h:commandButton>
+                    </h:panelGrid>
+                    <p:dialog header="New Action" widgetVar="dlg" resizable="false">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="nl" value="Name:"/>
+                            <p:inputText id="nl" value="#{actionBackingBean.selectedActionNew}"
+                                         label="nl"/>
+                            <f:facet name="footer">
+                                <br/>
+                                <p:commandButton value="Create"
+                                                 actionListener="#{actionBackingBean.newOne()}"
+                                                 update="configPanel"
+                                                 oncomplete="handleLoginRequest()"/>
+
+                                <script type="text/javascript">
+                                        function handleLoginRequest() {
+                                            PF('dlg').hide();
+                                        }
+
+
+                                </script>
+                            </f:facet>
+                        </h:panelGrid>
+
+                    </p:dialog>
+                </h:form>
+                <br/>
+                <h:form id="form2">
+
+                    <p:spacer width="10" height="25"/>
+
+                    <p:accordionPanel multiple="true" rendered="#{not empty actionBackingBean.config}" value="#{actionBackingBean.config.actions}" var="action">
+
+                        <p:tab title="#{action.offsetStr} #{action.name}">
+                            <h:panelGrid columns="2" rendered="#{action.name.equals('EmailAction')}">
+
+                                <h:outputLabel value="Offset Time:"/>
+                                <p:calendar value="#{action.offset}" pattern="HH:mm" timeOnly="true" timeZone="UTC"/>
+
+                                <h:outputLabel value="SMTP Host:"/>
+                                <p:inputText value="#{action.smtpServer}" size="50"/>
+
+                                <h:outputLabel value="Sender Ex: test@host.com :"/>
+                                <p:inputText value="#{action.sender}"/>
+
+                                <h:outputLabel value="Receiver Ex: t1@a.com,t2@b.com :"/>
+                                <p:inputText value="#{action.receiver}" size="95"/>
+
+                                <h:outputLabel value="Subject"/>
+                                <p:inputText value="#{action.subject}" size="95"/>
+
+                                <h:outputLabel for="text" value="Text:"/>
+                                <p:inputTextarea id="text" value="#{action.text}" rows="10" cols="52"/>
+
+                                <h:outputLabel for="text" value="Variables:"/>
+                                <h:outputLabel for="text" value="@releaseVersion@ / @snapshotVersion@ / @maintenanceVersion@ / @custom1@ / @custom2@"/>
+
+                                <br/>
+
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="2" rendered="#{action.name.equals('jenkinsAction')}">
+
+                                <h:outputLabel value="Offset Time:"/>
+                                <p:calendar value="#{action.offset}" pattern="HH:mm" timeOnly="true"/>
+
+                                <h:outputLabel value="Jenkins URL:"/>
+                                <p:inputText value="#{action.jenkinsUrl}" size="60"/>
+
+                                <h:outputLabel value="Jenkins Build Token (ID for Job starter via HTTP Get):"/>
+                                <p:inputText value="#{action.jenkinsBuildToken}" size="30"/>
+
+                                <h:outputLabel value="Jenkins Job Name"/>
+                                <p:inputText value="#{action.jenkinsJobname}" size="20"/>
+
+                                <h:outputLabel value="Jenkins User:"/>
+                                <p:inputText value="#{action.jenkinsUser}" size="30"/>
+
+                                <h:outputLabel value="Jenkins Password:"/>
+                                <p:password value="#{action.jenkinsPassword}" redisplay="true" size="30"/>
+
+                                <br/>
+
+                            </h:panelGrid>
+                        </p:tab>
+
+                    </p:accordionPanel>
+
+                    <p:spacer width="10" height="25"/>
+
+                    <h:panelGrid columns="4" id="newAction" rendered="#{not empty actionBackingBean.config}" cellpadding="5">
+
+                        <p:selectOneMenu id="action10" value="#{actionBackingBean.newAction}" onchange="submit()" update="fs:" style="center">
+                            <f:selectItem itemLabel="to add select a new Config ..." itemValue=""/>
+                            <f:selectItems value="#{actionBackingBean.findAllConfigs()}" var="dt" itemLabel="#{dt.name}" itemValue="#{dt.name}"/>
+                        </p:selectOneMenu>
+                        <p:spacer width="10" height="20"/>
+                        <p:commandButton value="Save" action="#{actionBackingBean.save()}" ajax="true" update="form,form2"/>
+
+                        <p:commandButton value="Delete" action="#{actionBackingBean.delete()}" ajax="true" update="form,form2"/>
+
+                    </h:panelGrid>
+                </h:form>
+
+            </h:panelGrid>
+
+        </p:fieldset>
+
+    </ui:define>
+
+</ui:composition>

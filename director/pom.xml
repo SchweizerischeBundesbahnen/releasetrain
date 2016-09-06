@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xmlns="http://maven.apache.org/POM/4.0.0"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>parent</artifactId>
+		<groupId>ch.sbb.releasetrain</groupId>
+		<version>0.0.30-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>director</artifactId>
+
+	<dependencies>
+
+		<dependency>
+			<artifactId>config</artifactId>
+			<groupId>ch.sbb.releasetrain</groupId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>action</artifactId>
+			<groupId>ch.sbb.releasetrain</groupId>
+			<version>${project.version}</version>
+		</dependency>
+
+	</dependencies>
+
+</project>

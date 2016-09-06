@@ -1,0 +1,46 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    max-width: 80em !important;
+    margin: 0 auto !important;
+    border-radius: 0px !important;
+}
+
+.ui-menubar, .ui-menu-child, .ui-menu, .ui-submenu, .ui-menu-link {
+    border: 1px solid !important;
+    border-color: rgb(190, 190, 190) !important;
+    max-width: 78em !important;
+    border-radius: 3px !important;
+    background: rgb(217, 217, 217) !important;
+}
+
+.ui-menuitem-text {
+    margin-right: 15px;
+}
+
+.ui-menubar {
+    height: 32px;
+}
+
+th, td, tr {
+    padding: 3px;
+    border: 0px !important;
+}
+
+.validationerror {
+    background-color: #FFBABA;
+    color: #D8000C;
+    border: 1px solid;
+    padding: 1px 5px 1px 5px;
+    border-radius: 3px 3px 3px 3px;
+    outline: 0 none;
+}
+
+.validationsuccess {
+    background-color: #BAFFBA;
+    color: #00B30A;
+    border: 1px solid;
+    padding: 1px 5px 1px 5px;
+    border-radius: 3px 3px 3px 3px;
+    outline: 0 none;
+}

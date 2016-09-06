@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml" template="/root.xhtml">
+
+    <ui:define name="page">
+
+        <h:form id="form">
+
+            <p:fieldset id="fs" legend="Git Connection">
+
+                <h:panelGrid columns="2" id="configPanel">
+
+                    <h:outputLabel for="configurl" value="GIT Url:"/>
+                    <p:inputText id="configurl" value="#{GITAccessor.model.configUrl}" size="70"/>
+
+                    <h:outputLabel for="configbranch" value="GIT Branch:"/>
+                    <p:inputText id="configbranch" value="#{GITAccessor.model.configBranch}" size="50"/>
+
+                    <h:outputLabel for="configuser" value="GIT User:"/>
+                    <p:inputText id="configuser" value="#{GITAccessor.model.configUser}" size="50"/>
+
+                    <h:outputLabel for="configpassword" value="GIT Password:"/>
+                    <p:password id="configpassword" redisplay="true" value="#{GITAccessor.model.encPassword}" size="50"/>
+
+                    <h:outputText value="Read access"/>
+                    <p:selectBooleanButton id="readConfig" value="#{GITAccessor.read}" onLabel="Yes" offLabel="No" disabled="true"/>
+
+                    <h:outputText value="Write access"/>
+                    <p:selectBooleanButton id="writeConfig" value="#{GITAccessor.write}" onLabel="Yes" offLabel="No" disabled="true"/>
+
+                    <h:outputText value="Error"/>
+                    <p:inputText id="configErrorConfig" value="#{GITAccessor.err}" size="70" disabled="true"/>
+
+                    <p:column>
+                        <p:commandButton id="checkConfig" value="Check Connection for Config" action="#{GITAccessor.reset()}" ajax="false" process="@form" update="configFieldset"/>
+                    </p:column>
+
+                </h:panelGrid>
+
+            </p:fieldset>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

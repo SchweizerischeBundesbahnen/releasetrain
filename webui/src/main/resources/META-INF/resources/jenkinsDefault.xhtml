@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <h:panelGrid columns="2">
+
+        <h:outputLabel for="configurl" value="Jenkins URL:"/>
+        <p:inputText id="configurl" value="#{jenkinsActionBackingBean.jenkins.jenkinsUrl}" size="40"/>
+
+        <h:outputLabel for="jenkinsBuildToken" value="Jenkins Build Token (ID for Job starter via HTTP Get):"/>
+        <p:inputText id="jenkinsBuildToken" value="#{jenkinsActionBackingBean.jenkins.jenkinsBuildToken}" size="40"/>
+
+        <h:outputLabel for="jenkinsJobname" value="Jenkins Job Name"/>
+        <p:inputText id="jenkinsJobname" value="#{jenkinsActionBackingBean.jenkins.jenkinsJobname}" size="40"/>
+
+        <h:outputLabel for="jenkinsUser" value="Jenkins User:"/>
+        <p:inputText id="jenkinsUser" value="#{jenkinsActionBackingBean.jenkins.jenkinsUser}" size="40"/>
+
+        <h:outputLabel for="jenkinsPassword" value="Jenkins Password:"/>
+        <p:password id="jenkinsPassword" value="#{jenkinsActionBackingBean.jenkins.encPassword}" redisplay="true" size="40"/>
+
+        <br/>
+
+        <p:commandButton value="Save" action="#{jenkinsActionBackingBean.save()}" ajax="true" update="form,form_m"/>
+
+    </h:panelGrid>
+
+</ui:composition>

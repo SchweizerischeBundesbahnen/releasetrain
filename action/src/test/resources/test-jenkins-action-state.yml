@@ -1,0 +1,6 @@
+!!ch.sbb.releasetrain.state.model.ActionState
+actionResult: NONE
+config:
+  offsetHours: 0
+  properties: {test: test, jenkins.jobname: releasetrain-demo}
+resultString: ''
