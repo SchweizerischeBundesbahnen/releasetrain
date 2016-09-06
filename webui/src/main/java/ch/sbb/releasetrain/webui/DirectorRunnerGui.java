@@ -14,6 +14,7 @@ import ch.sbb.releasetrain.webui.backingbeans.DefaultPersistence;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +30,7 @@ import javax.annotation.PreDestroy;
 @Component
 @Slf4j
 @Data
+@Scope("session")
 public class DirectorRunnerGui {
 
 	private Boolean on = Boolean.FALSE;
@@ -47,6 +49,9 @@ public class DirectorRunnerGui {
 
 	public void init(){
 		this.disableJob();
+		JenkinsActionConfig conf = (JenkinsActionConfig) pers.getNewForName("jenkinsAction");
+		templateJob = conf.getJenkinsJobname();
+		newJob = conf.getJenkinsJobname() + ".new";
 	}
 
 	@PreDestroy
@@ -54,11 +59,11 @@ public class DirectorRunnerGui {
 		this.enableJob();
 	}
 
-	private String templateJob = "user.u203244.template.git.custom";
+	private String templateJob = "";
 
 	private String templateText;
 
-	private String newJob = "user.u203244.releasetrain01.git.custom";
+	private String newJob = "";
 
 	private String releasetrainVersion = "0.0.30";
 	private String spec = "H/5 * * * *";
@@ -128,9 +133,6 @@ public class DirectorRunnerGui {
 		builder.append("-Dconfig.user=" + git.getModel().getConfigUser() + "\n");
 		builder.append("-Dconfig.password=" + git.getModel().getConfigPassword() + "\n");
 		builder.append("-Djava.io.tmpdir=\\${WORKSPACE}");
-
-
-
 
 		tempText = replaceNode(tempText, "targets", builder.toString());
 		tempText = replaceNode(tempText, "mavenName", mavenName);

@@ -14,26 +14,12 @@
 
 	<dependencies>
 
-
 		<dependency>
 			<groupId>ch.sbb.releasetrain</groupId>
 			<artifactId>utils</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
-
-
 	</dependencies>
-
-	<!-- Package as an executable war
-	<build>
-		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>-->
 
 </project>
