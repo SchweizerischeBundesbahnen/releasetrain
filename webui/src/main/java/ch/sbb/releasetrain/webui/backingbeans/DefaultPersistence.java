@@ -92,7 +92,7 @@ public class DefaultPersistence {
 			config.getActions().add(jenkinsAction);
 		}
 		init = true;
-		runner.init();
+		runner.intit();
 	}
 
 	public List<ActionConfig> findAllConfigs() {

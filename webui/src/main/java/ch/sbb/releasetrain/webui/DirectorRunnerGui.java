@@ -127,7 +127,7 @@ public class DirectorRunnerGui {
 		builder.append("-Dconfig.branch=" + git.getModel().getConfigBranch() + "\n");
 		builder.append("-Dconfig.user=" + git.getModel().getConfigUser() + "\n");
 		builder.append("-Dconfig.password=" + git.getModel().getConfigPassword() + "\n");
-		builder.append("-Djava.io.tmpdir=${WORKSPACE}");
+		builder.append("-Djava.io.tmpdir=\\${WORKSPACE}");
 
 
 
