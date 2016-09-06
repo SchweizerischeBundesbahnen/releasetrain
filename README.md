@@ -26,7 +26,19 @@ Main goal ist to schedule Builds with custom Release Numbers and other Parameter
 ![](docs/2016-09-06%2018_13_23-localhost_8080_app.htm.png)
 - Here you have to provide Connection informations to a existing Git Repo
 - The Git Branch will be created if not already exists, this one will be used to store the Configuration Files in Yaml Format
-- You can See the 2 green Buttons for read and write acces to the Git connection and branch. 
+- You can see the 2 green Buttons for read and write acces to the Git connection and branch. 
 - If you see errors in the Error field fix the config and "Check Connection for Config" again
 - The Provided Connection Informations will be stored in the User home under ./releasetrain/gitConfig.yaml
 the Password is encrypted so anyone can't read it in plaintext. It's easy to find the key so, it's not a big deal to decrypt at all...
+
+#### Insert the Default Action Configuration for Jenkins and Email Actions:
+![](docs/2016-09-06%20_13_19-localhost_8080_app.htm.png)
+- The Build token is for Jenkins Jobs with the "Trigger builds remotely (e.g., from scripts)" selected
+
+![](docs/2016-09-06%20_14_43-localhost_8080_app.htm.png)
+- Provide the Tempalte Email Information. In this Version there is no Option for a SMTP Server with Autentication, Please request a Ticket or open a Pullrequest if you need this option
+- The Default Action's will be the first Config Files on the branch on the configured Git Repo
+
+
+
+
