@@ -15,16 +15,16 @@ Main goal ist to schedule Builds with custom Release Numbers and other Parameter
 Travis-CI
 [![Build Status](https://travis-ci.org/SchweizerischeBundesbahnen/releasetrain.svg?branch=master)](https://travis-ci.org/SchweizerischeBundesbahnen/releasetrain)
 
-## Setup
+## For Users
+### Setup
 
 1. Download the Spring Boot App: [From Maven Central](http://repo1.maven.org/maven2/ch/sbb/releasetrain/webui/0.0.29/webui-0.0.29.jar)
 2. Start from Commandlinetoll with the command: _java -jar webui-0.0.29.jar_
 3. On Windows the default Browser will open an the Webapp is shown: http://localhost:8080/
 
-## Usage
-# On the Menu open Start as shown below:
+### Usage
+#### On the Menu open Start as shown below:
 ![](docs/2016-09-06%2018_13_23-localhost_8080_app.htm.png)
-
 - Here you have to provide Connection informations to a existing Git Repo
 - The Git Branch will be created if not already exists, this one will be used to store the Configuration Files in Yaml Format
 - You can See the 2 green Buttons for read and write acces to the Git connection and branch. 
