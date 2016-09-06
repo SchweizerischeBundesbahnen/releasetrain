@@ -65,7 +65,7 @@ public class DirectorRunnerGui {
 
 	private String newJob = "";
 
-	private String releasetrainVersion = "0.0.30";
+	private String releasetrainVersion = "0.9.0";
 	private String spec = "H/5 * * * *";
 	private String jdk = "Oracle JDK 1.8 64-Bit";
 
