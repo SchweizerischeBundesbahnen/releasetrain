@@ -269,14 +269,14 @@ public final class JenkinsJobThread extends Thread {
 	}
 
 	public String disable(String job) {
-		String url = this.jenkinsUrl + "/disable";
-		String result = http.getPageAsString(url);
+		String url = this.jenkinsUrl + "/job/"+job +"/disable";
+		String result = http.postContentToUrl(url,"");
 		return result;
 	}
 
 	public String enable(String job) {
-		String url = this.jenkinsUrl + "/enable";
-		String result = http.getPageAsString(url);
+		String url = this.jenkinsUrl  + "/job/"+job + "/enable";
+		String result = http.postContentToUrl(url,"");
 		return result;
 	}
 

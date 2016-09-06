@@ -17,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 /**
  * Mighty Director - dictator
  *
@@ -41,6 +44,15 @@ public class DirectorRunnerGui {
 
 	@Autowired
 	private GITAccessor git;
+
+	public void init(){
+		this.disableJob();
+	}
+
+	@PreDestroy
+	private void startup(){
+		this.enableJob();
+	}
 
 	private String templateJob = "user.u203244.template.git.custom";
 
@@ -115,6 +127,10 @@ public class DirectorRunnerGui {
 		builder.append("-Dconfig.branch=" + git.getModel().getConfigBranch() + "\n");
 		builder.append("-Dconfig.user=" + git.getModel().getConfigUser() + "\n");
 		builder.append("-Dconfig.password=" + git.getModel().getConfigPassword() + "\n");
+		builder.append("-Djava.io.tmpdir=${WORKSPACE}");
+
+
+
 
 		tempText = replaceNode(tempText, "targets", builder.toString());
 		tempText = replaceNode(tempText, "mavenName", mavenName);
@@ -133,6 +149,23 @@ public class DirectorRunnerGui {
 		} else {
 			th.writeNewConfig(tempText, this.newJob);
 		}
+		th.enable(this.newJob);
+	}
+
+	private void disableJob(){
+		JenkinsActionConfig conf = (JenkinsActionConfig) pers.getNewForName("jenkinsAction");
+		util.setUser(conf.getJenkinsUser());
+		util.setPassword(conf.getEncPassword());
+		JenkinsJobThread th = new JenkinsJobThread(this.newJob, "Cause", conf.getJenkinsUrl(), "build", util, null);
+		th.disable(this.newJob);
+
+	}
+
+	private void enableJob(){
+		JenkinsActionConfig conf = (JenkinsActionConfig) pers.getNewForName("jenkinsAction");
+		util.setUser(conf.getJenkinsUser());
+		util.setPassword(conf.getEncPassword());
+		JenkinsJobThread th = new JenkinsJobThread(this.newJob, "Cause", conf.getJenkinsUrl(), "build", util, null);
 		th.enable(this.newJob);
 	}
 

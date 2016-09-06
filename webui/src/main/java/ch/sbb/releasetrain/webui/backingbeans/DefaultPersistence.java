@@ -14,6 +14,7 @@ import ch.sbb.releasetrain.utils.yaml.YamlUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.sbb.releasetrain.webui.DirectorRunnerGui;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,9 @@ import org.springframework.stereotype.Controller;
 @Controller
 @Slf4j
 public class DefaultPersistence {
+
+	@Autowired
+	private DirectorRunnerGui runner;
 
 	private final static String NAME = "defaultConfig";
 	private EmailActionConfig email;
@@ -88,6 +92,7 @@ public class DefaultPersistence {
 			config.getActions().add(jenkinsAction);
 		}
 		init = true;
+		runner.init();
 	}
 
 	public List<ActionConfig> findAllConfigs() {
