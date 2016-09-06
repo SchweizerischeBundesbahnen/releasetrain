@@ -12,8 +12,7 @@ Main goal ist to schedule Builds with custom Release Numbers and other Parameter
 - Feel free to Fork or to create a pullrequest
 - Implementations of more Custom Actions are Welcome, please let me know if you need help or if you need better Interfaces
 
-Travis-CI
-[![Build Status](https://travis-ci.org/SchweizerischeBundesbahnen/releasetrain.svg?branch=master)](https://travis-ci.org/SchweizerischeBundesbahnen/releasetrain)
+### Travis-CI: [![Build Status](https://travis-ci.org/SchweizerischeBundesbahnen/releasetrain.svg?branch=master)](https://travis-ci.org/SchweizerischeBundesbahnen/releasetrain)
 
 ## For Users
 ### Setup
@@ -31,7 +30,3 @@ Travis-CI
 - If you see errors in the Error field fix the config and "Check Connection for Config" again
 - The Provided Connection Informations will be stored in the User home under ./releasetrain/gitConfig.yaml
 the Password is encrypted so anyone can't read it in plaintext. It's easy to find the key so, it's not bigt deal to decrypt at all...
-
-
-
-
