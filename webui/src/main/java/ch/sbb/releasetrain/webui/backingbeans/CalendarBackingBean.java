@@ -94,6 +94,7 @@ public class CalendarBackingBean {
 	}
 
 	public void reload() {
+		git.cloneOrPull();
 		String temp = selectedCalendar;
 		setSelectedCalendar("");
 		setSelectedCalendar(temp);
