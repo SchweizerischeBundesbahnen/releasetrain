@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import lombok.Data;
 import lombok.ToString;
@@ -63,6 +64,7 @@ public class ReleaseCalendarEvent implements Recognizable<ReleaseCalendarEvent> 
 
 	public Date getAsDate() {
 		SimpleDateFormat formater = new SimpleDateFormat(DATE_PATTERN);
+		formater.setTimeZone(TimeZone.getTimeZone("Europe/Zurich"));
 		try {
 			return formater.parse(date);
 		} catch (ParseException e) {
@@ -73,6 +75,7 @@ public class ReleaseCalendarEvent implements Recognizable<ReleaseCalendarEvent> 
 
 	public void setAsDate(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat(DATE_PATTERN);
+		format.setTimeZone(TimeZone.getTimeZone("Europe/Zurich"));
 		this.date = format.format(date);
 	}
 

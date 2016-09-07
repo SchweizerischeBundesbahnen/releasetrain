@@ -56,7 +56,7 @@
                             <h:panelGrid columns="2" rendered="#{action.name.equals('EmailAction')}">
 
                                 <h:outputLabel value="Offset Time:"/>
-                                <p:calendar value="#{action.offset}" pattern="HH:mm" timeOnly="true" timeZone="UTC"/>
+                                <p:calendar value="#{action.offset}" pattern="HH:mm" timeOnly="true" timeZone="Europe/Zurich"/>
 
                                 <h:outputLabel value="SMTP Host:"/>
                                 <p:inputText value="#{action.smtpServer}" size="50"/>

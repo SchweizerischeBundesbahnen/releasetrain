@@ -30,7 +30,6 @@ import javax.annotation.PreDestroy;
 @Component
 @Slf4j
 @Data
-@Scope("session")
 public class DirectorRunnerGui {
 
 	private Boolean on = Boolean.FALSE;

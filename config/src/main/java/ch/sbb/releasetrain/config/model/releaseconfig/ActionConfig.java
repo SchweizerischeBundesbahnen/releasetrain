@@ -28,19 +28,19 @@ public abstract class ActionConfig {
 	public abstract String getName();
 
 	public Date getOffset() {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Zurich"));
 		return new Date(offseMinutes * 60000);
 	}
 
 	public void setOffset(Date date) {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Zurich"));
 		offseMinutes = date.getTime() / 60000;
 	}
 
 	public String getOffsetStr() {
 		SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
-		fmt.setTimeZone(TimeZone.getTimeZone("UTC"));
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+		fmt.setTimeZone(TimeZone.getTimeZone("Europe/Zurich"));
+		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Zurich"));
 		return fmt.format(new Date(offseMinutes * 60000));
 	}
 
