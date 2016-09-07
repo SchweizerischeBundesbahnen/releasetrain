@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -31,8 +32,9 @@ public class GitRepoTest {
 
 	@Test
 	public void isCloned() throws IOException {
-		File dir = temporaryFolder.newFolder("cloned");
+		File dir = temporaryFolder.newFolder("cloned2");
 		new File(dir, ".git").mkdir();
 		assertTrue(new GitRepoImpl("", "", "", "", dir).isCloned());
+		FileUtils.deleteDirectory(dir);
 	}
 }
