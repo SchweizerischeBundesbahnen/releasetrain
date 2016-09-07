@@ -102,7 +102,6 @@ public class ActionBackingBean {
 	public void save() {
 		sortList();
 		configAccessor.writeConfig(selectedAction, this.config);
-		git.signalCommit();
 	}
 
 	public void reload() {
@@ -114,7 +113,6 @@ public class ActionBackingBean {
 	public void delete() {
 		configAccessor.deleteConfig(selectedAction);
 		setSelectedAction("");
-		git.signalCommit();
 	}
 
 	public void sortList() {

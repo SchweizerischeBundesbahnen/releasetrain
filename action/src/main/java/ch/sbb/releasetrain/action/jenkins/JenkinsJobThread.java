@@ -53,11 +53,11 @@ public final class JenkinsJobThread extends Thread {
 
 		String par = "";
 		if (params != null) {
-			for (final String param : params.keySet()) {
-				if (param == null || params.get(param) == null) {
+			for (final String key : params.keySet()) {
+				if (key == null || params.get(key) == null) {
 					continue;
 				}
-				final String poormanUrlEncoded = param.replace(" ", "+") + "=" + params.get(param).replace(" ", "+");
+				final String poormanUrlEncoded = key.replace(" ", "+") + "=" + params.get(key).replace(" ", "+");
 				par = par + "&" + poormanUrlEncoded;
 			}
 			jobUrl = jobUrl + par;

@@ -46,7 +46,6 @@ public class GitStateStore implements StateStore {
 		log.debug("Writing releaseState {}", releaseState);
 		new StateFileWriter(git.directory()).write(releaseState);
 		log.info("Wrote releaseState for release={}", releaseState.getReleaseName());
-		git.signalCommit();
 	}
 
 	@Override

@@ -97,7 +97,25 @@ public final class GitRepoImpl implements GitRepo {
 
 	public void doAddCommitPush() throws IOException, GitAPIException {
 		Git git = gitOpen();
-		gitOpen().add().addFilepattern(".").call();
+
+		git.add().addFilepattern(".").call();
+
+		// status
+		Status status=git.status().call();
+
+		// rm the deleted ones
+		if(status.getMissing().size() >0){
+			for(String rm : status.getMissing()){
+				git.rm().addFilepattern(rm).call();
+			}
+		}
+
+		// commit and push if needed
+		if(!status.hasUncommittedChanges()){
+			log.debug("not commiting git, because there are no changes");
+			return;
+		}
+
 		git.commit().setMessage("Automatic commit by releasetrain").call();
 		git.push().setCredentialsProvider(credentialsProvider()).call();
 	}

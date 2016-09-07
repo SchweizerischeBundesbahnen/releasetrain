@@ -25,12 +25,9 @@ public class GITPusherThread {
 	@Autowired
 	private GITAccessor th;
 
-	@Scheduled(fixedRate = 2 * 60 * 1000)
+	@Scheduled(fixedRate = 10 * 1000)
 	public void commit() {
-		if (th.isDirty()) {
-			th.addCommitPush();
-			th.setDirty(false);
-		}
+		th.addCommitPush();
 	}
 
 	@PreDestroy

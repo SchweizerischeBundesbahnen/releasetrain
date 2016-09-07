@@ -91,7 +91,6 @@ public class CalendarBackingBean {
 	public void save() {
 		sortList();
 		configAccessor.writeCalendar(this.calend, selectedCalendar);
-		git.signalCommit();
 	}
 
 	public void reload() {

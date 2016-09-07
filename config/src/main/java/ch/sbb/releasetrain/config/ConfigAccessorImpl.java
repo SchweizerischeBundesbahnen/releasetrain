@@ -77,7 +77,6 @@ public class ConfigAccessorImpl implements ConfigAccessor {
 
 		try {
 			FileUtils.writeStringToFile(file, accessorRelease.convertEntry(config));
-			git.signalCommit();
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
 		}
@@ -86,7 +85,6 @@ public class ConfigAccessorImpl implements ConfigAccessor {
 			this.writeCalendar(new ReleaseCalendar(), name);
 		}
 
-		git.signalCommit();
 	}
 
 	public void deleteConfig(String name) {
@@ -158,7 +156,6 @@ public class ConfigAccessorImpl implements ConfigAccessor {
 
 		try {
 			FileUtils.writeStringToFile(file, YamlUtil.marshall(cal));
-			git.signalCommit();
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
 		}

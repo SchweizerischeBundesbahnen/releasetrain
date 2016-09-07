@@ -5,10 +5,7 @@
 package ch.sbb.releasetrain.config.model.releaseconfig;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 import lombok.Data;
 
@@ -28,20 +25,34 @@ public abstract class ActionConfig {
 	public abstract String getName();
 
 	public Date getOffset() {
-		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Zurich"));
-		return new Date(offseMinutes * 60000);
+		long minute = offseMinutes % 60;
+		long hour = (offseMinutes - minute) / 60;
+		Calendar now = Calendar.getInstance();
+		now.set(Calendar.HOUR_OF_DAY, (int) hour);
+		now.set(Calendar.MINUTE, (int) minute);
+		now.set(Calendar.SECOND, 0);
+		return now.getTime();
 	}
 
 	public void setOffset(Date date) {
-		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Zurich"));
+
 		offseMinutes = date.getTime() / 60000;
+		offseMinutes = offseMinutes + 60;
+		if(offseMinutes < 0){
+			offseMinutes = 0;
+		}
 	}
 
 	public String getOffsetStr() {
 		SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
-		fmt.setTimeZone(TimeZone.getTimeZone("Europe/Zurich"));
-		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Zurich"));
-		return fmt.format(new Date(offseMinutes * 60000));
+		long minute = offseMinutes % 60;
+		long hour = (offseMinutes - minute) / 60;
+		Calendar now = Calendar.getInstance();
+		now.set(Calendar.HOUR_OF_DAY, (int) hour);
+		now.set(Calendar.MINUTE, (int) minute);
+		now.set(Calendar.SECOND, 0);
+
+		return fmt.format(now.getTime());
 	}
 
 	public String retreiveIdentifier() {
