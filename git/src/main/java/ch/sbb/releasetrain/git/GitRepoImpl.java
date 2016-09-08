@@ -124,12 +124,17 @@ public final class GitRepoImpl implements GitRepo {
 		}
 	}
 
-	Git pull(Git git) throws GitAPIException {
+	private Git pull(Git git) throws GitAPIException {
 		if (remoteBranchExists(git)) {
 			PullResult result = git.pull().setStrategy(MergeStrategy.RECURSIVE).setCredentialsProvider(this.credentialsProvider()).call();
 			if (result.isSuccessful()) {
 				return git;
 			} else {
+				log.info("*** pulling git, not able to merge with MergeStrategy.RECURSIVE go for MergeStrategy.THEIRS");
+				result = git.pull().setStrategy(MergeStrategy.THEIRS).setCredentialsProvider(this.credentialsProvider()).call();
+				if(result.isSuccessful()){
+					return git;
+				}
 				throw new GitException("Pull failed: " + result.toString());
 			}
 		} else {
@@ -137,7 +142,7 @@ public final class GitRepoImpl implements GitRepo {
 		}
 	}
 
-	Git checkoutOrCreateBranch(final Git git) {
+	private Git checkoutOrCreateBranch(final Git git) {
 		try {
 		if (!branch.equals(git.getRepository().getBranch())) {
 			CheckoutCommand checkoutCommand = git.checkout().setCreateBranch(true).setName(branch).setUpstreamMode(CreateBranchCommand.SetupUpstreamMode.TRACK);
