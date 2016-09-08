@@ -24,7 +24,7 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.introspector.BeanAccess;
 
 /**
- * Base Thread to initialize a GIT Connection read / write
+ * Read, Write and do Git Commands for a given Git Repo
  *
  * @author u203244 (Daniel Marthaler)
  * @version $Id: $

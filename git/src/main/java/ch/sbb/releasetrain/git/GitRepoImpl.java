@@ -72,16 +72,24 @@ public final class GitRepoImpl implements GitRepo {
 
 	@Override
 	public void cloneOrPull() {
-		callWithRetry(c -> doCloneOrPull(), 0);
-	}
-
-	private void doCloneOrPull() throws IOException, GitAPIException {
 		if (isCloned()) {
-			Git git = pull(gitOpen());
+			Git git = null;
+			try {
+				git = pull(gitOpen());
+			} catch (GitAPIException e) {
+				log.error(e.getMessage(),e);
+			} catch (IOException e) {
+				log.error(e.getMessage(),e);
+			}
 			this.git = git;
 			checkoutOrCreateBranch(git);
 		} else {
-			Git git = gitClone();
+			Git git = null;
+			try {
+				git = gitClone();
+			} catch (GitAPIException e) {
+				log.error(e.getMessage(),e);
+			}
 			checkoutOrCreateBranch(git);
 		}
 	}
@@ -89,58 +97,36 @@ public final class GitRepoImpl implements GitRepo {
 	@Override
 	public void addCommitPush() {
 		try {
-			doAddCommitPush();
+			Git git = gitOpen();
+
+			git.add().addFilepattern(".").call();
+
+			// status
+			Status status=git.status().call();
+
+			// rm the deleted ones
+			if(status.getMissing().size() >0){
+				for(String rm : status.getMissing()){
+					git.rm().addFilepattern(rm).call();
+				}
+			}
+
+			// commit and push if needed
+			if(!status.hasUncommittedChanges()){
+				log.debug("not commiting git, because there are no changes");
+				return;
+			}
+
+			git.commit().setMessage("Automatic commit by releasetrain").call();
+			git.push().setCredentialsProvider(credentialsProvider()).call();
 		} catch (Exception e) {
 			throw new GitException(e.getMessage(), e);
 		}
 	}
 
-	public void doAddCommitPush() throws IOException, GitAPIException {
-		Git git = gitOpen();
-
-		git.add().addFilepattern(".").call();
-
-		// status
-		Status status=git.status().call();
-
-		// rm the deleted ones
-		if(status.getMissing().size() >0){
-			for(String rm : status.getMissing()){
-				git.rm().addFilepattern(rm).call();
-			}
-		}
-
-		// commit and push if needed
-		if(!status.hasUncommittedChanges()){
-			log.debug("not commiting git, because there are no changes");
-			return;
-		}
-
-		git.commit().setMessage("Automatic commit by releasetrain").call();
-		git.push().setCredentialsProvider(credentialsProvider()).call();
-	}
-
-	private void callWithRetry(final GitConsumer call, int retry) {
-		try {
-			call.accept(null);
-		} catch (IOException | TransportException e) {
-			if (retry < 1) {
-				try {
-					Thread.sleep(1000L * (retry + 1)); // back off
-					callWithRetry(call, retry + 1);
-				} catch (InterruptedException e1) { // bad luck...
-				}
-			} else {
-				throw new GitException(String.format("Git operation falied after %d retries", retry), e);
-			}
-		} catch (GitAPIException e) {
-			throw new GitException("Git operation failed:" + e.getMessage(), e);
-		}
-	}
-
 	Git pull(Git git) throws GitAPIException {
 		if (remoteBranchExists(git)) {
-			PullResult result = git.pull().setStrategy(MergeStrategy.THEIRS).setCredentialsProvider(this.credentialsProvider()).call();
+			PullResult result = git.pull().setStrategy(MergeStrategy.RECURSIVE).setCredentialsProvider(this.credentialsProvider()).call();
 			if (result.isSuccessful()) {
 				return git;
 			} else {
@@ -151,14 +137,18 @@ public final class GitRepoImpl implements GitRepo {
 		}
 	}
 
-	Git checkoutOrCreateBranch(final Git git) throws GitAPIException, IOException {
+	Git checkoutOrCreateBranch(final Git git) {
+		try {
 		if (!branch.equals(git.getRepository().getBranch())) {
 			CheckoutCommand checkoutCommand = git.checkout().setCreateBranch(true).setName(branch).setUpstreamMode(CreateBranchCommand.SetupUpstreamMode.TRACK);
 
 			if (remoteBranchExists(git)) {
 				checkoutCommand.setStartPoint("origin/" + branch);
 			}
-			checkoutCommand.call();
+				checkoutCommand.call();
+		}
+		} catch (Exception e) {
+			log.error(e.getMessage(),e);
 		}
 		return git;
 	}

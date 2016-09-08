@@ -18,21 +18,33 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class Application {
 
+	private static final String URL = "http://localhost:8080";
+
 	public static void main(String[] args) {
+
 		SpringApplication.run(Application.class, args);
 
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Zurich"));
 
 		if(SystemUtils.IS_OS_WINDOWS){
 			Runtime rt = Runtime.getRuntime();
-			String url = "http://localhost:8080";
 			try {
-				rt.exec("rundll32 url.dll,FileProtocolHandler " + url);
+				rt.exec("rundll32 url.dll,FileProtocolHandler " + URL);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		} else if(SystemUtils.IS_OS_MAC){
+				Runtime runtime = Runtime.getRuntime();
+				String[] args2 = { "osascript", "-e", "open location \"" + URL + "\"" };
+				try
+				{
+					Process process = runtime.exec(args2);
+				}
+				catch (IOException e)
+				{
+					// do what you want with this
+				}
+			}
 		}
-
-	}
 
 }
