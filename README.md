@@ -15,9 +15,9 @@ The main goal ist to schedule builds with custom Release Numbers and other Param
 which will be installed automatically from Maven Central.
 
 ## Updates
-- 0.9.4 - Saving the Config before refresing on the git configuration
-        - Blocking Window when refreshing git connection
-        - Rest call to http://search.maven.org/ for the latest version when generating the jenkins job 
+- 0.9.4 * Saving the Config before refresing on the git configuration
+        * Blocking Window when refreshing git connection
+        * Rest call to http://search.maven.org/ for the latest version when generating the jenkins job 
 
 ## For Developers
 - Feel free to fork or to create a pull requests.
