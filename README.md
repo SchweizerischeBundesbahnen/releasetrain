@@ -14,6 +14,9 @@ The main goal ist to schedule builds with custom Release Numbers and other Param
 - Scheduled Jobs can be launced from the Spring Boot app or from a generated Jenkins Job. It suffices to launch a Maven Mojo, 
 which will be installed automatically from Maven Central.
 
+## Updates
+- 0.9.4 Saving the Config before refres on the first screen / Blocking Window when refreshing git connection
+
 ## For Developers
 - Feel free to fork or to create a pull requests.
 - Implementations of more Custom Actions are welcome, please let me know if you need help or if you need better interfaces.
@@ -79,12 +82,3 @@ Please file a ticket or open a pull request if you need this option.
 - First, you have to load the config as XML.
 - Then you can publish the job to Jenkins.
 - Fields above will be replaced in the XML or you can edit the Config in the Text Field...
-
-
-
-
-
-
-
-
-
