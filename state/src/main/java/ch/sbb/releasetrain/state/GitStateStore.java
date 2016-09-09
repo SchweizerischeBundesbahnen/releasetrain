@@ -44,7 +44,7 @@ public class GitStateStore implements StateStore {
 		}
 
 		log.debug("Writing releaseState {}", releaseState);
-		new StateFileWriter(git.directory()).write(releaseState);
+		new StateFileWriter(git.getRepo().directory()).write(releaseState);
 		log.info("Wrote releaseState for release={}", releaseState.getReleaseName());
 	}
 
@@ -56,7 +56,7 @@ public class GitStateStore implements StateStore {
 			throw new GitException("GIT Repo not readble !");
 		}
 
-		ReleaseState releaseState = new StateFileReader(git.directory()).read(releaseIdentifier);
+		ReleaseState releaseState = new StateFileReader(git.getRepo().directory()).read(releaseIdentifier);
 		log.info("Read releaseState for release={}", releaseIdentifier);
 		log.debug("Read releaseState={}", releaseState);
 		return releaseState;

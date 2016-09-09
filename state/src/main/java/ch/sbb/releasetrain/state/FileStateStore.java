@@ -29,11 +29,11 @@ public class FileStateStore implements StateStore {
 
 	@Override
 	public void writeReleaseStatus(ReleaseState releaseStatus) {
-		new StateFileWriter(new File(git.directory().toURI())).write(releaseStatus);
+		new StateFileWriter(new File(git.getRepo().directory().toURI())).write(releaseStatus);
 	}
 
 	@Override
 	public ReleaseState readReleaseStatus(String releaseName) {
-		return new StateFileReader(new File(git.directory().toURI())).read(releaseName);
+		return new StateFileReader(new File(git.getRepo().directory().toURI())).read(releaseName);
 	}
 }

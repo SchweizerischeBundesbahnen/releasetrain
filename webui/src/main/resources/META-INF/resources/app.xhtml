@@ -2,6 +2,7 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
                 xmlns="http://www.w3.org/1999/xhtml" template="/root.xhtml">
 
     <ui:define name="page">
@@ -16,26 +17,36 @@
                     <p:inputText id="configurl" value="#{GITAccessor.model.configUrl}" size="70"/>
 
                     <h:outputLabel for="configbranch" value="GIT Branch:"/>
-                    <p:inputText id="configbranch" value="#{GITAccessor.model.configBranch}" size="50"/>
+                    <p:inputText id="configbranch" value="#{GITAccessor.model.configBranch}" size="70"/>
 
                     <h:outputLabel for="configuser" value="GIT User:"/>
-                    <p:inputText id="configuser" value="#{GITAccessor.model.configUser}" size="50"/>
+                    <p:inputText id="configuser" value="#{GITAccessor.model.configUser}" size="70"/>
 
                     <h:outputLabel for="configpassword" value="GIT Password:"/>
-                    <p:password id="configpassword" redisplay="true" value="#{GITAccessor.model.encPassword}" size="50"/>
+                    <p:password id="configpassword" redisplay="true" value="#{GITAccessor.model.encPassword}" size="70"/>
 
                     <h:outputText value="Read access"/>
-                    <p:selectBooleanButton id="readConfig" value="#{GITAccessor.read}" onLabel="Yes" offLabel="No" disabled="true"/>
+                    <p:selectBooleanButton id="readConfig" value="#{GITAccessor.read}" onLabel="Yes" offLabel="No" disabled="true" style="width:485px"/>
 
                     <h:outputText value="Write access"/>
-                    <p:selectBooleanButton id="writeConfig" value="#{GITAccessor.write}" onLabel="Yes" offLabel="No" disabled="true"/>
+                    <p:selectBooleanButton id="writeConfig" value="#{GITAccessor.write}" onLabel="Yes" offLabel="No" disabled="true" style="width:485px"/>
 
                     <h:outputText value="Error"/>
                     <p:inputText id="configErrorConfig" value="#{GITAccessor.err}" size="70" disabled="true"/>
 
+                    <br/>
+
                     <p:column>
-                        <p:commandButton id="checkConfig" value="Check Connection for Config" action="#{GITAccessor.reset()}" ajax="false" process="@form" update="configFieldset"/>
+                        <p:commandButton id="checkConfig" value="Check Connection for Config" action="#{GITAccessor.reset()}" ajax="true" process="@form" update="form" onstart="PF('blockUIWidget').block()" oncomplete="PF('blockUIWidget').unblock()"/>
                     </p:column>
+
+                    <pe:blockUI widgetVar="blockUIWidget">
+                        <h:panelGrid columns="2">
+                            <h:graphicImage value="${request.contextPath}/static/images/ajax-loader.gif"
+                                            style="margin-right: 12px; vertical-align: middle;"/>
+                            <h:outputText value="Please wait..." style="white-space: nowrap;"/>
+                        </h:panelGrid>
+                    </pe:blockUI>
 
                 </h:panelGrid>
 

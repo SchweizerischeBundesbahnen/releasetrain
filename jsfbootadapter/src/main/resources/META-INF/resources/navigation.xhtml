@@ -9,27 +9,24 @@
             <p:menubar id="menubar" styleClass="menubar">
 
                 <!-- home -->
-                <p:menuitem id="m_userhandower" value="Start"
-                            title="Start" icon="fa fa-git"
-                            action="app.htm" ajax="false"/>
+                <p:menuitem id="m_userhandower" value="Connection"
+                            title="Start" icon="fa fa-git" action="app.htm" ajax="false"/>
 
                 <!-- jenkinsDefault -->
                 <p:menuitem value="Default Actions" rendered="#{GITAccessor.write and GITAccessor.read}"
-                            icon="fa fa-globe"
-                            action="defaults.htm" ajax="false"/>
+                <p:menuitem value="Default Actions" rendered="#{GITAccessor.write and GITAccessor.read}"
+                            icon="fa fa-globe" action="defaults.htm" ajax="false"/>
 
                 <!-- home -->
                 <p:menuitem value="Implemented Actions" rendered="#{GITAccessor.write and GITAccessor.read and defaultPersistence.isReady()}"
-                            title="Implemented Actions" icon="fa fa-refresh"
-                            action="actions.htm" ajax="false"/>
+                            title="Implemented Actions" icon="fa fa-refresh" action="actions.htm" ajax="false"/>
+
                 <!-- home -->
                 <p:menuitem value="Calendars" rendered="#{GITAccessor.write and GITAccessor.read and defaultPersistence.isReady()}"
-                            title="Implemented Actions" icon="fa fa-calendar"
-                            action="calendars.htm" ajax="false"/>
+                            title="Implemented Actions" icon="fa fa-calendar" action="calendars.htm" ajax="false"/>
 
-                <p:menuitem value="Run / Create" rendered="#{GITAccessor.write and GITAccessor.read and defaultPersistence.isReady()}"
-                            title="Run / Create" icon="fa fa-gear"
-                            action="run.htm" ajax="false"/>
+                <p:menuitem value="Run/Create" rendered="#{GITAccessor.write and GITAccessor.read and defaultPersistence.isReady()}"
+                            title="Run/Create" icon="fa fa-gear" action="run.htm" ajax="false"/>
 
             </p:menubar>
 

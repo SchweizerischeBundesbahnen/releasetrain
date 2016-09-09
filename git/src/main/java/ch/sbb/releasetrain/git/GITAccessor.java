@@ -33,12 +33,11 @@ import org.yaml.snakeyaml.introspector.BeanAccess;
 @Slf4j
 @Data
 @Component
-public class GITAccessor implements GitRepo {
+public class GITAccessor  {
 
 	@Getter
 	protected GitRepo repo;
 
-	private boolean connecting = true;
 	private boolean read = false;
 	private boolean write = false;
 	private String err = "";
@@ -89,13 +88,13 @@ public class GITAccessor implements GitRepo {
 		dirty = true;
 	}
 
-	@Override
 	public void reset() {
+
+		writeModel();
 
 		repo = client.gitRepo(model.getConfigUrl(), model.getConfigBranch(), model.getConfigUser(), model.getEncPassword());
 
 		err = "";
-		connecting = true;
 		read = false;
 		write = false;
 		repo.reset();
@@ -107,35 +106,19 @@ public class GITAccessor implements GitRepo {
 			FileUtils.writeStringToFile(new File(dir, "test.txt"), new Date().toString());
 			repo.addCommitPush();
 			write = true;
+			FileUtils.forceDelete(new File(dir, "test.txt"));
+			repo.addCommitPush();
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			err = e.getMessage();
 		}
-		connecting = false;
-
 	}
 
-	@Override
+
 	public void cloneOrPull() {
 		repo.cloneOrPull();
 	}
 
-	@Override
-	public void addCommitPush() {
-		if (!connecting && write) {
-			repo.addCommitPush();
-		} else {
-			throw new GitException("git connection not ready");
-		}
-	}
-
-	@Override
-	public File directory() {
-		if (!connecting && read) {
-			return repo.directory();
-		}
-		throw new GitException("git connection not ready");
-	}
 
 	private void writeModel() {
 		File file = new File(userhome + "/.releasetrain/gitConfig.yaml");

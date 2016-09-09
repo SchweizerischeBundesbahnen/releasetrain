@@ -27,7 +27,7 @@ public class GITPusherThread {
 
 	@Scheduled(fixedRate = 10 * 1000)
 	public void commit() {
-		th.addCommitPush();
+		th.getRepo().addCommitPush();
 	}
 
 	@PreDestroy

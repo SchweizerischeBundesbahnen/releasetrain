@@ -44,7 +44,7 @@ public class ConfigAccessorImpl implements ConfigAccessor {
 		if (!name.contains("-type")) {
 			name = name + "-type";
 		}
-		File dir = git.directory();
+		File dir = git.getRepo().directory();
 		File file = new File(dir, "/" + name + ".yml");
 		if (!file.exists()) {
 			return null;
@@ -103,7 +103,7 @@ public class ConfigAccessorImpl implements ConfigAccessor {
 
 	@Override
 	public List<MailReceiver> readMailReceiver() {
-		File dir = git.directory();
+		File dir = git.getRepo().directory();
 		File file = new File(dir, "/mailinglists.yml");
 		if (!file.exists()) {
 			return null;
@@ -136,7 +136,7 @@ public class ConfigAccessorImpl implements ConfigAccessor {
 
 	@Override
 	public ReleaseCalendar readCalendar(String action) {
-		File dir = git.directory();
+		File dir = git.getRepo().directory();
 		File file = new File(dir, "/" + action + "-cal.yml");
 		if (!file.exists()) {
 			return null;

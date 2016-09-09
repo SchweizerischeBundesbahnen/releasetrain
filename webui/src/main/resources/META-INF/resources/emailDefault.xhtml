@@ -7,6 +7,9 @@
 
     <h:panelGrid columns="2" id="configPanel">
 
+        <h:outputText value="Enabled: " />
+        <p:selectBooleanCheckbox value="#{emailActionBackingBean.email.enabled}" />
+
         <h:outputLabel value="SMTP Host:"/>
         <p:inputText value="#{emailActionBackingBean.email.smtpServer}" size="60"/>
 

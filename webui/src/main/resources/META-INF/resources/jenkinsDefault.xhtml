@@ -6,6 +6,9 @@
 
     <h:panelGrid columns="2">
 
+        <h:outputText value="Enabled: " />
+        <p:selectBooleanCheckbox value="#{jenkinsActionBackingBean.jenkins.enabled}" />
+
         <h:outputLabel for="configurl" value="Jenkins URL:"/>
         <p:inputText id="configurl" value="#{jenkinsActionBackingBean.jenkins.jenkinsUrl}" size="40"/>
 

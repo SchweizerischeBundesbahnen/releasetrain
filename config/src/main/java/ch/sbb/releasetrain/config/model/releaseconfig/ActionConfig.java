@@ -20,6 +20,8 @@ public abstract class ActionConfig {
 
 	protected long offseMinutes = 0;
 
+	private Boolean enabled = Boolean.TRUE;
+
 	private Map<String, String> properties = new HashMap<>();
 
 	public abstract String getName();

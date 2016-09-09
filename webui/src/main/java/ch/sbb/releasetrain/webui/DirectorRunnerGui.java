@@ -9,6 +9,7 @@ import ch.sbb.releasetrain.config.model.releaseconfig.JenkinsActionConfig;
 import ch.sbb.releasetrain.director.Director;
 import ch.sbb.releasetrain.git.GITAccessor;
 import ch.sbb.releasetrain.utils.http.HttpUtilImpl;
+import ch.sbb.releasetrain.utils.mavenserach.LatetVersionFromMavenserach;
 import ch.sbb.releasetrain.webui.backingbeans.DefaultPersistence;
 
 import lombok.Data;
@@ -46,6 +47,9 @@ public class DirectorRunnerGui {
 	@Autowired
 	private GITAccessor git;
 
+	@Autowired
+	private LatetVersionFromMavenserach version;
+
 	public void init(){
 		this.disableJob();
 		JenkinsActionConfig conf = (JenkinsActionConfig) pers.getNewForName("jenkinsAction");
@@ -64,7 +68,7 @@ public class DirectorRunnerGui {
 
 	private String newJob = "";
 
-	private String releasetrainVersion = "0.9.2";
+	private String releasetrainVersion = version.getLatestVersionForGroupId("ch.sbb.releasetrain");
 	private String spec = "H/5 * * * *";
 	private String jdk = "Oracle JDK 1.8 64-Bit";
 
