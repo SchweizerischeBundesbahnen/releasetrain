@@ -28,7 +28,7 @@ which will be installed automatically from Maven Central.
 ## For Users
 ### Setup
 
-1. Download the Spring Boot App: [From Maven Central](http://repo1.maven.org/maven2/ch/sbb/releasetrain/webui/0.0.29/webui-0.0.29.jar).
+1. Download the latest Spring Boot App: [From Maven Central](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22ch.sbb.releasetrain%22%20AND%20a%3A%22webui%22).
 2. Start from command line the command: _java -jar webui-0.0.29.jar_.
 3. On Windows the default browser will open and the webapp is shown at [http://localhost:8080](http://localhost:8080).
 
