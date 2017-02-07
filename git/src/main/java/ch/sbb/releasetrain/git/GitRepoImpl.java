@@ -17,6 +17,8 @@ import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.transport.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Access a git repository via JGit.
@@ -28,6 +30,9 @@ import org.eclipse.jgit.transport.*;
 @Slf4j
 public final class GitRepoImpl implements GitRepo {
 
+	private static final Logger logger = LoggerFactory.getLogger(GitRepoImpl.class);
+
+	
 	private final File gitDir;
 
 	private final String url;
