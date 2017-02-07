@@ -118,7 +118,19 @@ public final class GitRepoImpl implements GitRepo {
 			}
 
 			git.commit().setMessage("Automatic commit by releasetrain").call();
-			git.push().setCredentialsProvider(credentialsProvider()).call();
+			Iterable<PushResult> pushResults = git.push().setCredentialsProvider(credentialsProvider()).call();
+			
+			
+			for (PushResult pushResult : pushResults) {
+			    for (RemoteRefUpdate update : pushResult.getRemoteUpdates()) {
+				if (!update.getStatus().equals(RemoteRefUpdate.Status.OK)) {
+				    logger.error("GIT PUSH nicht erfolgreich. Status={} Message={}, Details={}", update.getStatus(), update.getMessage(), pushResult.getMessages());
+				    throw new TransportException(update.getMessage());
+				}
+			    }
+			}
+			
+			
 		} catch (Exception e) {
 			throw new GitException(e.getMessage(), e);
 		}
