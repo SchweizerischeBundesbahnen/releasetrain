@@ -29,9 +29,6 @@ import org.slf4j.LoggerFactory;
  */
 @Slf4j
 public final class GitRepoImpl implements GitRepo {
-
-	private static final Logger logger = LoggerFactory.getLogger(GitRepoImpl.class);
-
 	
 	private final File gitDir;
 
@@ -129,7 +126,7 @@ public final class GitRepoImpl implements GitRepo {
 			for (PushResult pushResult : pushResults) {
 			    for (RemoteRefUpdate update : pushResult.getRemoteUpdates()) {
 				if (!update.getStatus().equals(RemoteRefUpdate.Status.OK)) {
-				    logger.error("GIT PUSH nicht erfolgreich. Status={} Message={}, Details={}", update.getStatus(), update.getMessage(), pushResult.getMessages());
+				    log.error("GIT PUSH nicht erfolgreich. Status={} Message={}, Details={}", update.getStatus(), update.getMessage(), pushResult.getMessages());
 				    throw new TransportException(update.getMessage());
 				}
 			    }
