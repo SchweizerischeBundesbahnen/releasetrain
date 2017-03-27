@@ -21,9 +21,14 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanComparator;
 import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.ReorderEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
 /**
  * JenkinsActionBackingBean.
@@ -138,5 +143,13 @@ public class CalendarBackingBean {
 	public void onCellEdit(CellEditEvent event) {
 		log.info("row changed... " + event);
 		save();
+	}
+
+	public void onColoumnReorder(AjaxBehaviorEvent event) {
+
+		String in = event.getClass().toGenericString();
+
+		//log.info("Row Moved", "From: " + event.getFromIndex() + ", To:" + event.getToIndex());
+
 	}
 }

@@ -68,9 +68,11 @@
                     <br/><br/>
 
                     <p:dataTable var="ev" id="calendar" value="#{calendarBackingBean.calend.events}" editable="true" editMode="cell" rendered="#{not empty calendarBackingBean.calend}"
-                                 style="width:101%" rowIndexVar="ri">
+                                 style="width:101%" rowIndexVar="ri" draggableColumns="true">
 
                         <p:ajax event="cellEdit" listener="#{calendarBackingBean.onCellEdit}" update=":form2:calendar"/>
+
+                        <p:ajax event="colReorder" listener="#{calendarBackingBean.onColoumnReorder}" update=":form2:calendar" />
 
                         <p:column headerText="Date and Time" style="text-align: left">
                             <p:cellEditor>
