@@ -31,7 +31,7 @@ which will be installed automatically from Maven Central.
 ## For Users
 ### Setup
 
-1. Download the latest Spring Boot App: [From Maven Central](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22ch.sbb.releasetrain%22%20AND%20a%3A%22webui%22).
+1. Download the latest Spring Boot App: [From Maven Central](http://repo1.maven.org/maven2/ch/sbb/releasetrain/webui/0.9.6/webui-0.9.6.jar).
 2. Start from command line the command: _java -jar webui-0.9.6.jar_.
 3. On Windows the default browser will open and the webapp is shown at [http://localhost:8080](http://localhost:8080).
 
@@ -77,7 +77,3 @@ Please file a ticket or open a pull request if you need this option.
 ![](docs/2016-09-06_20_21_21-localhost_8080_actions.htm.png)
 - With New Entry you now can schedule your Actions whenever you need to run them.
 - In the State Column you can see the State of Actions already Succeded or in Error State.
-
-#### Run Create Actions
-![](docs/2016-09-06_20_22_11-localhost_8080_calendars.htm.png)
-- For local Testing you can hit the Start local button.
