@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,6 +26,7 @@ public class ReleaseCalendar {
 	private List<ReleaseColumn> coloumns = new ArrayList<>();
 
 	@Getter
+	@Setter
 	private List<ReleaseCalendarEvent> events = new ArrayList<>();
 
 	public ReleaseCalendar() {

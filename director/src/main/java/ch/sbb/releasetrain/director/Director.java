@@ -63,12 +63,7 @@ public class Director {
 				}
 			}
 		}
-
-		if (shutdown) {
 			git.commit();
-			System.exit(0);
-		}
-
 	}
 
 	private void handleEvent(ReleaseCalendarEvent event) {
@@ -87,6 +82,10 @@ public class Director {
 	}
 
 	private void handleAction(ReleaseCalendarEvent event, ReleaseState state) {
+
+		if(state.getState().equals("SUCCESS")){
+			return;
+		}
 		// if one of the action state in past and not executet execute it
 		for (ActionState actionState : state.getActionState()) {
 			LocalDateTime actionStartDate = event.retreiveAsDate().plusMinutes(actionState.getConfig().getOffseMinutes());
@@ -104,16 +103,12 @@ public class Director {
 					}
 				} catch (Exception e) {
 					log.error(e.getMessage(), e);
-					rs = ActionResult.SUCCESS;
+					rs = ActionResult.FAILED;
 					actionState.setResultString(e.getMessage());
 				}
+				actionState.setActionResult(rs);
 			}
 
-			actionState.setActionResult(rs);
-
-			if (actionState.getActionResult() != ActionResult.SUCCESS) {
-				return;
-			}
 		}
 	}
 

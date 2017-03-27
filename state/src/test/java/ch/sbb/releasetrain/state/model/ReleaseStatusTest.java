@@ -37,7 +37,7 @@ public class ReleaseStatusTest {
 	@Test
 	public void newActionStatusResult() {
 		ReleaseState releaseStatus = new ReleaseState("myrelease", createConfigs());
-		assertEquals(ActionResult.NONE, releaseStatus.getActionState().get(0).getActionResult());
+		assertEquals(ActionResult.ONGOING, releaseStatus.getActionState().get(0).getActionResult());
 	}
 
 	private List<ActionConfig> createConfigs() {

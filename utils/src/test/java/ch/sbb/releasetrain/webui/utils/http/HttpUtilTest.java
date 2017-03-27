@@ -7,9 +7,15 @@ package ch.sbb.releasetrain.webui.utils.http;
 import ch.sbb.releasetrain.utils.http.HttpUtilImpl;
 
 import java.io.InputStream;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class HttpUtilTest {
@@ -25,8 +31,8 @@ public class HttpUtilTest {
 	public void testGetBasic() throws Exception {
 		HttpUtilImpl http = new HttpUtilImpl();
 		http.setUser("ja");
-		http.setPassword("ja");
-		String response = http.getPageAsString("https://httpbin.org/basic-auth/ja/ja");
+		http.setPassword("nein");
+		String response = http.getPageAsString("http://httpbin.org/basic-auth/ja/nein");
 		Assert.assertTrue(response.contains("authenticated\": true"));
 	}
 
@@ -34,7 +40,7 @@ public class HttpUtilTest {
 	public void testPostBasic() throws Exception {
 		HttpUtilImpl http = new HttpUtilImpl();
 		String content = "sdcnsdcouansdcaosdch";
-		String response = http.postContentToUrl("https://httpbin.org/post", content);
+		String response = http.postContentToUrl("http://httpbin.org/post", content);
 		Assert.assertTrue(response.contains(content));
 	}
 
@@ -45,5 +51,6 @@ public class HttpUtilTest {
 		String content = IOUtils.toString(google);
 		Assert.assertTrue(content.contains("google.ch"));
 	}
+
 
 }

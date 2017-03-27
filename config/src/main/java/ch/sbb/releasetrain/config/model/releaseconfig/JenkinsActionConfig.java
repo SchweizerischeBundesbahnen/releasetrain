@@ -29,6 +29,8 @@ public class JenkinsActionConfig extends ActionConfig implements Recognizable<Je
 
 	private String jenkinsPassword;
 
+	private String jobAdminMail;
+
 	public String getEncPassword() {
 		if (jenkinsPassword == null) {
 			return null;

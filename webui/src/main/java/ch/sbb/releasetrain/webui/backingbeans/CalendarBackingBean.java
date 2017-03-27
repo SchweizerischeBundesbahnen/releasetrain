@@ -65,6 +65,7 @@ public class CalendarBackingBean {
 	public void setSelectedCalendar(String selecteCalendar) {
 		if (selecteCalendar.isEmpty()) {
 			this.selectedCalendar = "";
+			this.calend = null;
 			return;
 		}
 		this.selectedCalendar = selecteCalendar;
@@ -126,6 +127,12 @@ public class CalendarBackingBean {
 	public void sortList() {
 		BeanComparator<ReleaseCalendarEvent> eintraegeComp = new BeanComparator<ReleaseCalendarEvent>("date");
 		Collections.sort(calend.getEvents(), eintraegeComp);
+	}
+
+	public void delete(int id) {
+		//int i = Integer.parseInt(id);
+		this.calend.getEvents().remove(id);
+		this.save();
 	}
 
 	public void onCellEdit(CellEditEvent event) {

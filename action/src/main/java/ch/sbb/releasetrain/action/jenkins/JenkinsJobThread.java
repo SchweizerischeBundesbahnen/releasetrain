@@ -73,6 +73,10 @@ public final class JenkinsJobThread extends Thread {
 		}
 	}
 
+	public Boolean getRunning(){
+		return running;
+	}
+
 	public String getBuildColor() {
 
 		final String xmlApiString = callURL(apiLatestBuildURL);
@@ -203,7 +207,7 @@ public final class JenkinsJobThread extends Thread {
 			}
 		}
 
-		// give 10 seconds to jenkins to witch his state
+		// give 10 seconds to jenkins to switch his state
 		sleep(10);
 
 		this.finished = true;

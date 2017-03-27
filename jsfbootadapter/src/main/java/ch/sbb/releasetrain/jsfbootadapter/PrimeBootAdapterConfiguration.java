@@ -7,14 +7,18 @@ import java.util.EnumSet;
 
 import javax.faces.webapp.FacesServlet;
 import javax.servlet.DispatcherType;
+import javax.servlet.Filter;
 import javax.servlet.ServletContext;
 
 import com.sun.faces.config.ConfigureListener;
+
 import org.ocpsoft.rewrite.servlet.RewriteFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
-import org.springframework.boot.context.embedded.ServletListenerRegistrationBean;
-import org.springframework.boot.context.embedded.ServletRegistrationBean;
+
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.ServletContextAware;
@@ -28,6 +32,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 public class PrimeBootAdapterConfiguration extends WebMvcConfigurerAdapter implements ServletContextAware {
+
+	@Autowired
+	private CacheFilter filter;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PrimeBootAdapterConfiguration.class, args);
@@ -55,6 +62,16 @@ public class PrimeBootAdapterConfiguration extends WebMvcConfigurerAdapter imple
 		servletContext.setInitParameter("javax.faces.PROJECT_STAGE", "Production");
 
 	}
+	@Bean
+	public FilterRegistrationBean someFilterRegistration() {
+		FilterRegistrationBean registration = new FilterRegistrationBean();
+		registration.setFilter((Filter) filter);
+		registration.addUrlPatterns("/*");
+		registration.setName("someFilter");
+		registration.setOrder(2);
+		return registration;
+	}
+
 
 	@Bean
 	public ServletRegistrationBean facesServletRegistration() {

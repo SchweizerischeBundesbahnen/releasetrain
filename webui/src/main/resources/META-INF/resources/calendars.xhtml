@@ -68,7 +68,7 @@
                     <br/><br/>
 
                     <p:dataTable var="ev" id="calendar" value="#{calendarBackingBean.calend.events}" editable="true" editMode="cell" rendered="#{not empty calendarBackingBean.calend}"
-                                 style="width:101%">
+                                 style="width:101%" rowIndexVar="ri">
 
                         <p:ajax event="cellEdit" listener="#{calendarBackingBean.onCellEdit}" update=":form2:calendar"/>
 
@@ -101,6 +101,10 @@
 
                         <p:column headerText="State" style="text-align: left">
                             <h:outputText value="#{ev.state}"/>
+                        </p:column>
+
+                        <p:column>
+                            <p:commandButton value="X" actionListener="#{calendarBackingBean.delete(ri)}" ajax="true" update="form,form2"/>
                         </p:column>
 
                     </p:dataTable>

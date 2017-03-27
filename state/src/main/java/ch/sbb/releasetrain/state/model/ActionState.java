@@ -26,7 +26,7 @@ public class ActionState implements Recognizable<ActionState> {
 
 	private ActionConfig config;
 
-	private ActionResult actionResult = ActionResult.NONE;
+	private ActionResult actionResult = ActionResult.ONGOING;
 
 	public ActionState(final ActionConfig actionConfig) {
 		this.config = actionConfig;

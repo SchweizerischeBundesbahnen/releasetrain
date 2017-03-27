@@ -41,22 +41,34 @@ public class ReleaseState implements Recognizable<ReleaseState> {
 	}
 
 	public String getState() {
-		String ret = "-";
+
+		boolean hasFailed = false;
+		boolean hasOngoing = false;
+		boolean hasNone = false;
+
 		for (ActionState state : actionState) {
 
-			if (state.getActionResult() == ActionResult.NONE) {
-				ret = "NONE";
-			}
-
-			if (state.getActionResult() == ActionResult.SUCCESS && !ret.equals("NONE")) {
-				return "SUCCESS";
-			}
-
 			if (state.getActionResult() == ActionResult.FAILED) {
-				return "FAILED";
+				hasFailed = true;
 			}
+
+			if (state.getActionResult() == ActionResult.ONGOING) {
+				hasOngoing = true;
+			}
+
 		}
-		return ret;
+
+		if(hasFailed){
+			return "FAILED";
+		}
+
+		if(hasOngoing){
+			return "ONGOING";
+		}
+
+
+		return "SUCCESS";
+
 	}
 
 	@Override

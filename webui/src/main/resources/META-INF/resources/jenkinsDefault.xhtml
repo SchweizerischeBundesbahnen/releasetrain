@@ -24,6 +24,9 @@
         <h:outputLabel for="jenkinsPassword" value="Jenkins Password:"/>
         <p:password id="jenkinsPassword" value="#{jenkinsActionBackingBean.jenkins.encPassword}" redisplay="true" size="40"/>
 
+        <h:outputLabel for="adminmail" value="Jenkins Admin Mail:"/>
+        <p:inputText id="adminmail" value="#{jenkinsActionBackingBean.jenkins.jobAdminMail}" redisplay="true" size="40"/>
+
         <br/>
 
         <p:commandButton value="Save" action="#{jenkinsActionBackingBean.save()}" ajax="true" update="form,form_m"/>

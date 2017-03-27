@@ -60,7 +60,12 @@ public class SendMailAction extends AbstractAction {
 
 		smtpUtil.setMailhost(config.getSmtpServer());
 		for (String rec : arr) {
-			smtpUtil.send(config.getSender(), rec, subject, text);
+			try {
+				smtpUtil.send(config.getSender(), rec, subject, text);
+			} catch (Exception e){
+				log.error(e.getMessage(),e);
+				return ActionResult.FAILED;
+			}
 		}
 		return ActionResult.SUCCESS;
 

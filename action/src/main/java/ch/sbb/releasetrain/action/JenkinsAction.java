@@ -5,12 +5,19 @@
 package ch.sbb.releasetrain.action;
 
 import ch.sbb.releasetrain.action.jenkins.JenkinsJobThread;
+import ch.sbb.releasetrain.config.ConfigAccessor;
+import ch.sbb.releasetrain.config.model.releaseconfig.ActionConfig;
+import ch.sbb.releasetrain.config.model.releaseconfig.EmailActionConfig;
 import ch.sbb.releasetrain.config.model.releaseconfig.JenkinsActionConfig;
+import ch.sbb.releasetrain.config.model.releaseconfig.ReleaseConfig;
 import ch.sbb.releasetrain.state.model.ActionResult;
 import ch.sbb.releasetrain.state.model.ActionState;
+import ch.sbb.releasetrain.utils.emails.SMTPUtil;
+import ch.sbb.releasetrain.utils.emails.SMTPUtilImpl;
 import ch.sbb.releasetrain.utils.http.HttpUtilImpl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import lombok.Getter;
@@ -33,8 +40,16 @@ public class JenkinsAction extends AbstractAction {
 	@Setter
 	private HttpUtilImpl http;
 
+	private boolean warnedOnError = false;
+
+	@Autowired
+	private SMTPUtilImpl sender;
+
 	@Getter
 	private JenkinsJobThread jenkinsThread;
+
+	@Autowired
+	private ConfigAccessor accessor;
 
 	@Override
 	public String getName() {
@@ -46,6 +61,7 @@ public class JenkinsAction extends AbstractAction {
 		Map<String, String> params = new HashMap<>(state.getConfig().getProperties());
 
 		properties.putAll(params);
+		properties.put("getJobAdminMail",((JenkinsActionConfig)state.getConfig()).getJobAdminMail());
 
 		JenkinsActionConfig conf = (JenkinsActionConfig) state.getConfig();
 
@@ -54,10 +70,46 @@ public class JenkinsAction extends AbstractAction {
 
 		jenkinsThread = new JenkinsJobThread(conf.getJenkinsJobname(), "fromReleaseTrainJenkinsAction", conf.getJenkinsUrl(), conf.getJenkinsBuildToken(), http, properties);
 		jenkinsThread.startBuildJobOnJenkins(true);
+
+		while(jenkinsThread.getBuildColor().equals("blue") || jenkinsThread.getBuildColor().equals("red") ){
+			log.info("job is running or red, will stay in loop");
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			if(jenkinsThread.getBuildColor().equals("red")&& !warnedOnError){
+				log.info("job is red, will send warning mail");
+
+				ReleaseConfig configuration = accessor.readConfig("defaultConfig");
+				List<ActionConfig> actions= configuration.getActions();
+				for(ActionConfig act : actions){
+					if(act instanceof EmailActionConfig){
+						EmailActionConfig mailConf = (EmailActionConfig) act;
+						sender.setMailhost(mailConf.getSmtpServer());
+						try {
+							String mail = (String) properties.get("getJobAdminMail");
+							sender.send("noreply@noreply.com", mail, "Releasetrain: failed jenkins build detected", properties.toString());
+						} catch (Throwable e){
+							log.error(e.getMessage(),e);
+							warnedOnError = true;
+						}
+						}
+
+				}
+
+				warnedOnError = true;
+			}
+
+		}
+
+
 		state.setResultString(jenkinsThread.getBuildColor() + ": " + jenkinsThread.getJobUrl());
 		if (jenkinsThread.getBuildColor().equalsIgnoreCase("green")) {
 			return ActionResult.SUCCESS;
 		}
 		return ActionResult.FAILED;
 	}
+
 }
