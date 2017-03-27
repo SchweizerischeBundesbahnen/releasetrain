@@ -1,0 +1,3 @@
+mvn versions:set -DnewVersion=0.9.6
+clean deploy -P release
+mvn versions:set -DnewVersion=0.9.7-SNAPSHOT

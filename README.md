@@ -1,12 +1,11 @@
 # Releasetrain
 This is a tool that is easy to use and that integrates 
 * Parametrized Jenkins Jobs, 
-* Email Notification Actions and  
-* other Build and Release steps (planned)
+* Email Notification Actions
 
 in one simple configurable application.
 
-The main goal ist to schedule builds with custom Release Numbers and other Parameters. It can run as a standalone Spring Boot Webapp or it can generate a custom Jenkins Job as a trigger for the configured build events.
+The main goal ist to schedule builds with custom Release Numbers and other Parameters. It can run as a standalone Spring Boot Webapp.
 
 ## Advantages
 - It uses an existig git repo to store Action Configurations and the corresponding Calendars with custom Parameters
@@ -15,6 +14,10 @@ The main goal ist to schedule builds with custom Release Numbers and other Param
 which will be installed automatically from Maven Central.
 
 ## Updates
+- 0.9.6 Various Cleanup taks
+        Removed the View and the Logic t run releasetrain as a Jenkins Job
+        Bugfixes
+
 - 0.9.4 Saving the Config before refresing on the git configuration
         Blocking Window when refreshing git connection
         Rest call to http://search.maven.org/ for the latest version when generating the jenkins job 
@@ -29,7 +32,7 @@ which will be installed automatically from Maven Central.
 ### Setup
 
 1. Download the latest Spring Boot App: [From Maven Central](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22ch.sbb.releasetrain%22%20AND%20a%3A%22webui%22).
-2. Start from command line the command: _java -jar webui-0.0.29.jar_.
+2. Start from command line the command: _java -jar webui-0.9.6.jar_.
 3. On Windows the default browser will open and the webapp is shown at [http://localhost:8080](http://localhost:8080).
 
 ### Usage
@@ -78,9 +81,3 @@ Please file a ticket or open a pull request if you need this option.
 #### Run Create Actions
 ![](docs/2016-09-06_20_22_11-localhost_8080_calendars.htm.png)
 - For local Testing you can hit the Start local button.
-
-![](docs/2016-09-06_20_24_04-localhost_8080_app.htm.png)
-- As shown above you can export a Jenkins Job by providing an existing Template Job on your Jenkins
-- First, you have to load the config as XML.
-- Then you can publish the job to Jenkins.
-- Fields above will be replaced in the XML or you can edit the Config in the Text Field...
