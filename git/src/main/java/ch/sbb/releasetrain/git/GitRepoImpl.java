@@ -17,6 +17,8 @@ import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.transport.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Access a git repository via JGit.
@@ -27,7 +29,7 @@ import org.eclipse.jgit.transport.*;
  */
 @Slf4j
 public final class GitRepoImpl implements GitRepo {
-
+	
 	private final File gitDir;
 
 	private final String url;
@@ -118,7 +120,19 @@ public final class GitRepoImpl implements GitRepo {
 			}
 
 			git.commit().setMessage("Automatic commit by releasetrain").call();
-			git.push().setCredentialsProvider(credentialsProvider()).call();
+			Iterable<PushResult> pushResults = git.push().setCredentialsProvider(credentialsProvider()).call();
+			
+			
+			for (PushResult pushResult : pushResults) {
+			    for (RemoteRefUpdate update : pushResult.getRemoteUpdates()) {
+				if (!update.getStatus().equals(RemoteRefUpdate.Status.OK)) {
+				    log.error("GIT PUSH nicht erfolgreich. Status={} Message={}, Details={}", update.getStatus(), update.getMessage(), pushResult.getMessages());
+				    throw new TransportException(update.getMessage());
+				}
+			    }
+			}
+			
+			
 		} catch (Exception e) {
 			throw new GitException(e.getMessage(), e);
 		}
